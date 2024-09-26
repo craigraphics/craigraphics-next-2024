@@ -1,0 +1,8 @@
+{
+  "common": {
+    "welcome": "Bienvenido a Mi Aplicación Web",
+    "home": "Inicio",
+    "blog": "Blog",
+    "projects": "Proyectos"
+  }
+}
