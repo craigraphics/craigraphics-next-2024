@@ -1,0 +1,8 @@
+{
+  "common": {
+    "welcome": "Welcome to my Web App",
+    "home": "Home",
+    "blog": "Blog",
+    "projects": "Projects"
+  }
+}
