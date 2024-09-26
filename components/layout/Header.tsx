@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ThemeToggle from '../ThemeToggle';
 
 const Header = () => {
   return (
@@ -18,6 +19,7 @@ const Header = () => {
             <Link href="/projects" className="text-gray-800 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 px-3 py-2">
               Projects
             </Link>
+            <ThemeToggle />
           </div>
         </div>
       </nav>
