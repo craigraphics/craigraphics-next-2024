@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
+import { unstable_setRequestLocale } from 'next-intl/server';
 
 import '../globals.css';
 import { ThemeProvider } from '../../contexts/ThemeContext';
@@ -27,6 +28,13 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children, params: { locale } }: { children: React.ReactNode; params: { locale: string } }) {
+  // Validate that the incoming `locale` parameter is valid
+  const validLocales = ['en', 'es'];
+  if (!validLocales.includes(locale)) notFound();
+
+  // Enable static rendering
+  unstable_setRequestLocale(locale);
+
   let messages;
   try {
     messages = (await import(`../../messages/${locale}.json`)).default;
