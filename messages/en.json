@@ -23,19 +23,35 @@
     "toolbox": {
       "frontend": {
         "title": "Frontend",
-        "tools": "JavaScript, TypeScript, React, Redux, HTML, CSS, Tailwind, MUI, Angular, Vue, React Native"
+        "tools": ["React", "TypeScript", "JavaScript", "Next.js", "Redux", "HTML", "CSS", "Tailwind", "MUI", "Wordpress", "jQuery"]
       },
       "backend": {
         "title": "Backend",
-        "tools": "Next.js, Node.js, GraphQL, REST APIs, Firebase, OOP, NoSQL, Microservices"
+        "tools": ["Node.js", "Express", "Python", "NoSQL", "REST", "GraphQL"]
+      },
+      "performance": {
+        "title": "Performance & Optimization",
+        "tools": ["System Design", "Performance", "Webpack", "SEO", "PWA", "Lighthouse", "SSR"]
       },
       "design": {
         "title": "Design & UX",
-        "tools": "System Design, Performance, Webpack, SEO, UX Design, Figma"
+        "tools": ["Figma", "Adobe XD", "Responsive Design", "UI/UX Principles", "Graphic Design"]
       },
       "devops": {
         "title": "DevOps",
-        "tools": "CI/CD, Jenkins, Docker, Cypress, Jest, Git, Agile, Micro Frontend"
+        "tools": ["Docker", "Jenkins", "CI/CD", "GIT", "Netlify", "Vercel", "AWS"]
+      },
+      "build": {
+        "title": "Build Tools",
+        "tools": ["Webpack", "Babel", "Rollup", "Eslint", "PostCSS", "Lerna", "SASS"]
+      },
+      "security": {
+        "title": "Security, Testing & Authentication",
+        "tools": ["Cypress", "Playwright", "Jest", "OAuth", "JWT", "SSO", "OWASP", "CORS"]
+      },
+      "mobile": {
+        "title": "Mobile & Desktop",
+        "tools": ["React Native", "Electron", "Flutter"]
       }
     },
     "funFacts": {

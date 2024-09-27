@@ -24,19 +24,35 @@
     "toolbox": {
       "frontend": {
         "title": "Frontend",
-        "tools": "JavaScript, TypeScript, React, Redux, HTML, CSS, Tailwind, MUI, Angular, Vue, React Native"
+        "tools": ["React", "TypeScript", "JavaScript", "Next.js", "Redux", "HTML", "CSS", "Tailwind", "MUI", "Wordpress", "jQuery"]
       },
       "backend": {
         "title": "Backend",
-        "tools": "Next.js, Node.js, GraphQL, APIs REST, Firebase, POO, NoSQL, Microservicios"
+        "tools": ["Node.js", "Express", "Python", "NoSQL", "REST", "GraphQL"]
+      },
+      "performance": {
+        "title": "Rendimiento y Optimización",
+        "tools": ["Diseño de Sistemas", "Rendimiento", "Webpack", "SEO", "PWA", "Lighthouse", "SSR"]
       },
       "design": {
         "title": "Diseño y UX",
-        "tools": "Diseño de Sistemas, Rendimiento, Webpack, SEO, Diseño UX, Figma"
+        "tools": ["Figma", "Adobe XD", "Diseño Responsivo", "Principios de UI/UX", "Diseño Gráfico"]
       },
       "devops": {
         "title": "DevOps",
-        "tools": "CI/CD, Jenkins, Docker, Cypress, Jest, Git, Agile, Micro Frontend"
+        "tools": ["Docker", "Jenkins", "CI/CD", "GIT", "Netlify", "Vercel", "AWS"]
+      },
+      "build": {
+        "title": "Herramientas de Construcción",
+        "tools": ["Webpack", "Babel", "Rollup", "Eslint", "PostCSS", "Lerna", "SASS"]
+      },
+      "security": {
+        "title": "Seguridad, Pruebas y Autenticación",
+        "tools": ["Cypress", "Playwright", "Jest", "OAuth", "JWT", "SSO", "OWASP", "CORS"]
+      },
+      "mobile": {
+        "title": "Móvil y Escritorio",
+        "tools": ["React Native", "Electron", "Flutter"]
       }
     },
     "funFacts": {
