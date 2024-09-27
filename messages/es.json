@@ -1,9 +1,51 @@
 {
   "common": {
-    "menu": "Menú",
-    "welcome": "Bienvenido a Mi Aplicación Web",
+    "welcome": "Bienvenido a Tu Aplicación Web",
     "home": "Inicio",
     "blog": "Blog",
     "projects": "Proyectos"
+  },
+
+  "about": {
+    "greeting": {
+      "hello": "Hola, Soy",
+      "title": "Ingeniero de software senior con una pasión por crear increíbles experiencias web 🚀"
+    },
+    "title": "Sobre Mí",
+    "intro": "Soy un entusiasta del código con más de 15 años de experiencia convirtiendo café en aplicaciones web de alto rendimiento. No tengo superpoderes, pero me encanta crear experiencias de usuario fluidas como el agua. He tenido el privilegio de trabajar con marcas geniales como Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidencia de México y Coca-Cola.",
+    "whatIDo": "Lo Que Hago",
+    "skills": {
+      "fullStack": "Desarrollo full-stack con enfoque en front-end",
+      "design": "Convierto ideas de diseñadores y productos en aplicaciones completamente funcionales con gran atención al diseño",
+      "performance": "Creo sitios web rápidos y de alto rendimiento con tráfico pesado",
+      "problemSolving": "Resuelvo problemas complejos y lidero equipos pequeños"
+    },
+    "myToolbox": "Mi Caja de Herramientas",
+    "toolbox": {
+      "frontend": {
+        "title": "Frontend",
+        "tools": "JavaScript, TypeScript, React, Redux, HTML, CSS, Tailwind, MUI, Angular, Vue, React Native"
+      },
+      "backend": {
+        "title": "Backend",
+        "tools": "Next.js, Node.js, GraphQL, APIs REST, Firebase, POO, NoSQL, Microservicios"
+      },
+      "design": {
+        "title": "Diseño y UX",
+        "tools": "Diseño de Sistemas, Rendimiento, Webpack, SEO, Diseño UX, Figma"
+      },
+      "devops": {
+        "title": "DevOps",
+        "tools": "CI/CD, Jenkins, Docker, Cypress, Jest, Git, Agile, Micro Frontend"
+      }
+    },
+    "funFacts": {
+      "title": "Datos Curiosos",
+      "languages": "Fluido en inglés, español y JavaScript",
+      "power": "Impulsado por código, café y música",
+      "music": "Banda sonora para depurar: Música ambiental y John Coltrane",
+      "hobby": "Cuando no estoy programando, me encontrarás jugando tenis de mesa"
+    },
+    "connect": "¡Conectemos!"
   }
 }
