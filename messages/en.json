@@ -1,9 +1,66 @@
 {
   "common": {
-    "menu": "Menu",
-    "welcome": "Welcome to my Web App",
+    "welcome": "Welcome to Your Web App",
     "home": "Home",
     "blog": "Blog",
     "projects": "Projects"
+  },
+  "about": {
+    "greeting": {
+      "hello": "Hey there, I'm",
+      "title": "Senior Software Engineer with a passion for creating amazing web experiences 🚀"
+    },
+    "title": "About Me",
+    "intro": "I'm a code enthusiast with 15+ years of turning coffee into high-performance web applications. I don't have superpowers, but I love creating smooth user experiences like water. I've had the privilege of working with some pretty cool brands like Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidency of Mexico and Coca-Cola.",
+    "whatIDo": "What I Do",
+    "skills": {
+      "fullStack": "Full-stack with a focus on Front-end",
+      "design": "Turn designer and product ideas into fully functional applications with a big eye on design",
+      "performance": "Make fast performant websites with heavy traffic",
+      "problemSolving": "Solve complex problems and lead small teams"
+    },
+    "myToolbox": "My Toolbox",
+    "toolbox": {
+      "frontend": {
+        "title": "Frontend",
+        "tools": ["React", "TypeScript", "JavaScript", "Next.js", "Redux", "HTML", "CSS", "Tailwind", "MUI", "Wordpress", "jQuery"]
+      },
+      "backend": {
+        "title": "Backend",
+        "tools": ["Node.js", "Express", "Python", "NoSQL", "REST", "GraphQL"]
+      },
+      "performance": {
+        "title": "Performance & Optimization",
+        "tools": ["System Design", "Performance", "Webpack", "SEO", "PWA", "Lighthouse", "SSR"]
+      },
+      "design": {
+        "title": "Design & UX",
+        "tools": ["Figma", "Adobe XD", "Responsive Design", "UI/UX Principles", "Graphic Design"]
+      },
+      "devops": {
+        "title": "DevOps",
+        "tools": ["Docker", "Jenkins", "CI/CD", "GIT", "Netlify", "Vercel", "AWS"]
+      },
+      "build": {
+        "title": "Build Tools",
+        "tools": ["Webpack", "Babel", "Rollup", "Eslint", "PostCSS", "Lerna", "SASS"]
+      },
+      "security": {
+        "title": "Security, Testing & Authentication",
+        "tools": ["Cypress", "Playwright", "Jest", "OAuth", "JWT", "SSO", "OWASP", "CORS"]
+      },
+      "mobile": {
+        "title": "Mobile & Desktop",
+        "tools": ["React Native", "Electron", "Flutter"]
+      }
+    },
+    "funFacts": {
+      "title": "Fun Facts",
+      "languages": "Fluent in English, Spanish, and JavaScript",
+      "power": "Powered by code, coffee and music",
+      "music": "Debugging soundtrack: Ambient music and John Coltrane",
+      "hobby": "When not coding, you'll find me playing table tennis"
+    },
+    "connect": "Let's Connect!"
   }
 }

@@ -1,9 +1,67 @@
 {
   "common": {
-    "menu": "Menú",
-    "welcome": "Bienvenido a Mi Aplicación Web",
+    "welcome": "Bienvenido a Tu Aplicación Web",
     "home": "Inicio",
     "blog": "Blog",
     "projects": "Proyectos"
+  },
+
+  "about": {
+    "greeting": {
+      "hello": "Hola, Soy",
+      "title": "Ingeniero de software senior con una pasión por crear increíbles experiencias web 🚀"
+    },
+    "title": "Sobre Mí",
+    "intro": "Soy un entusiasta del código con más de 15 años de experiencia convirtiendo café en aplicaciones web de alto rendimiento. No tengo superpoderes, pero me encanta crear experiencias de usuario fluidas como el agua. He tenido el privilegio de trabajar con marcas geniales como Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidencia de México y Coca-Cola.",
+    "whatIDo": "Lo Que Hago",
+    "skills": {
+      "fullStack": "Desarrollo full-stack con enfoque en front-end",
+      "design": "Convierto ideas de diseñadores y productos en aplicaciones completamente funcionales con gran atención al diseño",
+      "performance": "Creo sitios web rápidos y de alto rendimiento con tráfico pesado",
+      "problemSolving": "Resuelvo problemas complejos y lidero equipos pequeños"
+    },
+    "myToolbox": "Mi Caja de Herramientas",
+    "toolbox": {
+      "frontend": {
+        "title": "Frontend",
+        "tools": ["React", "TypeScript", "JavaScript", "Next.js", "Redux", "HTML", "CSS", "Tailwind", "MUI", "Wordpress", "jQuery"]
+      },
+      "backend": {
+        "title": "Backend",
+        "tools": ["Node.js", "Express", "Python", "NoSQL", "REST", "GraphQL"]
+      },
+      "performance": {
+        "title": "Rendimiento y Optimización",
+        "tools": ["Diseño de Sistemas", "Rendimiento", "Webpack", "SEO", "PWA", "Lighthouse", "SSR"]
+      },
+      "design": {
+        "title": "Diseño y UX",
+        "tools": ["Figma", "Adobe XD", "Diseño Responsivo", "Principios de UI/UX", "Diseño Gráfico"]
+      },
+      "devops": {
+        "title": "DevOps",
+        "tools": ["Docker", "Jenkins", "CI/CD", "GIT", "Netlify", "Vercel", "AWS"]
+      },
+      "build": {
+        "title": "Herramientas de Construcción",
+        "tools": ["Webpack", "Babel", "Rollup", "Eslint", "PostCSS", "Lerna", "SASS"]
+      },
+      "security": {
+        "title": "Seguridad, Pruebas y Autenticación",
+        "tools": ["Cypress", "Playwright", "Jest", "OAuth", "JWT", "SSO", "OWASP", "CORS"]
+      },
+      "mobile": {
+        "title": "Móvil y Escritorio",
+        "tools": ["React Native", "Electron", "Flutter"]
+      }
+    },
+    "funFacts": {
+      "title": "Datos Curiosos",
+      "languages": "Fluido en inglés, español y JavaScript",
+      "power": "Impulsado por código, café y música",
+      "music": "Banda sonora para depurar: Música ambiental y John Coltrane",
+      "hobby": "Cuando no estoy programando, me encontrarás jugando tenis de mesa"
+    },
+    "connect": "¡Conectemos!"
   }
 }
