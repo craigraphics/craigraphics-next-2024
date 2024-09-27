@@ -1,5 +1,6 @@
 {
   "common": {
+    "menu": "Menú",
     "welcome": "Bienvenido a Mi Aplicación Web",
     "home": "Inicio",
     "blog": "Blog",
