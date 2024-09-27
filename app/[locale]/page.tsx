@@ -1,7 +1,14 @@
+import { unstable_setRequestLocale } from 'next-intl/server';
 import AboutMe from '@/components/AboutMe';
 import Layout from '@/components/layout/Layout';
 
-export default function Home() {
+type Props = {
+  params: { locale: string };
+};
+
+export default function Home({ params: { locale } }: Props) {
+  unstable_setRequestLocale(locale);
+
   return (
     <Layout>
       <AboutMe />

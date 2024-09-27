@@ -3,9 +3,8 @@ import localFont from 'next/font/local';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { unstable_setRequestLocale } from 'next-intl/server';
-
-import '../globals.css';
-import { ThemeProvider } from '../../contexts/ThemeContext';
+import { ThemeProvider } from '@/contexts/ThemeContext';
+import '@/app/globals.css';
 
 export function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'es' }];
