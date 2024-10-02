@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react';
 
 const Footer = () => {
   return (
-    <footer className="bg-white shadow-md dark:bg-gray-800">
+    <footer className="bg-white shadow-md dark:bg-gray-950">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="text-gray-600 dark:text-gray-300">© {new Date().getFullYear()} Craigraphics. All rights reserved.</div>
