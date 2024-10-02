@@ -3,9 +3,9 @@
     "welcome": "Bienvenido a Tu Aplicación Web",
     "home": "Inicio",
     "blog": "Blog",
-    "projects": "Proyectos"
+    "projects": "Proyectos",
+    "menu": "Menú"
   },
-
   "about": {
     "greeting": {
       "hello": "Hola, Soy",
@@ -63,5 +63,8 @@
       "hobby": "Cuando no estoy programando, me encontrarás jugando tenis de mesa"
     },
     "connect": "¡Conectemos!"
+  },
+  "blog": {
+    "readMore": "Leer Más"
   }
 }

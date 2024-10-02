@@ -3,7 +3,8 @@
     "welcome": "Welcome to Your Web App",
     "home": "Home",
     "blog": "Blog",
-    "projects": "Projects"
+    "projects": "Projects",
+    "menu": "Menu"
   },
   "about": {
     "greeting": {
@@ -62,5 +63,8 @@
       "hobby": "When not coding, you'll find me playing table tennis"
     },
     "connect": "Let's Connect!"
+  },
+  "blog": {
+    "readMore": "Read More"
   }
 }

@@ -110,11 +110,11 @@ const AboutMe = () => {
         <div className="mt-8">
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t('connect')}</h3>
           <div className="mt-4 flex space-x-6">
-            <a href="https://github.com/yourusername" className="text-gray-700 dark:text-gray-300 hover:text-gray-700">
+            <a href="https://github.com/craigraphics" target="_blank" className="text-gray-700 dark:text-gray-300 hover:text-gray-700">
               <span className="sr-only">GitHub</span>
               <Icon icon="mdi:github" width="40" height="40" />
             </a>
-            <a href="https://linkedin.com/in/willcraigz" className="text-gray-700 dark:text-gray-300 hover:text-gray-700">
+            <a href="https://linkedin.com/in/willcraigz" target="_blank" className="text-gray-700 dark:text-gray-300 hover:text-gray-700">
               <span className="sr-only">LinkedIn</span>
               <Icon icon="mdi:linkedin" width="40" height="40" />
             </a>

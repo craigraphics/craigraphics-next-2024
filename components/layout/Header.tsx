@@ -18,8 +18,9 @@ const Header = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  const changeLanguage = (value: string) => {
-    router.push(`/${value}${pathname.substring(3)}`);
+  const changeLanguage = (newLocale: string) => {
+    const currentPathname = pathname.substring(3) || '/';
+    router.push(`/${newLocale}${currentPathname}`);
   };
 
   const NavItems = ({ closeMenu }: { closeMenu?: () => void }) => (
@@ -49,7 +50,7 @@ const Header = () => {
   );
 
   return (
-    <header className="bg-white dark:bg-gray-900 shadow-md">
+    <header className="bg-white dark:bg-gray-950 shadow-md dark:shadow-slate-900">
       <nav className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           <div className="text-xl font-semibold text-gray-800 dark:text-white">
@@ -64,7 +65,7 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <ThemeToggle />
             <Select onValueChange={changeLanguage} defaultValue={pathname.substring(1, 3)}>
-              <SelectTrigger className="w-[80px] bg-white dark:bg-gray-800 text-gray-800 dark:text-white border-gray-300 dark:border-gray-600">
+              <SelectTrigger className="w-[80px] bg-white dark:bg-gray-900 text-gray-800 dark:text-white border-gray-300 dark:border-gray-600">
                 <SelectValue placeholder="Lang" />
               </SelectTrigger>
               <SelectContent className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
