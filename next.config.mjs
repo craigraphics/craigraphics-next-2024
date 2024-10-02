@@ -14,8 +14,8 @@ const withMDX = createMDX({
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   experimental: {
-    appDir: true,
-    nextIntlDir: 'i18n',
+    // appDir: true,
+    // nextIntlDir: 'i18n',
     mdxRs: true,
   },
 };

@@ -6,7 +6,7 @@ export interface BlogPost {
   date: string;
   content: string;
   language: 'en' | 'es';
-  image?: string;
+  image?: string | null;
   excerpt?: string;
 }
 
