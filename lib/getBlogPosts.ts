@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-// @ts-expect-error: TypeScript cannot find module declaration for 'gray-matter'
 import matter from 'gray-matter';
 import { BlogPost } from '@/types/blog';
 
