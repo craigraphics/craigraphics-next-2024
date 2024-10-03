@@ -33,24 +33,24 @@ const Header = () => {
         {t('home')}
       </Link>
       <Link
-        href="/blog"
-        className="block py-2 text-gray-800 dark:text-gray-200 hover:text-gray-600 dark:hover:text-white transition-colors"
-        onClick={closeMenu}
-      >
-        {t('blog')}
-      </Link>
-      <Link
         href="/projects"
         className="block py-2 text-gray-800 dark:text-gray-200 hover:text-gray-600 dark:hover:text-white transition-colors"
         onClick={closeMenu}
       >
         {t('projects')}
       </Link>
+      <Link
+        href="/blog"
+        className="block py-2 text-gray-800 dark:text-gray-200 hover:text-gray-600 dark:hover:text-white transition-colors"
+        onClick={closeMenu}
+      >
+        {t('blog')}
+      </Link>
     </>
   );
 
   return (
-    <header className="bg-white dark:bg-gray-950 shadow-md dark:shadow-slate-900">
+    <header className="bg-white dark:bg-gray-950 border-b-2  border-slate-300 dark:border-slate-400">
       <nav className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           <div className="text-xl font-semibold text-gray-800 dark:text-white">
