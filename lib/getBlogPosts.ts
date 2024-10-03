@@ -21,7 +21,10 @@ export function getBlogPosts(locale: string): BlogPost[] {
       const fileContents = fs.readFileSync(fullPath, 'utf8');
       const imageFormats = ['webp', 'jpg', 'jpeg', 'png'];
       let imagePath = null;
-      const { data, content } = matter(fileContents);
+      const { data, content } = matter(fileContents) as {
+        data: { title: string; date: string; excerpt: string; author: string };
+        content: string;
+      };
 
       for (const format of imageFormats) {
         const potentialPath = path.join(process.cwd(), 'public', 'images', 'blog', slug, `featured-image.${format}`);
@@ -36,6 +39,7 @@ export function getBlogPosts(locale: string): BlogPost[] {
         title: data.title,
         date: data.date,
         excerpt: data.excerpt,
+        author: data.author,
         content,
         image: imagePath,
         language: locale as 'en' | 'es',
