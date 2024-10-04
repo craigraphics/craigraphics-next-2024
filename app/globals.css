@@ -13,20 +13,26 @@ body {
 }
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background-light: 193 31% 94%;
+    --foreground-light: 225 9% 26%;
+
+    --primary-light: 212 71% 31%;
+    --primary-foreground-light: 210 40% 98%;
+
+    --background-dark: 217 39% 12%;
+    --foreground-dark: 205 76% 94%;
+
+    --primary-dark: 190 84% 77%;
+    --primary-foreground-dark: 222.2 47.4% 11.2%;
+
+    --secondary-light: 116 100% 33%;
+    --secondary-dark: 46 100% 72%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
@@ -45,8 +51,11 @@ body {
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: var(--background-dark);
+    --foreground: var(--foreground-dark);
+    --primary: var(--primary-dark);
+    --primary-foreground: var(--primary-foreground-dark);
+    --secondary: var(--secondary-dark);
 
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -54,10 +63,7 @@ body {
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
+    /* --secondary: 217.2 32.6% 17.5%; */
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -81,5 +87,9 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    .dark & {
+      @apply bg-background-dark text-foreground-dark;
+    }
   }
 }

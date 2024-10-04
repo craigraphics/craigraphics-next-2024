@@ -9,7 +9,8 @@
   "about": {
     "greeting": {
       "hello": "Hola, Soy",
-      "title": "Ingeniero de software senior con una pasión por crear increíbles experiencias web 🚀"
+      "role": "Ingeniero de Software Senior",
+      "title": "Apasionado por crear experiencias web increíbles."
     },
     "title": "Sobre Mí",
     "intro": "Soy un entusiasta del código con más de 15 años de experiencia convirtiendo café en aplicaciones web de alto rendimiento. No tengo superpoderes, pero me encanta crear experiencias de usuario fluidas como el agua. He tenido el privilegio de trabajar con marcas geniales como Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidencia de México y Coca-Cola.",

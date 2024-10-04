@@ -50,10 +50,10 @@ const Header = () => {
   );
 
   return (
-    <header className="bg-white dark:bg-gray-950 border-b-2  border-slate-300 dark:border-slate-400">
+    <header className=" border-b-2 border-slate-300 dark:border-slate-800">
       <nav className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
-          <div className="text-xl font-semibold text-gray-800 dark:text-white">
+          <div className="text-xl font-semibold ">
             <Link href="/">William Craig</Link>
           </div>
 
@@ -65,23 +65,19 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <ThemeToggle />
             <Select onValueChange={changeLanguage} defaultValue={pathname.substring(1, 3)}>
-              <SelectTrigger className="w-[80px] bg-white dark:bg-gray-900 text-gray-800 dark:text-white border-gray-300 dark:border-gray-600">
+              <SelectTrigger className="w-[80px] dark:bg-background-dark border-gray-300 dark:border-gray-600">
                 <SelectValue placeholder="Lang" />
               </SelectTrigger>
-              <SelectContent className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
-                <SelectItem value="en" className="text-gray-800 dark:text-white">
-                  EN
-                </SelectItem>
-                <SelectItem value="es" className="text-gray-800 dark:text-white">
-                  ES
-                </SelectItem>
+              <SelectContent className="bg-background dark:bg-background-dark border-gray-300 dark:border-gray-600">
+                <SelectItem value="en">EN</SelectItem>
+                <SelectItem value="es">ES</SelectItem>
               </SelectContent>
             </Select>
 
             {/* Mobile Menu Button */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden text-gray-800 dark:text-white">
+                <Button variant="ghost" size="icon" className="md:hidden">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>

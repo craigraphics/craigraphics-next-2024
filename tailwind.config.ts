@@ -22,15 +22,25 @@ const config: Config = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
+        background: {
+          DEFAULT: 'hsl(var(--background-light))',
+          dark: 'hsl(var(--background-dark))',
+        },
+        foreground: {
+          DEFAULT: 'hsl(var(--foreground-light))',
+          dark: 'hsl(var(--foreground-dark))',
+        },
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
+          DEFAULT: 'hsl(var(--primary-light))',
+          foreground: 'hsl(var(--primary-foreground-light))',
+          dark: 'hsl(var(--primary-dark))',
+          'dark-foreground': 'hsl(var(--primary-foreground-dark))',
         },
         secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
+          DEFAULT: 'hsl(var(--secondary-light))',
+          foreground: 'hsl(var(--secondary-foreground-light))',
+          dark: 'hsl(var(--secondary-dark))',
+          'dark-foreground': 'hsl(var(--secondary-foreground-dark))',
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
@@ -57,6 +67,11 @@ const config: Config = {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+      },
+      margin: {
+        13: '4rem',
+        14: '5rem',
+        15: '6rem',
       },
       keyframes: {
         'accordion-down': {
