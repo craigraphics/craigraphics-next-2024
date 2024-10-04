@@ -56,16 +56,21 @@ const AboutMe = () => {
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-10">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">{t('greeting.hello')} William Craig! 👋</h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300">{t('greeting.title')}</p>
-        </div>
+        <section className="mt-13">
+          <small className="text-xl mb-1 font-medium text-secondary dark:text-secondary-dark block">{t('greeting.hello')}</small>
+          <h1 className="text-7xl font-bold text-primary dark:text-primary-dark mb-2">William Craig!</h1>
+          <h2 className="text-4xl mb-2">{t('greeting.role')}</h2>
+          <h2 className="text-2xl mb-2 text-secondary dark:text-secondary-dark">Fullstack, Frontend, UX</h2>
+          <p className="w-5/6 text-primary dark:text-primary-dark text-2xl font-medium">{t('greeting.title')}</p>
+        </section>
 
-        <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-3xl">{t('title')}</h2>
-        <p className="mt-2 text-lg text-gray-700 dark:text-gray-300">{t('intro')}</p>
+        <hr className="border-t-1 border-primary dark:border-primary-dark border-dashed mt-14 mb-14 w-5/6"></hr>
 
-        <div className="mt-8">
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t('whatIDo')}</h3>
+        <h2 className="text-3xl font-extrabold text-primary dark:text-primary-dark sm:text-3xl">{t('title')}</h2>
+        <p className="mt-2 text-lg font-medium w-5/6 ">{t('intro')}</p>
+
+        <section className="mt-12">
+          <h3 className="text-2xl font-bold text-primary dark:text-primary-dark">{t('whatIDo')}</h3>
           <ul className="mt-4 space-y-1">
             {['fullStack', 'design', 'performance', 'problemSolving'].map((item, index) => (
               <li key={index} className="flex items-center">
@@ -76,10 +81,10 @@ const AboutMe = () => {
               </li>
             ))}
           </ul>
-        </div>
+        </section>
 
-        <div className="mt-8">
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{t('myToolbox')}</h3>
+        <section className="mt-12 w-4/6">
+          <h3 className="text-2xl font-bold mb-4 text-primary dark:text-primary-dark">{t('myToolbox')}</h3>
           <div className="grid grid-cols-1 gap-6">
             {skillData.map((skill, index) => (
               <ProgressBar
@@ -91,9 +96,9 @@ const AboutMe = () => {
               />
             ))}
           </div>
-        </div>
+        </section>
 
-        <div className="mt-8">
+        <section className="mt-8">
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t('funFacts.title')}</h3>
           <ul className="mt-4 space-y-1">
             {['languages', 'power', 'music', 'hobby'].map((fact, index) => (
@@ -105,7 +110,7 @@ const AboutMe = () => {
               </li>
             ))}
           </ul>
-        </div>
+        </section>
 
         <div className="mt-8">
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t('connect')}</h3>

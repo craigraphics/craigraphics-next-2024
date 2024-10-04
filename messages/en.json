@@ -9,7 +9,8 @@
   "about": {
     "greeting": {
       "hello": "Hey there, I'm",
-      "title": "Senior Software Engineer with a passion for creating amazing web experiences 🚀"
+      "role": "Senior Software Engineer",
+      "title": "Passionate about creating amazing web experiences."
     },
     "title": "About Me",
     "intro": "I'm a code enthusiast with 15+ years of turning coffee into high-performance web applications. I don't have superpowers, but I love creating smooth user experiences like water. I've had the privilege of working with some pretty cool brands like Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidency of Mexico and Coca-Cola.",
