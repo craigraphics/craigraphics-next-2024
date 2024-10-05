@@ -19,7 +19,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
+      className="ml-4 p-2 rounded-full border border-primary dark:text-secondary-dark bg-background dark:bg-background-dark text-secondary dark:border-primary-dark-foreground hover:bg-primary dark:hover:bg-primary-dark dark:hover:bg-gray-600 hover:text-foreground-dark dark:hover:text-background-dark"
       aria-label="Toggle theme"
     >
       <Icon icon={theme === 'light' ? 'ph:moon' : 'ph:sun'} className="w-5 h-5" />
