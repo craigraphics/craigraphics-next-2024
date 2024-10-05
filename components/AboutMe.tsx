@@ -54,7 +54,7 @@ const AboutMe = () => {
   ];
 
   return (
-    <div className="py-12 px-4 sm:px-6 lg:px-8">
+    <div className="py-14 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <section className="mt-13">
           <small className="text-xl mb-1 font-medium text-secondary dark:text-secondary-dark block">{t('greeting.hello')}</small>

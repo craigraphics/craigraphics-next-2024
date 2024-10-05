@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
@@ -18,11 +18,35 @@ const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const changeLanguage = (newLocale: string) => {
     const currentPathname = pathname.substring(3) || '/';
     router.push(`/${newLocale}${currentPathname}`);
   };
+
+  const controlHeader = () => {
+    if (typeof window !== 'undefined') {
+      if (window.scrollY > lastScrollY) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+      setLastScrollY(window.scrollY);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', controlHeader);
+
+      return () => {
+        window.removeEventListener('scroll', controlHeader);
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastScrollY]);
 
   const NavItems = ({ closeMenu }: { closeMenu?: () => void }) => (
     <>
@@ -38,7 +62,13 @@ const Header = () => {
     </>
   );
   return (
-    <header className="border-b border-muted dark:border-muted-dark ">
+    <header
+      className={`fixed top-0 left-0 w-full
+        border-b border-muted dark:border-muted-dark
+        bg-white dark:bg-gray-800 bg-opacity-50 dark:bg-opacity-50
+        transition-transform duration-300
+        ${isVisible ? 'translate-y-0' : '-translate-y-full'} backdrop-filter backdrop-blur-lg`}
+    >
       <nav className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           <div className="text-xl font-semibold ">
