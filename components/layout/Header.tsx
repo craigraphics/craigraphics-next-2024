@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
@@ -11,6 +10,8 @@ import { Sheet, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { SheetContent } from '@/components/ui/custom-sheet';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
+import Logo from '@/components/layout/Logo';
+import Link from '@/components/ui/NavLink';
 
 const Header = () => {
   const t = useTranslations('common');
@@ -25,36 +26,25 @@ const Header = () => {
 
   const NavItems = ({ closeMenu }: { closeMenu?: () => void }) => (
     <>
-      <Link
-        href="/"
-        className="block py-2 text-gray-800 dark:text-gray-200 hover:text-gray-600 dark:hover:text-white transition-colors"
-        onClick={closeMenu}
-      >
+      <Link href="/" onClick={closeMenu}>
         {t('home')}
       </Link>
-      <Link
-        href="/projects"
-        className="block py-2 text-gray-800 dark:text-gray-200 hover:text-gray-600 dark:hover:text-white transition-colors"
-        onClick={closeMenu}
-      >
+      <Link href="/projects" onClick={closeMenu}>
         {t('projects')}
       </Link>
-      <Link
-        href="/blog"
-        className="block py-2 text-gray-800 dark:text-gray-200 hover:text-gray-600 dark:hover:text-white transition-colors"
-        onClick={closeMenu}
-      >
+      <Link href="/blog" onClick={closeMenu}>
         {t('blog')}
       </Link>
     </>
   );
-
   return (
-    <header className=" border-b-2 border-slate-300 dark:border-slate-800">
+    <header className="border-b border-muted dark:border-muted-dark ">
       <nav className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           <div className="text-xl font-semibold ">
-            <Link href="/">William Craig</Link>
+            <Link href="/">
+              <Logo />
+            </Link>
           </div>
 
           {/* Desktop Menu */}
@@ -65,12 +55,30 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <ThemeToggle />
             <Select onValueChange={changeLanguage} defaultValue={pathname.substring(1, 3)}>
-              <SelectTrigger className="w-[80px] dark:bg-background-dark border-gray-300 dark:border-gray-600">
+              <SelectTrigger className="w-[80px] dark:bg-background-dark border-primary border dark:border-primary-dark dark:text-secondary-dark">
                 <SelectValue placeholder="Lang" />
               </SelectTrigger>
-              <SelectContent className="bg-background dark:bg-background-dark border-gray-300 dark:border-gray-600">
-                <SelectItem value="en">EN</SelectItem>
-                <SelectItem value="es">ES</SelectItem>
+              <SelectContent className="bg-background dark:bg-background-dark ">
+                <SelectItem
+                  className=" 
+                  dark:hover:bg-secondary-dark dark:hover:text-foreground-dark
+                  data-[state=checked]:bg-primary data-[state=checked]:text-foreground-dark
+                  dark:data-[state=checked]:bg-primary-dark dark:data-[state=checked]:text-slate-800  
+                  cursor-pointer"
+                  value="en"
+                >
+                  EN
+                </SelectItem>
+                <SelectItem
+                  className="
+                  dark:hover:bg-secondary-dark dark:hover:text-foreground-dark
+                  data-[state=checked]:bg-primary data-[state=checked]:text-foreground-dark
+                  dark:data-[state=checked]:bg-primary-dark dark:data-[state=checked]:text-slate-800  
+                  cursor-pointer"
+                  value="es"
+                >
+                  ES
+                </SelectItem>
               </SelectContent>
             </Select>
 
@@ -81,9 +89,9 @@ const Header = () => {
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[240px] sm:w-[300px] bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700">
+              <SheetContent side="right" className="w-[240px] sm:w-[300px] border-gray-200 dark:border-gray-700">
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-lg font-semibold text-gray-800 dark:text-white">{t('menu')}</h2>
+                  <h2 className="text-lg font-semibold">{t('menu')}</h2>
                   <SheetClose asChild>
                     <Button variant="ghost" size="icon" className="text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
                       <X className="h-6 w-6" />
