@@ -54,24 +54,24 @@ const AboutMe = () => {
   ];
 
   return (
-    <div className="py-14 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="py-14 mt-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto">
         <section className="mt-13">
           <small className="text-xl mb-1 font-medium text-secondary dark:text-secondary-dark block">{t('greeting.hello')}</small>
           <h1 className="text-6xl sm:text-7xl font-bold text-primary dark:text-primary-dark mb-2">William Craig!</h1>
           <h2 className="text-3xl sm:text-4xl mb-2">{t('greeting.role')}</h2>
           <h2 className="text-2xl mb-2 text-secondary dark:text-secondary-dark">Fullstack, Frontend, UX</h2>
-          <p className="sm:w-5/6 text-primary dark:text-primary-dark text-2xl font-medium">{t('greeting.title')}</p>
+          <p className=" text-primary dark:text-primary-dark text-2xl font-medium">{t('greeting.title')}</p>
         </section>
 
         <hr className="border-t-1 border-primary dark:border-primary-dark border-dashed mt-14 mb-14 w-5/6"></hr>
 
         {/* About me section */}
         <h2 className="text-3xl font-extrabold text-primary dark:text-primary-dark sm:text-3xl underline-heading">{t('title')}</h2>
-        <p className="mt-4 text-lg font-medium sm:w-5/6 ">{t('intro')}</p>
+        <p className="mt-4 text-lg font-medium  ">{t('intro')}</p>
 
         {/* What I do section */}
-        <section className="mt-12">
+        <section className="mt-14 lg:w-5/6">
           <h3 className="text-2xl font-bold text-primary dark:text-primary-dark underline-heading">{t('whatIDo')}</h3>
           <ul className="mt-4 space-y-0">
             {['fullStack', 'design', 'performance', 'problemSolving'].map((item, index) => (
@@ -90,7 +90,7 @@ const AboutMe = () => {
         </section>
 
         {/* My Toolbox section */}
-        <section className="mt-12 sm:w-4/6">
+        <section className="mt-14 lg:w-5/6">
           <h3 className="text-2xl font-bold mb-4 text-primary dark:text-primary-dark underline-heading">{t('myToolbox')}</h3>
           <div className="grid grid-cols-1 gap-6">
             {skillData.map((skill, index) => (
@@ -106,7 +106,7 @@ const AboutMe = () => {
         </section>
 
         {/* Fun Facts section */}
-        <section className="mt-12">
+        <section className="mt-14">
           <h3 className="text-2xl font-bold mb-4 text-primary dark:text-primary-dark underline-heading">{t('funFacts.title')}</h3>
           <ul className="mt-0 space-y-0">
             {['languages', 'power', 'music', 'hobby'].map((fact, index) => (
@@ -121,19 +121,22 @@ const AboutMe = () => {
         </section>
 
         {/* Connect section */}
-        <div className="mt-12">
-          <h3 className="text-2xl font-bold mb-4 text-primary dark:text-primary-dark underline-heading">{t('connect')}</h3>
-          <div className="mt-1 flex space-x-6">
-            <a href="https://github.com/craigraphics" target="_blank" className="text-gray-700 dark:text-gray-300 hover:text-gray-700">
+        <section className="mt-14 lg:mt-0 ">
+          <h3 className="text-2xl font-bold mb-4 text-primary dark:text-primary-dark underline-heading block lg:hidden">{t('connect')}</h3>
+          <div
+            className="mt-1 flex bottom-4  static flex-row  space-x-4
+          lg:fixed lg:space-y-4 lg:space-x-0 lg:flex-col lg:bottom-14 lg:mb-4 lg:left-4"
+          >
+            <a href="https://github.com/craigraphics" target="_blank">
               <span className="sr-only">GitHub</span>
-              <Icon icon="mdi:github" width="40" height="40" />
+              <Icon icon="mdi:github" width="38" height="38" className="dark:text-foreground-dark dark:hover:text-secondary-dark" />
             </a>
-            <a href="https://linkedin.com/in/willcraigz" target="_blank" className="text-gray-700 dark:text-gray-300 hover:text-gray-700">
+            <a href="https://linkedin.com/in/willcraigz" target="_blank">
               <span className="sr-only">LinkedIn</span>
-              <Icon icon="mdi:linkedin" width="40" height="40" />
+              <Icon icon="mdi:linkedin" width="38" height="38" className="dark:text-foreground-dark dark:hover:text-secondary-dark" />
             </a>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
