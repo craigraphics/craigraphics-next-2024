@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { Icon } from '@iconify/react';
 import ProgressBar from '@/components/ui/ProgressBar';
+import Image from 'next/image';
 
 const colors = ['bg-blue-600', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500', 'bg-pink-500', 'bg-indigo-500'];
 
@@ -55,8 +56,9 @@ const AboutMe = () => {
 
   return (
     <div className="py-14 mt-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto">
-        <section className="mt-13">
+      <div className="max-w-2xl mx-auto relative">
+        <section className="mt-4">
+          <Image src="/images/profile.png" alt="William Craig" width={200} height={200} className="rounded-full mx-auto mb-10" />
           <small className="text-xl mb-1 font-medium text-secondary dark:text-secondary-dark block">{t('greeting.hello')}</small>
           <h1 className="text-6xl sm:text-7xl font-bold text-primary dark:text-primary-dark mb-2">William Craig!</h1>
           <h2 className="text-3xl sm:text-4xl mb-2">{t('greeting.role')}</h2>
