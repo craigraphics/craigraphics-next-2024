@@ -66,7 +66,7 @@ const Header = () => {
       className={`fixed top-0 left-0 w-full
         border-b border-muted dark:border-muted-dark
         bg-white dark:bg-gray-800 bg-opacity-50 dark:bg-opacity-50
-        transition-transform duration-300
+        transition-transform duration-300 z-10
         ${isVisible ? 'translate-y-0' : '-translate-y-full'} backdrop-filter backdrop-blur-lg`}
     >
       <nav className="container mx-auto px-6 py-3">
