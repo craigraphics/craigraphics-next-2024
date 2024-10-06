@@ -3,7 +3,7 @@
     "welcome": "Welcome to Your Web App",
     "home": "Home",
     "blog": "Blog",
-    "projects": "Projects",
+    "projects": "Work",
     "menu": "Menu"
   },
   "about": {
@@ -67,5 +67,68 @@
   },
   "blog": {
     "readMore": "Read More"
+  },
+  "projects": {
+    "title": "Work experience",
+    "description": "Here are some of the projects I've worked on. Click on the tabs to learn more about each project.",
+    "companies": [
+      {
+        "title": "Freelance",
+        "period": "July 2024 - Present",
+        "location": "San Francisco, CA",
+        "role": "Full Stack Developer & UI/UX Designer",
+        "description": "<li>Working as a freelancer creating web applications and designing for different clients and projects</li>",
+        "tags": ["Next.js", "React", "TypeScript", "Node.js", "Firebase", "React Native", "Tailwind CSS", "Angular", "Figma", "Adobe XD"]
+      },
+      {
+        "title": "Globant",
+        "period": "Aug 2015 - July 2024",
+        "location": "Dallas, TX / San Francisco, CA",
+        "role": "Senior Software Engineer lv. II",
+        "description": "<li>Behind the decision of planning and execution of Autodesk's high-traffic Profile single-page application, resulting in a 30% performance improvement and a more unified brand design and a better user experience using React, GraphQL, Node, AWS, Microservices.</li> <li>Developed a highly configurable package module and a library of reusable components, enabling easy integration into other projects by external teams. This module allows users to update and save their profile settings and preferences.</li> <li>Team leader involved in the design and development of a WordPress blog for Frontier Communications, recognized as a finalist for Best Blog 2020 at the US Social Media Awards for Pub-Con.</li> <li>Technical leader for Carnival Cruise Cinema App, which led to choose movies, read reviews, watch trailers, get showtimes, purchase tickets, and redeem them at the theater using Angular as the front-end framework and REST API.</li> <li>Developed an interactive tool with D3.js and AngularJS that led to visualize all the different products and their interconnected relationships through an animated tree graph for Autodesk PLM 360.</li>",
+        "tags": [
+          "React",
+          "TypeScript",
+          "GraphQL",
+          "Node.js",
+          "Express",
+          "MongoDB",
+          "Tailwind CSS",
+          "AWS",
+          "D3.js",
+          "Angular",
+          "WordPress",
+          "Jenkins",
+          "CI/CD",
+          "Docker",
+          "Lerna",
+          "SASS"
+        ]
+      },
+      {
+        "title": "5M2",
+        "period": "Feb 2014 - Aug 2015",
+        "location": "Mexico City, Mexico",
+        "role": "Front End Developer Sr",
+        "description": "<li>Supervised the front-end development of GOB.mx. Transformed many government procedures from office-based to digital, improving accessibility and efficiency for hundreds of millions of users focusing on performance, user experience and accessibility.</li> <li>Led the creation of a style guide framework for public administration agencies and ministries. Organized and led meetings with technical directors across the country, successfully implementing a unified brand design with detailed code and integration guidance nationwide.</li>",
+        "tags": ["AngularJS", "Bootstrap", "SASS", "Grunt", "Ruby on Rails", "WordPress"]
+      },
+      {
+        "title": "Telmex",
+        "period": "May 2013 - Jan 2014",
+        "location": "Mexico City, Mexico",
+        "role": "Front End Developer Sr",
+        "description": "<li>Contributed to the redesign and reconstruction of telmex.com, effectively transforming it into one of Latin America's most heavily visited websites</li>",
+        "tags": ["Liferay", "Bootstrap", "SASS", "Grunt", "jQuery", "JavaScript"]
+      },
+      {
+        "title": "Interalia",
+        "period": "Jan 2010 - May 2013",
+        "location": "Mexico City, Mexico",
+        "role": "Web Designer Sr. / Front End Developer",
+        "description": "<li>Development of multiple websites promoting different new brands and models for General Motors like Chevrolet, Buick and Cadillac using vanilla JS and jQuery for their highly interactive websites.</li><li>Led the design, development of micro-sites, web campaigns, fan pages and mobile sites for Coca-Cola Latin America </li><li>Redesign of company's logo and brand by being selected among dozen other proposals made by other graphic designers.</li>",
+        "tags": ["ActionScript 3", "HTML5", "jQuery", "CSS3", "Objective-C", "JavaScript"]
+      }
+    ]
   }
 }
