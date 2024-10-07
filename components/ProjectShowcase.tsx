@@ -15,11 +15,7 @@ interface ProjectData {
   liveLink?: string;
 }
 
-interface ProjectShowcaseProps {
-  project: ProjectData;
-}
-
-const ProjectShowcase: React.FC<ProjectShowcaseProps> = () => {
+const ProjectShowcase = () => {
   const t = useTranslations('projects');
   const apps = t.raw('apps');
 
