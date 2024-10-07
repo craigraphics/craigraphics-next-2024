@@ -68,9 +68,9 @@
   "blog": {
     "readMore": "Read More"
   },
-  "projects": {
+  "work": {
     "title": "Work experience",
-    "description": "Here are some of the projects I've worked on. Click on the tabs to learn more about each project.",
+    "description": "I've had the privilege of working with different companies and agencies over the years, which has been a rich and learning experience.",
     "companies": [
       {
         "title": "Freelance",
@@ -128,6 +128,38 @@
         "role": "Web Designer Sr. / Front End Developer",
         "description": "<li>Development of multiple websites promoting different new brands and models for General Motors like Chevrolet, Buick and Cadillac using vanilla JS and jQuery for their highly interactive websites.</li><li>Led the design, development of micro-sites, web campaigns, fan pages and mobile sites for Coca-Cola Latin America </li><li>Redesign of company's logo and brand by being selected among dozen other proposals made by other graphic designers.</li>",
         "tags": ["ActionScript 3", "HTML5", "jQuery", "CSS3", "Objective-C", "JavaScript"]
+      }
+    ]
+  },
+  "projects": {
+    "title": "Highlighted Projects",
+    "description": "Here are some of the projects I've worked on.",
+    "apps": [
+      {
+        "title": "Profile Autodesk",
+        "description": "An user-centric approach that balanced functionality and aesthetic appeal. Utilizing Figma for design and adhering to Autodesk's brand guidelines, we engaged in continuous discussions to make informed decisions on the application's design and implementation. This close-knit collaboration ensured that both technical and visual aspects were seamlessly integrated, resulting in a robust and intuitive application that met the performance and usability needs of high-traffic users.",
+        "image": "/images/work/profile.jpg",
+
+        "tools": [
+          "React",
+          "GraphQL",
+          "Node.js",
+          "AWS",
+          "Microservices",
+          "Material UI",
+          "Figma",
+          "Serverless",
+          "Microfrontend",
+          "TypeScript"
+        ],
+        "liveLink": "https://profile.autodesk.com"
+      },
+      {
+        "title": "Blog Frontier",
+        "description": "My creative solution for the project involved bringing the product owners' ideas to life with a strong focus on user experience. I was responsible for creating detailed user flows and wireframes, designing high-fidelity mockups, and leading a small development team to build the project. We developed a custom WordPress template tailored to our needs, ensuring a seamless and engaging user experience. Our efforts culminated in the blog becoming a finalist for Best Blog 2020 at the US Social Media Awards for Pub-Con, reflecting the success and impact of our work.",
+        "image": "/images/work/frontier.jpg",
+        "tools": ["React", "Wordpress", "jQuery", "SASS", "PHP", "UI/UX"],
+        "liveLink": "https://blog.frontier.com"
       }
     ]
   }

@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import ThemeToggle from '../ThemeToggle';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetTrigger, SheetClose } from '@/components/ui/sheet';
+import { Separator } from '@/components/ui/separator';
 import { SheetContent } from '@/components/ui/custom-sheet';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
@@ -53,9 +54,11 @@ const Header = () => {
       <Link href="/" onClick={closeMenu}>
         {t('home')}
       </Link>
-      <Link href="/projects" onClick={closeMenu}>
+      <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5" />
+      <Link href="/work" onClick={closeMenu}>
         {t('projects')}
       </Link>
+      <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5" />
       <Link href="/blog" onClick={closeMenu}>
         {t('blog')}
       </Link>
@@ -91,7 +94,7 @@ const Header = () => {
               <SelectContent className="bg-background dark:bg-background-dark ">
                 <SelectItem
                   className=" 
-                  dark:hover:bg-secondary-dark dark:hover:text-foreground-dark
+                  dark:hover:text-primary dark:hover:bg-secondary-dark
                   data-[state=checked]:bg-primary data-[state=checked]:text-foreground-dark
                   dark:data-[state=checked]:bg-primary-dark dark:data-[state=checked]:text-slate-800  
                   cursor-pointer"
@@ -101,7 +104,7 @@ const Header = () => {
                 </SelectItem>
                 <SelectItem
                   className="
-                  dark:hover:bg-secondary-dark dark:hover:text-foreground-dark
+                  dark:hover:text-primary dark:hover:bg-secondary-dark
                   data-[state=checked]:bg-primary data-[state=checked]:text-foreground-dark
                   dark:data-[state=checked]:bg-primary-dark dark:data-[state=checked]:text-slate-800  
                   cursor-pointer"
