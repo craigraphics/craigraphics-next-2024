@@ -41,7 +41,7 @@ const ProjectShowcase = () => {
                 </div>
                 <div className="p-6 lg:w-1/2">
                   <h3 className="text-2xl font-bold text-primary dark:text-primary-dark mb-2">{project.title}</h3>
-                  <p className="text-secondary-foreground dark:text-secondary-foreground-dark mb-4">{project.description}</p>
+                  <p className="text-foreground dark:text-foreground-dark mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.tools.map((tool, index) => (
                       <span
