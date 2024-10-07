@@ -27,7 +27,10 @@ const ProjectShowcase = () => {
       </div>
       <div className="pt-4 mt-4 max-w-2xl lg:max-w-5xl mx-auto">
         {apps.map((project: ProjectData) => (
-          <Card key={project.title} className="w-full bg-transparent border-muted-dark overflow-hidden mb-14">
+          <Card
+            key={project.title}
+            className="w-full bg-transparent border-muted dark:border-muted-dark shadow-md shadow-black:20 dark:shadow-black:80 overflow-hidden mb-14"
+          >
             <CardContent className="p-0">
               <div className="flex flex-col lg:flex-row">
                 <div className="relative h-64 lg:h-auto lg:w-1/2">
@@ -35,7 +38,7 @@ const ProjectShowcase = () => {
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="rounded-t-lg lg:rounded-l-lg lg:rounded-tr-none object-cover"
+                    className="rounded-t-lg lg:rounded-l-lglg:rounded-tr-none object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>

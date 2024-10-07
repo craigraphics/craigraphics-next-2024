@@ -18,14 +18,11 @@ const components = {
 
 const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
   return (
-    <article className="max-w-none">
-      <header className="relative h-[60vh] mb-8 -mx-11 -mt-8">
-        <Image src={post.image || '/placeholder-image.jpg'} alt={post.title} fill className="object-cover" priority />
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end">
-          <div className="py-8 mx-auto max-w-screen-lg container">
-            <h1 className="text-4xl font-bold text-white mb-4">{post.title}</h1>
-            <div className="text-white text-sm uppercase tracking-wide">{post.category}</div>
-          </div>
+    <article className=" mt-14 sm:max-w-4xl mx-auto">
+      <header className="relative h-[60vh] mb-8">
+        <Image src={post.image || '/images/placeholder-image.jpg'} alt={post.title} fill className="object-cover rounded-md" priority />
+        <div className="py-8 mx-auto max-w-screen-lg container">
+          <div className=" text-sm uppercase tracking-wide">{post.category}</div>
         </div>
       </header>
       <main>
@@ -36,19 +33,18 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
               <AvatarFallback>{post.author}</AvatarFallback>
             </Avatar>
             <div>
-              <div className="font-semibold text-gray-500 dark:text-gray-400">{post?.author}</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
+              <div className="font-semibold text-accent dark:text-accent-dark">{post?.author}</div>
+              <div className="text-sm text-secondary dark:text-secondary-dark">
                 {post.date} · {post.readTime}
               </div>
             </div>
           </div>
-
+          <h1 className="text-4xl font-bold text-primary dark:text-primary-dark mb-12 mt-6 underline-heading">{post.title}</h1>
           <div
             className="prose dark:prose-invert max-w-none
-                        prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-headings:mb-2
-                        prose-p:text-gray-700 dark:prose-p:text-gray-300
-                        prose-a:text-blue-600 dark:prose-a:text-blue-400
-                        prose-strong:text-gray-900 dark:prose-strong:text-gray-100
+                        prose-headings:font-bold prose-headings:text-foreground dark:prose-headings:text-primary-dark prose-headings:mb-2
+                        prose-p:text-foreground dark:prose-p:text-foreground-dark
+                        prose-a:text-secondary dark:prose-a:text-secondary-dark
                         prose-ul:list-disc prose-ol:list-decimal prose-li:m-0              
                         prose-pre:bg-transparent prose-pre:p-0
                         prose-code:text-current mdx-content"
@@ -57,14 +53,14 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
           </div>
         </section>
       </main>
-      <footer className="my-9 border-t-4 border-red-600 dark:border-red-700"></footer>
+      <hr className="border-t-1 border-primary dark:border-primary-dark border-dashed mt-14 mb-14" />
 
       {post.tags && post.tags.length > 0 && (
         <section className="container mx-auto max-w-screen-lg px-4 mt-0">
-          <h2 className="text-xl text-gray-900 dark:text-gray-100 font-semibold mb-2">Tags</h2>
+          <h2 className="text-xl text-primary dark:text-primary-dark font-semibold mb-2 ">Tags</h2>
           <ul className="flex flex-wrap gap-2">
             {post.tags.map((tag, index) => (
-              <li key={index} className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">
+              <li key={index} className="text-xs bg-muted dark:bg-muted-dark px-2 py-1 rounded text-primary dark:text-primary-dark">
                 {tag}
               </li>
             ))}

@@ -66,6 +66,8 @@
     "connect": "Let's Connect!"
   },
   "blog": {
+    "title": "Blog articles & tutorials",
+    "description": "I write about web development, design, and other tech-related topics. Here are some of my latest articles.",
     "readMore": "Read More"
   },
   "work": {

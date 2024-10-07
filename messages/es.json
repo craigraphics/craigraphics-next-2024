@@ -66,6 +66,8 @@
     "connect": "¡Conectemos!"
   },
   "blog": {
+    "title": "Blog artículos y tutoriales",
+    "description": "Aquí encontrarás artículos y tutoriales sobre desarrollo web, diseño de productos y experiencias de usuario.",
     "readMore": "Leer Más"
   },
   "work": {
