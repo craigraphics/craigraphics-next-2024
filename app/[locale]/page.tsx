@@ -6,6 +6,13 @@ type Props = {
   params: { locale: string };
 };
 
+export async function generateMetadata() {
+  return {
+    title: 'Home Page - William Craig',
+    description: 'Welcome to the Home Page of William Craig - craigraphics',
+  };
+}
+
 export default function Home({ params: { locale } }: Props) {
   unstable_setRequestLocale(locale);
 

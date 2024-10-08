@@ -12,7 +12,9 @@ const Footer = () => {
             href="https://github.com/craigraphics/craigraphics-next-2024"
             target="_blank"
           >
-            <small>Designed and built by William Craig - {new Date().getFullYear()}</small>
+            <small>
+              {t('built')} - {new Date().getFullYear()}
+            </small>
           </a>
         </div>
       </div>
