@@ -73,11 +73,34 @@ const AboutMe = () => {
           >
             <a href="https://github.com/craigraphics" target="_blank">
               <span className="sr-only">GitHub</span>
-              <Icon icon="mdi:github" width="38" height="38" className="dark:text-foreground-dark dark:hover:text-secondary-dark" />
+              <Icon icon="mdi:github" width="28" height="28" className="text-accent dark:text-accent-dark dark:hover:text-secondary-dark" />
             </a>
             <a href="https://linkedin.com/in/willcraigz" target="_blank">
               <span className="sr-only">LinkedIn</span>
-              <Icon icon="mdi:linkedin" width="38" height="38" className="dark:text-foreground-dark dark:hover:text-secondary-dark" />
+              <Icon
+                icon="mdi:linkedin"
+                width="28"
+                height="28"
+                className="text-accent dark:text-accent-dark dark:hover:text-secondary-dark"
+              />
+            </a>
+            <a href="https://behance.net/willcraigz" target="_blank">
+              <span className="sr-only">Behance</span>
+              <Icon
+                icon="mdi:behance"
+                width="28"
+                height="28"
+                className="text-accent dark:text-accent-dark dark:hover:text-secondary-dark"
+              />
+            </a>
+            <a href="https://instagram.com/willcrg" target="_blank">
+              <span className="sr-only">Instagram</span>
+              <Icon
+                icon="mdi:instagram"
+                width="28"
+                height="28"
+                className="text-accent dark:text-accent-dark dark:hover:text-secondary-dark"
+              />
             </a>
           </div>
         </section>

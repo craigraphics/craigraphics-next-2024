@@ -4,7 +4,10 @@
     "home": "Inicio",
     "blog": "Blog",
     "projects": "Trabajo",
-    "menu": "Menú"
+    "menu": "Menú",
+    "open_menu": "Abrir Menú",
+    "close_menu": "Cerrar Menú",
+    "menu_description": "Alternar menú de navegación"
   },
   "about": {
     "greeting": {
@@ -163,5 +166,8 @@
         "liveLink": "https://blog.frontier.com"
       }
     ]
+  },
+  "footer": {
+    "built": "Diseñado y Construido por William Craig"
   }
 }

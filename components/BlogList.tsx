@@ -21,10 +21,10 @@ export default function BlogList({ posts, locale, t }: BlogListProps) {
     <Layout>
       <div className="pt-14 mt-12 sm:max-w-4xl mx-auto">
         <h2 className="text-3xl font-extrabold text-primary dark:text-primary-dark sm:text-3xl underline-heading mb-4">{t('title')}</h2>
-        <p className="text-secondary dark:text-secondary-dark text-lgfont-medium mb-4">{t('description')}</p>
+        <p className="text-secondary dark:text-secondary-dark text-lg font-medium mb-4">{t('description')}</p>
 
         {featuredPost && (
-          <article className="my-12 grid md:grid-cols-2 gap-8 items-center rounded-md pl-7 border border-muted dark:border-muted-dark shadow-md shadow-black:20 dark:shadow-black:80">
+          <article className="my-12 grid md:grid-cols-2 gap-8 items-center rounded-md pl-7 border border-muted dark:border-muted-dark shadow-md shadow-black:20 dark:shadow-black:80 p-7 md:p-0 md:pl-7">
             <header>
               <Link href={`/${locale}/blog/${featuredPost.slug}`}>
                 <h1 className="text-4xl text-primary dark:text-primary-dark font-bold mb-4 ">{featuredPost.title}</h1>
