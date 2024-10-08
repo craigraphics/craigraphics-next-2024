@@ -18,6 +18,9 @@ const nextConfig = {
     // nextIntlDir: 'i18n',
     mdxRs: true,
   },
+  images: {
+    domains: ['img.shields.io'],
+  },
 };
 
 // Wrap the existing config with both withNextIntl and withMDX

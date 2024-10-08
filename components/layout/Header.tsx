@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import ThemeToggle from '../ThemeToggle';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Sheet, SheetTrigger, SheetClose } from '@/components/ui/sheet';
+import { Sheet, SheetDescription, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
 import { SheetContent } from '@/components/ui/custom-sheet';
 import { Button } from '@/components/ui/button';
@@ -54,11 +54,11 @@ const Header = () => {
       <Link href="/" onClick={closeMenu}>
         {t('home')}
       </Link>
-      <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5" />
+      <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
       <Link href="/work" onClick={closeMenu}>
         {t('projects')}
       </Link>
-      <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5" />
+      <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
       <Link href="/blog" onClick={closeMenu}>
         {t('blog')}
       </Link>
@@ -118,17 +118,32 @@ const Header = () => {
             {/* Mobile Menu Button */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="md:hidden text-secondary dark:text-secondary-dark 
+                  hover:bg-secondary dark:hover:bg-primary-dark
+                  hover:text-foreground-dark dark:hover:text-primary"
+                >
                   <Menu className="h-6 w-6" />
+                  <span className="sr-only">{t('open_menu')}</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[240px] sm:w-[300px] border-gray-200 dark:border-gray-700">
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-lg font-semibold">{t('menu')}</h2>
+              <SheetContent side="right" className="w-[240px] sm:w-[300px] bg-background-dark/70">
+                <SheetHeader className="mb-4">
+                  <SheetTitle>{t('menu')}</SheetTitle>
+                  <SheetDescription className="pb-2">{t('menu_description')}</SheetDescription>
+                  <Separator orientation="horizontal" className="bg-accent dark:bg-accent-dark" />
+                </SheetHeader>
+                <div className="absolute top-1 right-1 ">
                   <SheetClose asChild>
-                    <Button variant="ghost" size="icon" className="text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-secondary dark:text-secondary-dark hover:bg-transparent hover:text-primary hover:dark:text-primary-dark"
+                    >
                       <X className="h-6 w-6" />
-                      <span className="sr-only">Close</span>
+                      <span className="sr-only">{t('close_menu')}</span>
                     </Button>
                   </SheetClose>
                 </div>

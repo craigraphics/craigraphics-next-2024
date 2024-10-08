@@ -15,8 +15,7 @@ body {
   :root {
     --background-light: 73 17% 96%;
     --foreground-light: 225 27% 33%%;
-
-    --primary-light: 218 25% 39%;
+    --primary-light: 218 59% 37%;
     --primary-foreground-light: 210 40% 98%;
 
     --background-dark: 217 39% 12%;
