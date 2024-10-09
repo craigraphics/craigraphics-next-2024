@@ -19,6 +19,7 @@ This web application is built with the following cutting-edge tools and framewor
 - **[TypeScript](https://www.typescriptlang.org/)**: For adding static type definitions
 - **[Tailwind CSS](https://tailwindcss.com/)**: For rapid and responsive styling
 - **[ChadCN](https://ui.shadcn.com/)**: For customizable UI components
+- **[next-intl](https://next-intl-docs.vercel.app/)**: Internationalization for NextJS
 
 ## 🌐 Deployment
 
@@ -41,23 +42,7 @@ npm install
 npm run dev
 ```
 
-## 📂 Project Structure
-
-The project follows the Next.js 13 App Router structure:
-
-```
-├── app/
-│   ├── layout.tsx
-│   ├── page.tsx
-│   └── ...
-├── components/
-├── public/
-├── styles/
-├── lib/
-└── ...
-```
-
-5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
 
 ## 📂 Project Structure
 
