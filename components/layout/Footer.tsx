@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="shadow-md ">
       <div className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
+        <div className="text-center">
           <a
             className="text-accent dark:text-accent-dark hover:underline"
             href="https://github.com/craigraphics/craigraphics-next-2024"
