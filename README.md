@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# craigraphics.com
 
-## Getting Started
+Welcome to the repository of my personal website! This project was built using some of the modern web technologies.
+
+![Website Preview](./public/images/homepage.png)
+
+### Currently comes with 3 sections:
+
+- About me - showcasing experience, skills and personal information
+- Work - Lists in tab layout structure each of my previous jobs. Also highlights some of the projects I have worked with.
+- Blog - Contains articles I have written.
+
+## 🚀 Technologies Used
+
+This web application is built with the following cutting-edge tools and frameworks:
+
+- **[Next.js 13](https://nextjs.org/)** with App Router: For server-side rendering and routing
+- **[React 18](https://reactjs.org/)**: For building user interfaces
+- **[TypeScript](https://www.typescriptlang.org/)**: For adding static type definitions
+- **[Tailwind CSS](https://tailwindcss.com/)**: For rapid and responsive styling
+- **[ChadCN](https://ui.shadcn.com/)**: For customizable UI components
+- **[next-intl](https://next-intl-docs.vercel.app/)**: Internationalization for NextJS
+
+## 🌐 Deployment
+
+This website is deployed and hosted on [Vercel](https://vercel.com/).
+
+## 🛠️ Setup and Installation
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 First, run the development server:
 
 ```bash
+# Clone the repository
+git clone https://github.com/craigraphcis/craigraphics-next-2024
+# Navigate to the project directory
+cd craigraphics-next-2024
+# Install dependencies
+npm install
+# Run the development server (npm, yarn, pnpm, bun)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📂 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project follows the Next.js 13 App Router structure:
 
-## Learn More
+```
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── ...
+├── components/
+├── public/
+├── styles/
+├── lib/
+└── ...
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🔧 Customization
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This website is built to be easily customizable. You can modify the content, styling, and components to fit your personal brand and preferences.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📄 License
 
-## Deploy on Vercel
+[MIT License](LICENSE)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📞 Contact
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+If you have any questions or would like to connect, please send me a message.
+
+---
+
+Thank you for visiting my personal website repository! Feel free to explore the code and don't hesitate to reach out if you have any questions or feedback.
