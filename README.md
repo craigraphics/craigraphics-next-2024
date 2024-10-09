@@ -2,7 +2,7 @@
 
 Welcome to the repository of my personal website! This project was built using some of the modern web technologies.
 
-![Website Preview](images/homepage.png)
+![Website Preview](./public/images/homepage.png)
 
 ### Currently comes with 3 sections:
 
