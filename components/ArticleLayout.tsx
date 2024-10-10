@@ -11,14 +11,14 @@ interface ArticleLayoutProps {
 
 const components = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  pre: (props: any) => <div {...props} />,
+  pre: (props: any) => <div className="my-pre-class">{props.children}</div>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   code: (props: any) => <ClientCodeBlock {...props} />,
 };
 
 const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
   return (
-    <article className=" mt-14 sm:max-w-4xl mx-auto">
+    <article className="mt-14 sm:max-w-4xl mx-auto">
       <header className="relative h-[60vh] mb-8">
         <Image src={post.image || '/images/placeholder-image.jpg'} alt={post.title} fill className="object-cover rounded-md" priority />
         <div className="py-8 mx-auto max-w-screen-lg container">
@@ -70,5 +70,4 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
     </article>
   );
 };
-
 export default ArticleLayout;
