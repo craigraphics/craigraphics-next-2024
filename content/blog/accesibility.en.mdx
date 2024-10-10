@@ -1,0 +1,256 @@
+---
+title: "Let's talk about Web Accessibility, and how to build inclusive digital experiences"
+date: "2024-10-10"
+readTime: "5 min read"
+author: "William Craig"
+tags: ["Accessibility", "Color Contrast", "Web Development", "Keyboard Navigation", "HTML5", "ARIA", "Responsive Design"]
+excerpt: "Web accessibility ensures that people with disabilities can perceive, understand, navigate, and interact with websites and tools. It's not just the right thing to do; in many cases, it's the law."
+---
+
+Today, we're diving into a topic that's not just important but crucial in this field: **web accessibility**. By the end of this article, we'll have a solid grasp on how to make our websites more inclusive and user-friendly for everyone. So, let's get started!
+
+## Why Accessibility Matters
+
+Before we jump into it, let's talk about why accessibility is so important. Imagine we've created an amazing website, but a significant portion of our users can't navigate it easily or understand its content. That's not just a bummer—it's a real problem. Web accessibility ensures that people with disabilities can perceive, understand, navigate, and interact with websites and tools. It's not just the right thing to do; in many cases, it's the law.
+
+Now, let's explore some key areas of web accessibility and how to implement them.
+
+## 1. Proper Contrast: Making Our Content Pop
+
+First up on our accessibility journey is proper contrast. This is all about making sure our text and important visual elements stand out against their background. Good contrast is essential for users with visual impairments, but it also benefits everyone, especially when viewing screens in bright sunlight or on low-quality displays.
+
+### Why It Matters
+
+Low contrast text can be a real headache (literally!) for users with visual impairments or color blindness. But even users with perfect vision can struggle with low contrast in certain lighting conditions.
+
+### How to Implement It
+
+The Web Content Accessibility Guidelines (WCAG) recommend a contrast ratio of at least 4.5:1 for normal text and 3:1 for large text. Here's a simple way to check and adjust your contrast:
+
+```css
+/* High contrast example */
+.high-contrast {
+  color: #333333; /* Dark gray text */
+  background-color: #FFFFFF; /* White background */
+}
+
+/* Low contrast example - avoid this */
+.low-contrast {
+  color: #CCCCCC; /* Light gray text */
+  background-color: #FFFFFF; /* White background */
+}
+```
+
+Pro tip: Use tools like WebAIM's Contrast Checker to verify your color choices meet accessibility standards. Lighthouse from the developers tools, will also flag any contrast issues in the "Accessibility" section of the audit.
+
+## 2. Keyboard Navigation: No Mouse? No Problem!
+
+Next up, let's talk about keyboard navigation. Not everyone uses a mouse or touchpad to browse the web. Some people rely entirely on their keyboard, whether due to motor disabilities, personal preference, or other reasons.
+
+### Why It Matters
+
+Keyboard navigation is crucial for users with motor disabilities who can't use a mouse, as well as power users who prefer keyboard shortcuts for efficiency.
+
+### How to Implement It
+
+Ensure all interactive elements on our page can be accessed and operated using only the keyboard. Here's a simple example of how to make a custom button accessible:
+
+```html
+<button class="custom-button" tabindex="0" role="button" aria-pressed="false">
+  Click me!
+</button>
+```
+
+```css
+.custom-button:focus {
+  outline: 2px solid #4A90E2;
+  /* Add a visible focus state */
+}
+```
+
+```javascript
+document.querySelector('.custom-button').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' || e.key === ' ') {
+    // Activate the button on Enter or Space key press
+    this.click();
+    e.preventDefault();
+  }
+});
+```
+
+## 3. HTML5 Semantic Elements: Giving Meaning to Our Markup
+
+Now, let's talk about something that's not just good for accessibility, but also for your overall code quality: HTML5 semantic elements.
+
+### Why It Matters
+
+Semantic HTML gives meaning to our content structure. Screen readers and other assistive technologies rely on these semantic cues to understand and navigate our content. Plus, it makes our code more readable and maintainable!
+
+### How to Implement It
+
+Instead of using generic `<div>` elements for everything, use semantic elements that describe their content. Here's a quick before-and-after:
+
+```html
+<!-- Before: Not semantic -->
+<div class="header">
+  <div class="logo">My Website</div>
+  <div class="nav">
+    <div class="nav-item">Home</div>
+    <div class="nav-item">About</div>
+    <div class="nav-item">Contact</div>
+  </div>
+</div>
+<div class="main-content">
+  <div class="article">
+    <div class="article-title">Welcome to My Site</div>
+    <div class="article-content">This is the main content...</div>
+  </div>
+</div>
+<div class="footer">© 2024 My Website</div>
+
+<!-- After: Semantic HTML5 -->
+<header>
+  <h1>My Website</h1>
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<main>
+  <article>
+    <h2>Welcome to My Site</h2>
+    <p>This is the main content...</p>
+  </article>
+</main>
+<footer>© 2024 My Website</footer>
+```
+
+See how much clearer that is? It's not just easier for us humans to read, but also for browsers and assistive technologies to understand the structure of your page.
+
+## 4. REM Font Sizes: Flexible Text for All
+
+Let's size things up with a chat about REM units for font sizes. REM stands for "root em," and it's a game-changer for creating flexible, accessible typography.
+
+### Why It Matters
+
+Using REM units for font sizes allows text to scale according to the user's preferences. This is crucial for users who need larger text sizes to read comfortably.
+
+### How to Implement It
+
+First, set a base font size on the root element (usually `<html>`), then use REM units for your text elements:
+
+```css
+html {
+  font-size: 16px; /* This sets the base size */
+}
+
+body {
+  font-size: 1rem; /* This will be equivalent to 16px */
+}
+
+h1 {
+  font-size: 2rem; /* This will be equivalent to 32px */
+}
+
+.small-text {
+  font-size: 0.875rem; /* This will be equivalent to 14px */
+}
+```
+
+Pro tip: You can use `calc()` to create a fluid typography system that scales with viewport width:
+
+```css
+html {
+  font-size: calc(14px + 0.5vw);
+}
+```
+
+This creates a responsive base font size that grows slightly as the viewport gets wider.
+
+## 5. ARIA Roles: Enhancing Semantic Meaning
+
+ARIA (Accessible Rich Internet Applications) roles are attributes you can add to HTML elements to provide additional semantic meaning when native HTML elements or attributes are insufficient.
+
+### Why It Matters
+
+ARIA roles help assistive technologies understand the purpose of elements, especially for complex or dynamic content that might not be clear from the HTML structure alone.
+
+### How to Implement It
+
+Here's an example of how to use ARIA roles to create an accessible tabs component:
+
+```html
+<div role="tablist">
+  <button role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">
+    Tab 1
+  </button>
+  <button role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2">
+    Tab 2
+  </button>
+</div>
+
+<div role="tabpanel" id="panel-1" aria-labelledby="tab-1">
+  Content for Tab 1
+</div>
+<div role="tabpanel" id="panel-2" aria-labelledby="tab-2" hidden>
+  Content for Tab 2
+</div>
+```
+
+Remember, only use ARIA when necessary. As the first rule of ARIA states: "If you can use a native HTML element or attribute with the semantics and behavior you require already built in, instead of re-purposing an element and adding an ARIA role, state or property to make it accessible, then do so."
+
+## 6. Cross-Device Testing: Ensuring Compatibility
+
+Last but not least, let's talk about cross-device testing. In our multi-device world, it's crucial to ensure your accessible design works across different platforms and browsers.
+
+### Why It Matters
+
+Users access the web from a vast array of devices, from small mobile phones to large desktop monitors, and everything in between. Accessibility features need to work consistently across all these scenarios.
+
+### How to Implement It
+
+While nothing beats testing on actual devices, several tools can help you test across multiple environments:
+
+1. **BrowserStack**: Allows us to test our website on real devices and browsers in the cloud.
+
+2. **Sauce Labs**: Offers automated testing across numerous browser/OS combinations.
+
+3. **Cypress**: While primarily for automated testing, Cypress can be configured to test on different viewport sizes, simulating various devices.
+
+Here's a simple Cypress test example that checks if your main navigation is accessible across different viewport sizes:
+
+```javascript
+describe('Navigation Accessibility', () => {
+  const sizes = ['iphone-6', 'ipad-2', [1200, 800]];
+  
+  sizes.forEach((size) => {
+    it(`Should be accessible on ${size} screen`, () => {
+      if (Cypress._.isArray(size)) {
+        cy.viewport(size[0], size[1]);
+      } else {
+        cy.viewport(size);
+      }
+      
+      cy.visit('/');
+      cy.get('nav').should('be.visible');
+      cy.get('nav a').should('have.attr', 'href').and('not.be.empty');
+      cy.get('nav a').first().focus().should('have.focus');
+      cy.get('body').type('{tab}');
+      cy.get('nav a').eq(1).should('have.focus');
+    });
+  });
+});
+```
+
+This test checks if the navigation is visible, if links have proper `href` attributes, and if they're properly focusable using the keyboard across different screen sizes.
+
+## Wrapping Up
+
+We've covered a good amount of ground, from proper contrast and keyboard navigation to semantic HTML, flexible typography, ARIA roles, and cross-device testing. We need to remember that accessibility isn't a checklist to complete and forget. It's an ongoing process of learning, implementing, and refining.
+
+By incorporating these practices into our development workflow, we're not just following guidelines—we're actively making the web a better, more inclusive place for everyone. And that, my fellow developers, is something to be proud of.
+
+Keep learning, keep coding, and most importantly, keep making the web accessible for all!
