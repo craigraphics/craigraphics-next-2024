@@ -19,10 +19,10 @@
     "intro": "I'm a code enthusiast with 15+ years of turning coffee into high-performance web applications. I don't have superpowers, but I love creating smooth user experiences like water. I've had the privilege of working with some pretty cool brands like Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidency of Mexico and Coca-Cola.",
     "whatIDo": "What I Do",
     "skills": {
-      "fullStack": "<em>Full-stack</em> with a focus on Front-end",
-      "design": "Turn <em>designer</em> and product ideas into fully functional applications with a big eye on design",
-      "performance": "Make fast <em>performant</em> websites with heavy traffic",
-      "problemSolving": "Solve <em>complex</em> problems and <em>lead</em> small <em>teams</em>"
+      "fullStack": "<em>Full-stack</em> with a focus on Front-end.",
+      "design": "Turn <em>designer</em> and product ideas into fully functional applications with a big eye on design.",
+      "performance": "Make fast <em>performant</em> websites with heavy traffic.",
+      "problemSolving": "Solve <em>complex</em> problems and <em>lead</em> small <em>teams</em>."
     },
     "myToolbox": "My Toolbox",
     "toolbox": {
@@ -61,10 +61,10 @@
     },
     "funFacts": {
       "title": "Fun Facts",
-      "languages": "Fluent in English, Spanish, and JavaScript",
-      "power": "Powered by code, coffee and music",
-      "music": "Debugging soundtrack: Ambient music and John Coltrane",
-      "hobby": "When not coding, you'll find me playing table tennis"
+      "languages": "Fluent in English, Spanish, and JavaScript.",
+      "power": "Powered by code, coffee and music.",
+      "music": "Debugging soundtrack: Ambient music and John Coltrane.",
+      "hobby": "When not coding, you'll find me playing table tennis."
     },
     "connect": "Let's Connect!"
   },

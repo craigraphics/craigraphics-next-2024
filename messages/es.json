@@ -19,10 +19,10 @@
     "intro": "Soy un entusiasta del código con más de 15 años de experiencia convirtiendo café en aplicaciones web de alto rendimiento. No tengo superpoderes, pero me encanta crear experiencias de usuario fluidas como el agua. He tenido el privilegio de trabajar con marcas geniales como Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidencia de México y Coca-Cola.",
     "whatIDo": "Lo Que Hago",
     "skills": {
-      "fullStack": "Desarrollo full-stack con enfoque en front-end",
-      "design": "Convierto ideas de diseñadores y productos en aplicaciones completamente funcionales con gran atención al diseño",
-      "performance": "Creo sitios web rápidos y de alto rendimiento con tráfico pesado",
-      "problemSolving": "Resuelvo problemas complejos y lidero equipos pequeños"
+      "fullStack": "Desarrollo full-stack con enfoque en front-end.",
+      "design": "Convierto ideas de diseñadores y productos en aplicaciones completamente funcionales con gran atención al diseño.",
+      "performance": "Creo sitios web rápidos y de alto rendimiento con tráfico pesado.",
+      "problemSolving": "Resuelvo problemas complejos y lidero equipos pequeños."
     },
     "myToolbox": "Mi Caja de Herramientas",
     "toolbox": {
@@ -61,10 +61,10 @@
     },
     "funFacts": {
       "title": "Datos Curiosos",
-      "languages": "Fluido en inglés, español y JavaScript",
-      "power": "Impulsado por código, café y música",
-      "music": "Banda sonora para depurar: Música ambiental y John Coltrane",
-      "hobby": "Cuando no estoy programando, me encontrarás jugando tenis de mesa"
+      "languages": "Fluido en inglés, español y JavaScript.",
+      "power": "Impulsado por código, café y música.",
+      "music": "Banda sonora para depurar: Música ambiental y John Coltrane.",
+      "hobby": "Cuando no estoy programando, me encontrarás jugando tenis de mesa."
     },
     "connect": "¡Conectemos!"
   },
