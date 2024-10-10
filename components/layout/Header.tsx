@@ -49,21 +49,24 @@ const Header = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastScrollY]);
 
-  const NavItems = ({ closeMenu }: { closeMenu?: () => void }) => (
-    <>
-      <Link href="/" onClick={closeMenu}>
-        {t('home')}
-      </Link>
-      <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
-      <Link href="/work" onClick={closeMenu}>
-        {t('projects')}
-      </Link>
-      <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
-      <Link href="/blog" onClick={closeMenu}>
-        {t('blog')}
-      </Link>
-    </>
-  );
+  const NavItems = ({ closeMenu }: { closeMenu?: () => void }) => {
+    const locale = pathname.substring(1, 3);
+    return (
+      <>
+        <Link href={`/${locale}/`} onClick={closeMenu}>
+          {t('home')}
+        </Link>
+        <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
+        <Link href={`/${locale}/work`} onClick={closeMenu}>
+          {t('projects')}
+        </Link>
+        <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
+        <Link href={`/${locale}/blog`} onClick={closeMenu}>
+          {t('blog')}
+        </Link>
+      </>
+    );
+  };
   return (
     <header
       className={`fixed top-0 left-0 w-full
