@@ -11,9 +11,8 @@ interface ArticleLayoutProps {
 }
 
 const components = {
-  // @ts-ignore
-  pre: (props: any) => <div className="my-pre-class">{props.children}</div>,
-  // @ts-ignore
+  pre: (props: React.ComponentProps<'div'>) => <div className="my-pre-class">{props.children}</div>,
+  // @ts-expect-error
   code: (props: any) => <ClientCodeBlock {...props} />,
 };
 
