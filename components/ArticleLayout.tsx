@@ -11,7 +11,9 @@ interface ArticleLayoutProps {
 }
 
 const components = {
+  // @ts-ignore
   pre: (props: any) => <div className="my-pre-class">{props.children}</div>,
+  // @ts-ignore
   code: (props: any) => <ClientCodeBlock {...props} />,
 };
 
