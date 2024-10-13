@@ -11,10 +11,8 @@ interface ArticleLayoutProps {
 }
 
 const components = {
-  // @ts-expect-error
-  pre: (props: any) => <div className="my-pre-class">{props.children}</div>,
-  // @ts-expect-error
-  code: (props: any) => <ClientCodeBlock {...props} />,
+  pre: (props: React.HTMLAttributes<HTMLDivElement>) => <div className="my-pre-class">{props.children}</div>,
+  code: (props: React.ComponentProps<typeof ClientCodeBlock>) => <ClientCodeBlock {...props} />,
 };
 
 const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
