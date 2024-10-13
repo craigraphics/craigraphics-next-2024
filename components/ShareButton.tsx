@@ -3,6 +3,7 @@
 import React from 'react';
 import { Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTranslations } from 'next-intl';
 
 interface ShareButtonProps {
   title: string;
@@ -10,6 +11,8 @@ interface ShareButtonProps {
 }
 
 const ShareButton: React.FC<ShareButtonProps> = ({ title, url }) => {
+  const t = useTranslations('common');
+
   const handleShare = async () => {
     if (navigator.share) {
       try {
@@ -27,9 +30,9 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title, url }) => {
   };
 
   return (
-    <Button variant="ghost" size="sm" onClick={handleShare}>
+    <Button variant="ghost" className="hover:bg-primary dark:hover:bg-primary-dark" size="sm" onClick={handleShare}>
       <Share2 className="h-5 w-5 mr-2" />
-      Share
+      {t('share')}
     </Button>
   );
 };
