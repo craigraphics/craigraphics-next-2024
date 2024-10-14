@@ -11,9 +11,9 @@ interface ArticleLayoutProps {
 }
 
 const components = {
-  // @ts-ignore
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   pre: (props: any) => <div className="my-pre-class">{props.children}</div>,
-  // @ts-ignore
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   code: (props: any) => <ClientCodeBlock {...props} />,
 };
 
