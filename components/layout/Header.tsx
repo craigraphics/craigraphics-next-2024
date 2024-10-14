@@ -23,7 +23,7 @@ const Header = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const changeLanguage = (newLocale: string) => {
-    const currentPathname = pathname.substring(3) || '/';
+    const currentPathname = pathname?.substring(3) || '/';
     router.push(`/${newLocale}${currentPathname}`);
   };
 
@@ -50,7 +50,7 @@ const Header = () => {
   }, [lastScrollY]);
 
   const NavItems = ({ closeMenu }: { closeMenu?: () => void }) => {
-    const locale = pathname.substring(1, 3);
+    const locale = pathname?.substring(1, 3);
     return (
       <>
         <Link href={`/${locale}/`} onClick={closeMenu}>
@@ -90,7 +90,7 @@ const Header = () => {
 
           <div className="flex items-center space-x-4">
             <ThemeToggle />
-            <Select onValueChange={changeLanguage} defaultValue={pathname.substring(1, 3)}>
+            <Select onValueChange={changeLanguage} defaultValue={pathname?.substring(1, 3)}>
               <SelectTrigger className="w-[80px] dark:bg-background-dark border-primary border dark:border-primary-dark dark:text-secondary-dark">
                 <SelectValue placeholder="Lang" />
               </SelectTrigger>

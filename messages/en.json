@@ -7,7 +7,8 @@
     "menu": "Menu",
     "open_menu": "Open Menu",
     "close_menu": "Close Menu",
-    "menu_description": "Toggle navigation menu"
+    "menu_description": "Toggle navigation menu",
+    "share": "Share"
   },
   "about": {
     "greeting": {
