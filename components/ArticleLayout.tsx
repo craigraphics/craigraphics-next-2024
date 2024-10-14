@@ -5,6 +5,7 @@ import { BlogPost } from '@/types/blog';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import ClientCodeBlock from '@/components/ClientCodeBlock';
 import ShareButton from '@/components/ShareButton';
+import LikeButton from '@/components/LikeButton';
 
 interface ArticleLayoutProps {
   post: BlogPost;
@@ -41,7 +42,10 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
                 </div>
               </div>
             </div>
-            <ShareButton title={post.title} url={`${process.env.NEXT_PUBLIC_BASE_URL}/blog/${post.slug}`} />
+            <div className="flex items-center space-x-4">
+              <LikeButton slug={post.slug} />
+              <ShareButton title={post.title} url={`${process.env.NEXT_PUBLIC_BASE_URL}/blog/${post.slug}`} />
+            </div>
           </div>
           <h1 className="text-4xl font-bold text-primary dark:text-primary-dark mb-12 mt-6 underline-heading">{post.title}</h1>
           <div className="prose dark:prose-invert max-w-none prose-headings:font-bold prose-headings:text-foreground dark:prose-headings:text-primary-dark prose-headings:mb-2 prose-p:text-foreground dark:prose-p:text-foreground-dark prose-a:text-secondary dark:prose-a:text-secondary-dark prose-ul:list-disc prose-ol:list-decimal prose-li:m-0 prose-pre:bg-transparent prose-pre:p-0 prose-code:text-current mdx-content">
