@@ -13,24 +13,31 @@ const LikeButton: React.FC<LikeButtonProps> = ({ slug }) => {
 
   useEffect(() => {
     const storedLiked = localStorage.getItem(`liked_${slug}`);
-    const storedLikeCount = localStorage.getItem(`likeCount_${slug}`);
-
     if (storedLiked) {
       setLiked(JSON.parse(storedLiked));
     }
 
-    if (storedLikeCount) {
-      setLikeCount(parseInt(storedLikeCount, 10));
-    }
+    fetch(`/api/likes?slug=${slug}`)
+      .then(response => response.json())
+      .then(data => setLikeCount(data.likes));
   }, [slug]);
 
-  const handleLike = () => {
+  const handleLike = async () => {
     if (!liked) {
-      const newLikeCount = likeCount + 1;
       setLiked(true);
-      setLikeCount(newLikeCount);
       localStorage.setItem(`liked_${slug}`, JSON.stringify(true));
-      localStorage.setItem(`likeCount_${slug}`, newLikeCount.toString());
+      const response = await fetch('/api/likes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ slug }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setLikeCount(data.likes);
+      }
     }
   };
 
