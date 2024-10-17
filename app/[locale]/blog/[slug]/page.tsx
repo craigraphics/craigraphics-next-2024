@@ -1,6 +1,7 @@
 import { getPost } from '@/lib/getPost';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import BlogPostContent from '@/components/BlogPostContent';
+import ClientProvider from '@/components/ClientProvider';
 
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }) {
   return {
@@ -15,5 +16,9 @@ export default async function BlogPostPage({ params: { locale, slug } }: { param
   if (!post) {
     return <div>Post not found</div>;
   }
-  return <BlogPostContent post={post} />;
+  return (
+    <ClientProvider>
+      <BlogPostContent post={post} />
+    </ClientProvider>
+  );
 }
