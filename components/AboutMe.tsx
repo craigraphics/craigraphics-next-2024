@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl';
 import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import MyToolBox from '@/components/MyToolbox';
+import Contact from '@/components/Contact';
 
 const AboutMe = () => {
   const t = useTranslations('about');
@@ -45,6 +46,7 @@ const AboutMe = () => {
             ))}
           </ul>
         </section>
+        <Contact />
 
         {/* My Toolbox section */}
         <MyToolBox />
