@@ -13,6 +13,13 @@ export async function POST(req: Request) {
 
   sgMail.setApiKey(apiKey);
 
+  console.log('Email Configuration:', {
+    fromEmail: process.env.fromMail,
+    toEmail: process.env.toMail,
+    // Don't log the full API key
+    apiKeyExists: !!process.env.sendGridAPIKey,
+  });
+
   try {
     // Log the request body
     const body = await req.json();
