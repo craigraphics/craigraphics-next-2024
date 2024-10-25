@@ -109,3 +109,13 @@ body {
     @apply border-t border border-primary dark:border-primary-dark border-dashed w-2/5;
   }
 }
+
+@layer components {
+  .toast-success {
+    @apply bg-accent-dark text-background-dark border-transparent;
+  }
+
+  .toast-error {
+    @apply bg-red-500 text-white border-red-600;
+  }
+}

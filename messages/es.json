@@ -4,6 +4,7 @@
     "home": "Inicio",
     "blog": "Blog",
     "projects": "Trabajo",
+    "contact": "Contacto",
     "menu": "Menú",
     "open_menu": "Abrir Menú",
     "close_menu": "Cerrar Menú",
@@ -136,6 +137,20 @@
         "tags": ["ActionScript 3", "HTML5", "jQuery", "CSS3", "Objective-C", "JavaScript"]
       }
     ]
+  },
+  "contact": {
+    "title": "¡Hablemos!",
+    "description": "Si tienes un proyecto en mente, una pregunta o simplemente quieres saludar, no dudes en ponerte en contacto conmigo.",
+    "form": {
+      "email": "Por favor ingresa tu correo electrónico",
+      "emailPlaceholder": "email@email.com",
+      "message": "Por favor ingresa tu mensaje",
+      "messagePlaceholder": "Escribe tu mensaje aquí...",
+      "send": "Enviar",
+      "sending": "Enviando...",
+      "success": "¡Gracias por tu mensaje! Me pondré en contacto contigo pronto.",
+      "error": "¡Ups! Algo salió mal. Por favor, inténtalo de nuevo."
+    }
   },
   "projects": {
     "title": "Proyectos Destacados",
