@@ -63,7 +63,7 @@ const EmailForm: FC = () => {
         description: t('form.success'),
         className: 'font-medium',
       });
-    } catch (error) {
+    } catch () {
       toast({
         variant: 'error',
         description: t('form.error'),
