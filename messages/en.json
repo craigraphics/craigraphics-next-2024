@@ -4,6 +4,7 @@
     "home": "Home",
     "blog": "Blog",
     "projects": "Work",
+    "contact": "Contact",
     "menu": "Menu",
     "open_menu": "Open Menu",
     "close_menu": "Close Menu",
@@ -136,6 +137,20 @@
         "tags": ["ActionScript 3", "HTML5", "jQuery", "CSS3", "Objective-C", "JavaScript"]
       }
     ]
+  },
+  "contact": {
+    "title": "Lets connect",
+    "description": "My career has been a journey of continuous learning and growth, and I am always on the lookout for the next exciting challenge. Let's connect and see how we can build the future together.",
+    "form": {
+      "email": "Please add your email",
+      "emailPlaceholder": "email@email.com",
+      "message": "Please add your message",
+      "messagePlaceholder": "Your message here...",
+      "send": "Send",
+      "sending": "Sending...",
+      "success": "Message sent successfully!",
+      "error": "An error occurred while sending the message. Please try again later."
+    }
   },
   "projects": {
     "title": "Highlighted Projects",

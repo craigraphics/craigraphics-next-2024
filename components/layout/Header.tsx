@@ -64,6 +64,10 @@ const Header = () => {
         <Link href={`/${locale}/blog`} onClick={closeMenu}>
           {t('blog')}
         </Link>
+        <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
+        <Link href={`/${locale}/contact`} onClick={closeMenu}>
+          {t('contact')}
+        </Link>
       </>
     );
   };
