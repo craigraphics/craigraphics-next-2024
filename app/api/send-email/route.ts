@@ -50,6 +50,7 @@ export async function POST(req: Request) {
       },
       { status: 200 }
     );
+    /* eslint-disable @typescript-eslint/no-explicit-any */
   } catch (error: any) {
     console.error('Detailed error information:');
     console.error('Error name:', error.name);
