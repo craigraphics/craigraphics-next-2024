@@ -10,7 +10,7 @@ export async function generateMetadata() {
   };
 }
 
-export default function Project({ params: { locale } }: { params: { locale: string } }) {
+export default async function ContactPage({ params: { locale } }: { params: { locale: string } }) {
   unstable_setRequestLocale(locale);
   return (
     <ClientProvider>
