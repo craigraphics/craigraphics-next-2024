@@ -1,3 +1,4 @@
+import { use } from "react";
 import { getBlogPosts } from '@/lib/getBlogPosts';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import BlogList from '@/components/BlogList';
@@ -10,7 +11,13 @@ export async function generateMetadata() {
   };
 }
 
-export default function BlogPage({ params: { locale } }: { params: { locale: string } }) {
+export default function BlogPage(props: { params: Promise<{ locale: string }> }) {
+  const params = use(props.params);
+
+  const {
+    locale
+  } = params;
+
   unstable_setRequestLocale(locale);
   const t = useTranslations('blog');
   const posts = getBlogPosts(locale);

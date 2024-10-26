@@ -4,10 +4,16 @@ import ProjectShowcase from '@/components/ProjectShowcase';
 import Layout from '@/components/layout/Layout';
 
 type Props = {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata({ params: { locale } }: Props) {
+export async function generateMetadata(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   unstable_setRequestLocale(locale);
 
   return {
@@ -16,7 +22,13 @@ export async function generateMetadata({ params: { locale } }: Props) {
   };
 }
 
-export default async function Project({ params: { locale } }: { params: { locale: string } }) {
+export default async function Project(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   unstable_setRequestLocale(locale);
   return (
     <Layout>
