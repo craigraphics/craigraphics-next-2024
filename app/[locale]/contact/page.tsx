@@ -13,9 +13,7 @@ export async function generateMetadata() {
 export default async function ContactPage(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
 
-  const {
-    locale
-  } = params;
+  const { locale } = params;
 
   unstable_setRequestLocale(locale);
   return (

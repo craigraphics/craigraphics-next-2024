@@ -10,9 +10,7 @@ type Props = {
 export async function generateMetadata(props: Props) {
   const params = await props.params;
 
-  const {
-    locale
-  } = params;
+  const { locale } = params;
 
   unstable_setRequestLocale(locale);
 
@@ -25,9 +23,7 @@ export async function generateMetadata(props: Props) {
 export default async function Project(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
 
-  const {
-    locale
-  } = params;
+  const { locale } = params;
 
   unstable_setRequestLocale(locale);
   return (
