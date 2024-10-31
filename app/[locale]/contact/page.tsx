@@ -10,7 +10,11 @@ export async function generateMetadata() {
   };
 }
 
-export default function Project({ params: { locale } }: { params: { locale: string } }) {
+export default async function ContactPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
+
+  const { locale } = params;
+
   unstable_setRequestLocale(locale);
   return (
     <ClientProvider>

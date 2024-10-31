@@ -17,6 +17,7 @@ const AlternativeCodeBlock: React.FC<AlternativeCodeBlockProps> = ({ children, c
   const language = className ? className.replace(/language-/, '') : 'javascript';
 
   return (
+    // @ts-expect-error - `wrapLines` and `wrapLongLines` are not in the types
     <SyntaxHighlighter
       language={language}
       style={nightOwl}

@@ -3,17 +3,31 @@ import AboutMe from '@/components/AboutMe';
 import Layout from '@/components/layout/Layout';
 
 type Props = {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata() {
+export async function generateMetadata(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
+  unstable_setRequestLocale(locale);
+
   return {
     title: 'Home Page - William Craig',
     description: 'Welcome to the Home Page of William Craig - craigraphics',
   };
 }
 
-export default function Home({ params: { locale } }: Props) {
+export default async function Home(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   unstable_setRequestLocale(locale);
 
   return (

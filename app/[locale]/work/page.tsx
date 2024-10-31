@@ -3,14 +3,28 @@ import WorkExperience from '@/components/WorkExperience';
 import ProjectShowcase from '@/components/ProjectShowcase';
 import Layout from '@/components/layout/Layout';
 
-export async function generateMetadata() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata(props: Props) {
+  const params = await props.params;
+
+  const { locale } = params;
+
+  unstable_setRequestLocale(locale);
+
   return {
     title: 'Work Page - William Craig',
     description: 'Welcome to the Work Page of William Craig - craigraphics',
   };
 }
 
-export default function Project({ params: { locale } }: { params: { locale: string } }) {
+export default async function Project(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
+
+  const { locale } = params;
+
   unstable_setRequestLocale(locale);
   return (
     <Layout>
