@@ -41,7 +41,7 @@ export default function BlogList({ posts, locale, t }: BlogListProps) {
             <Link href={`/${locale}/blog/${featuredPost.slug}`}>
               <figure className="relative h-64 md:h-96">
                 <Image
-                  src={featuredPost.image || '/placeholder-image.jpg'}
+                  src={featuredPost.image || '/images/placeholder-image.jpg'}
                   alt={featuredPost.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
