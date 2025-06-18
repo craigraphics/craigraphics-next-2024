@@ -31,7 +31,7 @@ interface OpenAIError {
   message?: string;
 }
 
-export const openai = new OpenAI({
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
