@@ -17,6 +17,7 @@
       "role": "Senior Software Engineer",
       "title": "Passionate about creating amazing web experiences."
     },
+
     "title": "About Me",
     "intro": "I'm a code enthusiast with 15+ years of turning coffee into high-performance web applications. I don't have superpowers, but I love creating smooth user experiences like water. I've had the privilege of working with some pretty cool brands like Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidency of Mexico and Coca-Cola.",
     "whatIDo": "What I Do",
@@ -28,6 +29,23 @@
     },
     "myToolbox": "My Toolbox",
     "toolbox": {
+      "fullstack": {
+        "title": "Full Stack"
+      },
+      "description": "The tools and technologies I use to build exceptional digital experiences",
+      "since": "Since",
+      "usedIn": "Used in:",
+      "more": "more",
+      "hoverTip": "Hover over any technology to see when I learned it and projects where I've used it",
+      "years": {
+        "twoPlus": "2+ years",
+        "threePlus": "3+ years",
+        "fourPlus": "4+ years",
+        "fivePlus": "5+ years",
+        "sixPlus": "6+ years",
+        "tenPlus": "10+ years",
+        "fifteenPlus": "15+ years"
+      },
       "frontend": {
         "title": "Frontend",
         "tools": ["React", "TypeScript", "JavaScript", "Next.js", "Redux", "HTML", "CSS", "Tailwind", "MUI", "Wordpress", "jQuery"]

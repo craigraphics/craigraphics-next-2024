@@ -28,6 +28,23 @@
     },
     "myToolbox": "Mi Caja de Herramientas",
     "toolbox": {
+      "fullstack": {
+        "title": "Full Stack"
+      },
+      "description": "Las herramientas y tecnologías que uso para crear experiencias digitales excepcionales",
+      "since": "Desde",
+      "usedIn": "Usado en:",
+      "more": "más",
+      "hoverTip": "Pasa el cursor sobre cualquier tecnología para ver cuándo la aprendí y proyectos donde la he usado",
+      "years": {
+        "twoPlus": "2+ años",
+        "threePlus": "3+ años",
+        "fourPlus": "4+ años",
+        "fivePlus": "5+ años",
+        "sixPlus": "6+ años",
+        "tenPlus": "10+ años",
+        "fifteenPlus": "15+ años"
+      },
       "frontend": {
         "title": "Frontend",
         "tools": ["React", "TypeScript", "JavaScript", "Next.js", "Redux", "HTML", "CSS", "Tailwind", "MUI", "Wordpress", "jQuery"]
