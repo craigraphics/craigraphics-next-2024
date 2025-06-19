@@ -6,6 +6,12 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+export const metadata = {
+  verification: {
+    google: 'ya5cBfllEEWq8mqy2fudC48DhPfyusx-Ov0Aack1o2A',
+  },
+};
+
 const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen ">
