@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { Icon } from '@iconify/react';
 import Image from 'next/image';
-import MyToolBox from '@/components/MyToolbox';
+import TechStack from '@/components/TechStack';
 
 const AboutMe = () => {
   const t = useTranslations('about');
@@ -46,8 +46,8 @@ const AboutMe = () => {
           </ul>
         </section>
 
-        {/* My Toolbox section */}
-        <MyToolBox />
+        {/* Tech Stack & Expertise section */}
+        <TechStack />
 
         {/* Fun Facts section */}
         <section className="mt-14">
