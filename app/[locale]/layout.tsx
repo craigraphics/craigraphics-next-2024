@@ -18,6 +18,12 @@ const geistMono = localFont({
   weight: '100 900',
 });
 
+export const metadata = {
+  verification: {
+    google: 'ya5cBfllEEWq8mqy2fudC48DhPfyusx-Ov0Aack1o2A',
+  },
+};
+
 const validLocales = ['en', 'es'] as const;
 
 export function generateStaticParams() {
@@ -61,6 +67,7 @@ export default async function RootLayout(props: { children: React.ReactNode; par
           <ThemeProvider>{children}</ThemeProvider>
         </NextIntlClientProvider>
         <Analytics />
+        <meta name="google-site-verification" content="ya5cBfllEEWq8mqy2fudC48DhPfyusx-Ov0Aack1o2A" />
       </body>
     </html>
   );
