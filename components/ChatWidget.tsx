@@ -55,21 +55,23 @@ export default function ModernChatWidget() {
     setIsTyping(true);
     setTypingMessage('');
 
-    let index = 0;
     const words = text.split(' ');
+    let currentIndex = 0;
 
     const typeInterval = setInterval(() => {
-      if (index < words.length) {
-        setTypingMessage(prev => (index === 0 ? words[index] : prev + ' ' + words[index]));
-
-        index++;
+      if (currentIndex < words.length) {
+        setTypingMessage(() => {
+          const wordsToShow = words.slice(0, currentIndex + 1);
+          return wordsToShow.join(' ');
+        });
+        currentIndex++;
       } else {
         clearInterval(typeInterval);
         setIsTyping(false);
         setTypingMessage('');
         callback?.();
       }
-    }, 80); // Adjust speed here (80ms = fast typewriting)
+    }, 90);
   };
 
   const resetChat = () => {
