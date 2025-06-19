@@ -216,7 +216,7 @@ const TechnologyCategory = ({ IconComponent, iconColor, lineColor, title, techno
   );
 };
 
-const EnhancedToolbox = () => {
+const TechStack = () => {
   const t = useTranslations('about');
   const tToolbox = useTranslations('about.toolbox');
   const locale = useTranslations('common')('home') === 'Home' ? 'en' : 'es';
@@ -314,4 +314,4 @@ const EnhancedToolbox = () => {
   );
 };
 
-export default EnhancedToolbox;
+export default TechStack;
