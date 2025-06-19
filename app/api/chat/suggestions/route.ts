@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   const suggestions = [
+    "What is William's technical expertise or core skill set?",
     'What projects has William worked on?',
     'How does William build modern web apps?',
     'What sets William apart as a full-stack developer?',

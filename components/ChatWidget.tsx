@@ -80,7 +80,15 @@ export default function ModernChatWidget() {
     setIsLoading(false);
     setIsTyping(false);
     setTypingMessage('');
+  };
+
+  const closeChat = () => {
     setIsOpen(false);
+    setMessages([]);
+    setInputMessage('');
+    setIsLoading(false);
+    setIsTyping(false);
+    setTypingMessage('');
   };
 
   const sendMessage = async (message: string = inputMessage) => {
@@ -201,7 +209,7 @@ export default function ModernChatWidget() {
   return (
     <>
       {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 transition-opacity duration-300" onClick={resetChat} />
+      <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 transition-opacity duration-300" onClick={closeChat} />
 
       {/* Chat Container */}
       <div className="fixed inset-4 md:inset-8 lg:inset-16 z-50 flex items-center justify-center">
@@ -224,7 +232,7 @@ export default function ModernChatWidget() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={resetChat}
+              onClick={closeChat}
               className="h-10 w-10 rounded-full hover:bg-red-500/10 hover:text-red-500 transition-colors text-muted-foreground"
             >
               <X className="h-5 w-5" />
