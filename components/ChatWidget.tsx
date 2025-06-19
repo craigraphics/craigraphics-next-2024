@@ -60,10 +60,8 @@ export default function ModernChatWidget() {
 
     const typeInterval = setInterval(() => {
       if (index < words.length) {
-        setTypingMessage(prev => {
-          const newText = prev + (index === 0 ? '' : ' ') + words[index];
-          return newText;
-        });
+        setTypingMessage(prev => (index === 0 ? words[index] : prev + ' ' + words[index]));
+
         index++;
       } else {
         clearInterval(typeInterval);
