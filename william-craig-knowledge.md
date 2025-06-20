@@ -150,4 +150,11 @@ Today, I focus on modern full-stack development with React, Next.js, and TypeScr
 - Enjoys solving problems that go beyond a single layer of the stack
 - Combines strategic thinking with technical implementation
 
+### Hobbies and personal life
+
+- I started playing table tennis on a club by the age of 14, I competed while young on many youth tournaments and quit playing for almost a decade until I started playing again in 2017 back in Texas, one of my greatest achievements was winning the under 1800 rating event of the state championship of Texas State.
+- I consider myself a music nerd and enjoy listening to Free Jazz, Ambient Music, Rock, Chamber Music, among many others, I like watching movies specially drama and art films.
+- I enjoy reading about philosophy, astronomy, particle physics, General Relativity, history and social psychology.
+- I am engaged with a beautiful woman and I am very fortunate man.
+
 **Current Professional Motto:** "Powered by code, coffee and music" - Combining technical expertise with creative problem-solving, focusing on creating seamless user experiences while maintaining high performance and scalability standards.

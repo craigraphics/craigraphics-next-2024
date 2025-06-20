@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Send, X, MessageCircle, Sparkles, Bot, User } from 'lucide-react';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -21,6 +22,9 @@ export default function ModernChatWidget() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [typingMessage, setTypingMessage] = useState<string>('');
   const [isTyping, setIsTyping] = useState(false);
+
+  const t = useTranslations('chatWidget');
+  const locale = useLocale();
 
   // Scroll detection to hide chat widget near footer
   useEffect(() => {
@@ -40,11 +44,11 @@ export default function ModernChatWidget() {
 
   // Fetch suggestions on mount
   useEffect(() => {
-    fetch('/api/chat/suggestions')
+    fetch(`/api/chat/suggestions?locale=${locale}`)
       .then(res => res.json())
       .then(data => setSuggestions(data.suggestions))
       .catch(console.error);
-  }, []);
+  }, [locale]);
 
   // Auto scroll to bottom when new messages arrive
   useEffect(() => {
@@ -116,7 +120,7 @@ export default function ModernChatWidget() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Something went wrong');
+        throw new Error(data.error || t('errorMessage'));
       }
 
       typeWriterEffect(data.response, () => {
@@ -130,7 +134,7 @@ export default function ModernChatWidget() {
     } catch (error) {
       const errorMessage: Message = {
         role: 'assistant',
-        content: error instanceof Error ? error.message : 'Sorry, something went wrong. Please try again.',
+        content: error instanceof Error ? error.message : t('errorMessage'),
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -173,13 +177,13 @@ export default function ModernChatWidget() {
                   <div className="w-8 h-8 bg-gradient-to-br from-primary-dark to-secondary-dark dark:from-primary-dark dark:to-secondary-dark rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <MessageCircle className="w-4 h-4 text-primary" />
                   </div>
-                  <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-accent dark:bg-accent-dark rounded-full animate-[pulse_2s_ease-in-out_infinite] border border-background dark:border-background-dark" />
+                  <div className="absolute top-0 -right-1 w-3 h-3 bg-accent dark:bg-accent-dark rounded-full animate-[pulse_2s_ease-in-out_infinite] border border-background dark:border-background-dark" />
                 </div>
 
                 {/* Input-style text */}
                 <div className="flex-1 min-w-0">
                   <div className="text-muted-foreground text-sm group-hover:text-foreground dark:group-hover:text-foreground-dark transition-colors duration-300">
-                    Ask about William&#39;s experience...
+                    {t('placeholder')}
                   </div>
                 </div>
 
@@ -187,7 +191,7 @@ export default function ModernChatWidget() {
                 <div className="flex items-center space-x-3 flex-shrink-0">
                   <div className="hidden sm:flex items-center space-x-2 text-muted-foreground text-xs">
                     <Sparkles className="w-3 h-3 animate-[pulse_2.5s_ease-in-out_infinite] text-primary dark:text-primary-dark" />
-                    <span>AI Assistant</span>
+                    <span>{t('aiAssistant')}</span>
                   </div>
 
                   {/* Send-style icon - smaller */}
@@ -224,8 +228,8 @@ export default function ModernChatWidget() {
                 <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-accent dark:bg-accent-dark rounded-full border-2 border-background dark:border-background-dark animate-[pulse_2s_ease-in-out_infinite]" />
               </div>
               <div>
-                <h3 className="font-semibold text-lg text-foreground dark:text-primary-dark">William&#39;s AI Assistant</h3>
-                <p className="text-sm text-muted-foreground">Ask about my experience & expertise</p>
+                <h3 className="font-semibold text-lg text-foreground dark:text-primary-dark">{t('title')}</h3>
+                <p className="text-sm text-muted-foreground">{t('subtitle')}</p>
               </div>
             </div>
 
@@ -246,10 +250,8 @@ export default function ModernChatWidget() {
                 <div className="space-y-6">
                   <div className="text-center py-8 text-muted-foreground">
                     <Sparkles className="w-12 h-12 mx-auto mb-4 text-primary dark:text-primary-dark animate-[pulse_2.5s_ease-in-out_infinite]" />
-                    <h4 className="text-lg font-medium mb-2 text-foreground dark:text-foreground-dark">
-                      Hi! I&#39;m William&#39;s AI Assistant
-                    </h4>
-                    <p className="text-sm">I can answer questions about William&#39;s professional experience, skills, and projects.</p>
+                    <h4 className="text-lg font-medium mb-2 text-foreground dark:text-foreground-dark">{t('welcomeMessage')}</h4>
+                    <p className="text-sm">{t('description')}</p>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -257,11 +259,11 @@ export default function ModernChatWidget() {
                       <Button
                         key={index}
                         variant="outline"
-                        className="p-4 h-auto text-left justify-start text-sm transition-all duration-200 hover:scale-[1.02] border-muted dark:border-muted-dark hover:border-primary/50 dark:hover:border-primary-dark/50 hover:bg-primary/5 dark:hover:bg-primary-dark/5 bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark"
+                        className="p-4 h-auto text-left justify-start text-sm transition-all duration-200 hover:scale-[1.02] border-muted dark:border-muted-dark hover:border-primary/50 dark:hover:border-primary-dark/50 hover:bg-primary/5 dark:hover:bg-primary-dark/5 bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark break-words whitespace-normal min-h-[3.5rem]"
                         onClick={() => sendMessage(suggestion)}
                       >
-                        <MessageCircle className="w-4 h-4 mr-3 text-primary dark:text-primary-dark flex-shrink-0" />
-                        <span className="text-foreground dark:text-foreground-dark">{suggestion}</span>
+                        <MessageCircle className="w-4 h-4 mr-3 text-primary dark:text-primary-dark flex-shrink-0 mt-0.5" />
+                        <span className="text-foreground dark:text-foreground-dark text-left leading-tight">{suggestion}</span>
                       </Button>
                     ))}
                   </div>
@@ -327,7 +329,7 @@ export default function ModernChatWidget() {
                           style={{ animationDelay: '300ms' }}
                         />
                       </div>
-                      <span className="text-sm text-muted-foreground">Thinking...</span>
+                      <span className="text-sm text-muted-foreground">{t('thinking')}</span>
                     </div>
                   </div>
                 </div>
@@ -361,7 +363,7 @@ export default function ModernChatWidget() {
                     value={inputMessage}
                     onChange={e => setInputMessage(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    placeholder="Ask about William's experience..."
+                    placeholder={t('placeholder')}
                     className="w-full px-4 py-3 rounded-2xl border border-muted dark:border-muted-dark bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark focus:border-transparent transition-all duration-200"
                     disabled={isLoading}
                     maxLength={500}
@@ -378,12 +380,12 @@ export default function ModernChatWidget() {
               </div>
 
               <p className="text-xs mt-3 text-center text-muted-foreground">
-                This is an AI assistant. For direct contact, use the contact form.
+                {t('disclaimer')}
                 <button
                   onClick={resetChat}
                   className="ml-1 text-primary dark:text-primary-dark hover:text-secondary dark:hover:text-secondary-dark underline"
                 >
-                  Reset conversation
+                  {t('resetConversation')}
                 </button>
               </p>
             </div>
