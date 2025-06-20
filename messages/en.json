@@ -204,5 +204,17 @@
   },
   "footer": {
     "built": "Designed & Built by William Craig"
+  },
+  "chatWidget": {
+    "title": "William's AI Assistant",
+    "subtitle": "Ask about my experience & expertise",
+    "placeholder": "Ask about William's experience...",
+    "aiAssistant": "AI Assistant",
+    "welcomeMessage": "Hi! I'm William's AI Assistant",
+    "description": "I can answer questions about William's professional experience, skills, and projects.",
+    "thinking": "Thinking...",
+    "disclaimer": "This is an AI assistant. For direct contact, use the contact form.",
+    "resetConversation": "Reset conversation",
+    "errorMessage": "Sorry, something went wrong. Please try again."
   }
 }
