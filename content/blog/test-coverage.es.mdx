@@ -1,0 +1,53 @@
+---
+title: "Deja de escribir tests solo para alcanzar un número"
+date: "2025-06-19"
+readTime: "6 min read"
+author: "William Craig"
+tags: ["Desarrollo de Software", "Pruebas Unitarias", "Cobertura de Tests", "Cultura de Ingeniería", "Buenas Prácticas", "Desarrollo Full-Stack"]
+excerpt: "No todo el código merece un test unitario. Escribir tests solo para alcanzar un porcentaje arbitrario de cobertura es una pérdida de tiempo. Este artículo cuestiona la obsesión por los números de cobertura y defiende pruebas significativas y enfocadas."
+---
+
+
+Creo que las pruebas unitarias son excelentes cuando estás lidiando con funciones que tienen muchos edge cases, como transformaciones de datos, utilidades o lógica que maneja entradas extrañas o impredecibles. Pero apuntar a una cobertura de tests alta de forma indiscriminada puede ser una pérdida de tiempo enorme. Algunos componentes simplemente no se benefician de ese nivel de escrutinio. Escribir tests solo para alcanzar un número arbitrario no tiene sentido en mi opinión. Prefiero dedicar más tiempo a casos de prueba significativos que perseguir un porcentaje solo por apariencia.
+
+Seamos honestos, hay partes de una app que son demasiado triviales o demasiado inestables (desde la perspectiva del UI o del diseño) como para justificar escribir pruebas unitarias. Por ejemplo, cuando tienes un componente que simplemente renderiza una etiqueta o pasa props a un componente hijo, escribir un test que básicamente verifica que “1 es igual a 1” no es productivo. No detecta bugs, no previene regresiones y claramente no mejora la experiencia del desarrollador. Pero adivina qué: igual vas a obtener una marca verde en el reporte de cobertura, y algún gerente en algún lugar puede pensar que construiste algo a prueba de balas. Spoiler: no lo hiciste.
+
+### Los beneficios de las pruebas unitarias (cuando se hacen bien)
+
+Obviamente, tienen beneficios reales. Cuando estás escribiendo funciones puras, lógica de negocio crítica, o cualquier cosa que pueda romperse si le pasas los datos equivocados, los tests unitarios son oro. Te dan confianza para refactorizar, ayudan a documentar el comportamiento y reducen la necesidad de testear escenarios raros manualmente todo el tiempo.
+
+También ayudan en bases de código heredadas donde no estás 100% seguro de lo que hace una función. En esos casos, escribir tests antes de refactorizar (aunque no te guste el código) puede salvarte el cuello.
+
+Pero, otra vez: el contexto importa. Estos beneficios solo aparecen cuando estás probando las cosas correctas, no todo.
+
+### El costo real y los tradeoffs
+
+El costo en tiempo es real. Escribir tests lleva tiempo. Mantenerlos cuando cambian los requerimientos (lo cual pasa todo el tiempo) también lleva tiempo. Los tests pueden convertirse en deuda técnica si son superficiales, frágiles o irrelevantes. Especialmente cuando trabajas en entornos con ciclos rápidos de iteración—como startups o productos en etapas tempranas—tenés que preguntarte: ¿este test nos ayuda a movernos rápido o nos está frenando?
+
+Otro tradeoff es la falsa confianza. Cuando los desarrolladores escriben tests solo para satisfacer una métrica, suelen escribir tests superficiales que en realidad no prueban el comportamiento. Podés terminar con 95% de cobertura y aún así pasar por alto un bug importante en cómo se comporta realmente la app. Eso no es calidad, es una simulación de calidad.
+
+Y no olvidemos los puntos de integración. La mayoría de los bugs no ocurren dentro de funciones puras. Suceden en los límites: entre servicios, entre front-end y back-end, entre las expectativas del usuario y lo que realmente hace la UI. Por eso, deberíamos invertir más tiempo en pruebas de integración y tests end-to-end. Cubren una superficie más amplia y detectan patrones reales de uso.
+
+### Cuándo esta opinión no aplica
+
+Si estás construyendo librerías, SDKs o cualquier cosa que vaya a ser consumida por decenas de desarrolladores o que se ejecute en entornos críticos (piensa: salud, banca, aviación), probablemente sí quieras una cobertura alta de tests. No por el número, sino porque no controlás cómo se va a usar tu código. En ese mundo, los edge cases no son opcionales, son el núcleo.
+
+Además, si estás en un entorno regulado donde el cumplimiento es importante, los tests unitarios pueden ser obligatorios. No porque sean técnicamente útiles, sino porque necesitás trazabilidad y documentación.
+
+### Alternativas y soluciones más útiles
+
+En vez de medir cobertura de tests, prefiero medir cobertura de riesgo. Preguntate: ¿Cuáles son los caminos críticos de tu aplicación? ¿Qué sería catastrófico si se rompe? ¿Cuáles son las partes más frágiles de tu stack, las que probablemente fallen durante un deploy o una actualización?
+
+También deberíamos apoyarnos más en tests de integración, porque ahí es donde viven la mayoría de los bugs reales. Un buen test de integración simula una acción real del usuario y hace aserciones sobre el resultado, incluso si involucra varias capas de tu app. Es más lento, pero mucho más valioso.
+
+Las pruebas por snapshot para componentes de UI también pueden ser útiles, pero solo si revisás esos snapshots. Aprobar diffs a ciegas arruina el propósito.
+
+Por último, un buen sistema de logging y monitoreo en producción va a hacer más por la confiabilidad de tu app que alcanzar el 95% de cobertura en tu CI.
+
+### Reflexión final
+
+Los tests tienen que tener un propósito. Deberían protegerte, darte confianza y ayudarte a entregar mejor software. Pero cuando se convierten en un ejercicio de marcar casillas, ya no estás escribiendo tests. Estás generando ruido.
+
+Y ese es el punto: como ingenieros, nuestro trabajo no es alcanzar números, es resolver problemas. A veces eso significa escribir menos tests. A veces significa tirar a la basura tests frágiles. Y a veces significa ignorar el reporte de cobertura y enfocarse en lo que realmente importa: ¿la app funciona? ¿Es confiable para los usuarios?
+
+Gracias por leer. Si esta perspectiva te resultó útil, no dudes en compartirla con tu equipo o en redes sociales. Sigamos la conversación sobre lo que realmente significa calidad en el desarrollo de software.
