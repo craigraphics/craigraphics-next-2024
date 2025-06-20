@@ -1,0 +1,53 @@
+---
+title: "Stop Writing Tests Just to Hit a Number"
+date: "2025-06-19"
+readTime: "6 min read"
+author: "William Craig"
+tags: ["Software Development", "Unit Testing", "Test Coverage", "Engineering Culture", "Best Practices", "Full-Stack Development"]
+excerpt: "Not all code deserves a unit test. Writing tests just to reach an arbitrary coverage percentage is a waste of time. This article questions the obsession with coverage metrics and argues for meaningful, targeted testing instead."
+---
+
+
+I think that unit testing is great when you're dealing with functions that have a lot of edge cases stuff like data transformations, utilities, or logic that handles weird or unpredictable inputs. But aiming for high test coverage across the board can be a massive waste of time. Some components just don't benefit from that level of scrutiny. Writing tests just to hit an arbitrary number is meaningless in my opinion. I'd rather spend more time on meaningful test cases than chase a percentage for the sake of optics.
+
+Let's be honest, some parts of the app are either too trivial or too unstable (from a UI or design perspective) to justify testing them with unit tests. For instance, when you have a component that simply renders a label or forwards props to a child component, writing a test that basically checks if “1 equals 1” is not productive. It doesn't catch bugs, it doesn't prevent regressions, and it sure as hell doesn't improve the developer experience. But guess what? You'll still get a green checkmark in your coverage report, and some manager somewhere might think you've built something rock solid. Spoiler alert: you haven't.
+
+### The Pros of Unit Testing (When Done Right)
+
+There are real benefits, obviously. When you're building pure functions, critical business logic, or anything that would break if you pass it the wrong data or get the wrong result, unit tests are gold. They give you confidence during refactoring, help you document behavior, and reduce the need to constantly manually test weird scenarios.
+
+Unit tests also help in legacy codebases where you're not 100% sure what a function is doing. In those cases, writing tests before refactoring (even if you don't love the code) can save your neck.
+
+But again, context matters. These benefits only show up when you're testing the right things, not everything.
+
+### The Real Costs and Tradeoffs
+
+The time cost is real. Writing tests takes time. Maintaining them when requirements change (which happens all the time) also takes time. Tests can become a form of technical debt if they're shallow, brittle, or meaningless. Especially when you work in an environment with fast iteration cycles—like startups or early-stage products you have to ask yourself: is this test helping us move fast or slowing us down?
+
+Another tradeoff is false confidence. When developers write tests just to satisfy a metric, they often write shallow tests that don't actually test behavior. You might end up with 95% coverage and still miss a major bug in how your app actually behaves in the real world. That's not quality, that's performative assurance.
+
+And let's not forget about integration points. Most bugs don't happen inside pure functions. They happen at the boundaries between services, between front-end and back-end, between user expectations and what the UI actually does. That's why, we should tend to invest more time in integration tests and end-to-end tests. They cover a wider surface and catch actual usage patterns.
+
+### When This Opinion Doesn't Hold
+
+If you're building libraries, SDKs, or anything that's going to be consumed by dozens of developers or run in critical environments (think: healthcare, banking, aviation), you probably do want high test coverage. Not for the number, but because you don't control how your code will be used. In that world, edge cases aren't optional, they're the whole point.
+
+Also, if you're in a regulated environment where compliance matters, unit tests might be mandatory, not because they're technically helpful, but because you need audit trails and documentation.
+
+### Possible Turnarounds and Better Alternatives
+
+Instead of measuring test coverage, I prefer to measure coverage of risk. Ask yourself: What are the critical paths in your application? What would be catastrophic if it broke? What are the most fragile parts of your stack, things likely to fail during deploys or updates?
+
+We should also lean heavily on integration tests, because that's where most of the real-world bugs live. A good integration test will simulate an actual user action and assert on the result, even if several layers of your app are involved. It's slower, but more valuable.
+
+Snapshot testing for UI components can also be useful, but only if you review those snapshots. Blindly approving diffs defeats the purpose.
+
+Finally, good logging and monitoring in production will do more for your app's reliability than hitting 95% test coverage on your CI.
+
+### Final Thoughts
+
+Tests should have purpose. They should protect you, give you confidence, and help you ship better software. But when they turn into a checkbox exercise, you're not writing tests anymore. You're just generating noise.
+
+And that's the thing: as engineers, our job is not to hit numbers, it's to solve problems. Sometimes that means writing fewer tests. Sometimes it means throwing away brittle tests. And sometimes it means ignoring the coverage report and focusing on what really matters: does the app work, and is it reliable for users?
+
+Thank you for reading. If you found this perspective useful, feel free to share it with your team or on social media. Let's keep the conversation going about what real quality means in software development.
