@@ -5,9 +5,9 @@ const locales = ['en', 'es'] as const;
 export default createMiddleware({
   locales,
   defaultLocale: 'en',
+  localePrefix: 'as-needed',
 });
 
 export const config = {
-  // Skip all paths that should not be internationalized
-  matcher: ['/((?!api|_next|.*\\..*).*)'],
+  matcher: ['/((?!api|_next|sitemap|robots|.*\\..*).*)'],
 };
