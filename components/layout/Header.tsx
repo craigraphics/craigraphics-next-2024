@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import ThemeToggle from '../ThemeToggle';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -16,6 +16,7 @@ import Link from '@/components/ui/NavLink';
 
 const Header = () => {
   const t = useTranslations('common');
+  const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -50,7 +51,6 @@ const Header = () => {
   }, [lastScrollY]);
 
   const NavItems = ({ closeMenu }: { closeMenu?: () => void }) => {
-    const locale = pathname?.substring(1, 3);
     return (
       <>
         <Link href={`/${locale}/`} onClick={closeMenu}>
@@ -71,6 +71,7 @@ const Header = () => {
       </>
     );
   };
+
   return (
     <header
       className={`fixed top-0 left-0 w-full
@@ -94,7 +95,7 @@ const Header = () => {
 
           <div className="flex items-center space-x-4">
             <ThemeToggle />
-            <Select onValueChange={changeLanguage} defaultValue={pathname?.substring(1, 3)}>
+            <Select onValueChange={changeLanguage} defaultValue={locale}>
               <SelectTrigger className="w-[80px] dark:bg-background-dark border-primary border dark:border-primary-dark dark:text-secondary-dark">
                 <SelectValue placeholder="Lang" />
               </SelectTrigger>
