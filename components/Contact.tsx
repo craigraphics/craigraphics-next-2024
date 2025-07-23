@@ -18,7 +18,6 @@ interface EmailFormData {
 
 interface EmailResponse {
   message: string;
-  sendGridResponse?: number;
   messageId?: string;
 }
 

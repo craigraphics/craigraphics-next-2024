@@ -1,35 +1,35 @@
 import { NextResponse } from 'next/server';
-import sgMail from '@sendgrid/mail';
+import { Resend } from 'resend';
 
 export async function POST(req: Request) {
   console.log('API route hit - Starting email send process');
 
   // Check if API key is set
-  const apiKey = process.env.sendGridAPIKey;
+  const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.error('SendGrid API key is missing');
-    return NextResponse.json({ message: 'SendGrid configuration error' }, { status: 500 });
+    console.error('Resend API key is missing');
+    return NextResponse.json({ message: 'Resend configuration error' }, { status: 500 });
   }
 
-  sgMail.setApiKey(apiKey);
+  const resend = new Resend(apiKey);
 
   try {
     // Log the request body
     const body = await req.json();
 
     // Check if required environment variables exist
-    if (!process.env.toMail || !process.env.fromMail) {
+    if (!process.env.TO_EMAIL || !process.env.FROM_EMAIL) {
       console.error('Missing required email configuration:', {
-        toMail: !!process.env.toMail,
-        fromMail: !!process.env.fromMail,
+        toEmail: !!process.env.TO_EMAIL,
+        fromEmail: !!process.env.FROM_EMAIL,
       });
       return NextResponse.json({ message: 'Email configuration error' }, { status: 500 });
     }
 
     // Construct email message
-    const msg = {
-      to: process.env.toMail,
-      from: process.env.fromMail,
+    const { data, error } = await resend.emails.send({
+      from: process.env.FROM_EMAIL,
+      to: [process.env.TO_EMAIL],
       subject: 'New Message from craigraphics.com',
       text: `From: ${body.email}\nMessage: ${body.message}`,
       html: `
@@ -38,37 +38,36 @@ export async function POST(req: Request) {
         <p><strong>Message:</strong></p>
         <p>${body.message}</p>
       `,
-    };
+    });
 
-    // Send the email
-    const response = await sgMail.send(msg);
-
-    return NextResponse.json(
-      {
-        message: 'Email sent successfully',
-        sendGridResponse: response[0].statusCode,
-      },
-      { status: 200 }
-    );
-    /* eslint-disable @typescript-eslint/no-explicit-any */
-  } catch (error: any) {
-    console.error('Detailed error information:');
-    console.error('Error name:', error.name);
-    console.error('Error message:', error.message);
-
-    if (error.response) {
-      console.error('SendGrid Error Response:', {
-        body: error.response.body,
-        statusCode: error.response.statusCode,
-        headers: error.response.headers,
-      });
+    if (error) {
+      console.error('Resend error:', error);
+      return NextResponse.json(
+        {
+          message: 'Error sending email',
+          error: error.message,
+        },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json(
       {
+        message: 'Email sent successfully',
+        messageId: data?.id,
+      },
+      { status: 200 }
+    );
+  } catch (error: unknown) {
+    console.error('Detailed error information:');
+    console.error('Error:', error);
+
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+
+    return NextResponse.json(
+      {
         message: 'Error sending email',
-        error: error.message,
-        sendGridError: error.response?.body || 'No detailed error available',
+        error: errorMessage,
       },
       { status: 500 }
     );
