@@ -20,14 +20,14 @@ export default function BlogList({ posts, locale, t }: BlogListProps) {
   return (
     <Layout>
       <div className="pt-14 mt-12 sm:max-w-4xl mx-auto">
-        <h2 className="text-3xl font-extrabold text-primary dark:text-primary-dark sm:text-3xl underline-heading mb-4">{t('title')}</h2>
+        <h1 className="text-3xl font-extrabold text-primary dark:text-primary-dark sm:text-3xl underline-heading mb-4">{t('title')}</h1>
         <p className="text-secondary dark:text-secondary-dark text-lg font-medium mb-4">{t('description')}</p>
 
         {featuredPost && (
           <article className="my-12 grid md:grid-cols-2 gap-8 items-center rounded-md pl-7 border border-muted dark:border-muted-dark shadow-md shadow-black:20 dark:shadow-black:80 p-7 md:p-0 md:pl-7">
             <header>
               <Link href={`/${locale}/blog/${featuredPost.slug}`}>
-                <h1 className="text-4xl text-primary dark:text-primary-dark font-bold mb-4 ">{featuredPost.title}</h1>
+                <h2 className="text-4xl text-primary dark:text-primary-dark font-bold mb-4 ">{featuredPost.title}</h2>
               </Link>
 
               <p className="text-gray-600 dark:text-gray-300 mb-4">{featuredPost.excerpt}</p>
@@ -42,7 +42,7 @@ export default function BlogList({ posts, locale, t }: BlogListProps) {
               <figure className="relative h-64 md:h-96">
                 <Image
                   src={featuredPost.image || '/images/placeholder-image.jpg'}
-                  alt={featuredPost.title}
+                  alt={`Featured image for blog post: ${featuredPost.title}`}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="rounded-r-md object-cover"
@@ -63,17 +63,18 @@ export default function BlogList({ posts, locale, t }: BlogListProps) {
                 <figure className="relative h-48">
                   <Image
                     src={post.image || '/images/placeholder-image.jpg'}
-                    alt={post.title}
+                    alt={`Featured image for blog post: ${post.title}`}
                     fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover"
+                    loading="lazy"
                   />
                 </figure>
                 <div className="p-4">
                   <header>
-                    <h2 className="text-xl font-semibold mb-2 text-primary dark:text-primary-dark  group-hover:text-secondary dark:group-hover:text-secondary-dark transition-colors duration-300">
+                    <h3 className="text-xl font-semibold mb-2 text-primary dark:text-primary-dark  group-hover:text-secondary dark:group-hover:text-secondary-dark transition-colors duration-300">
                       {post.title}
-                    </h2>
+                    </h3>
                     <time className="text-sm text-muted-dark dark:text-muted mb-2" dateTime={post.date}>
                       {new Date(post.date).toLocaleDateString()}
                     </time>

@@ -13,7 +13,16 @@ const AboutMe = () => {
     <div className="py-14 mt-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto relative">
         <section className="mt-4">
-          <Image src="/images/profile.png" alt="William Craig" width={200} height={200} className="rounded-full mx-auto mb-12" priority />
+          <Image
+            src="/images/profile.png"
+            alt="William Craig"
+            width={200}
+            height={200}
+            className="rounded-full mx-auto mb-12"
+            priority
+            fetchPriority="high"
+            sizes="200px"
+          />
           <small className="text-xl mb-1 font-medium text-secondary dark:text-secondary-dark block">{t('greeting.hello')}</small>
           <h1 className="text-6xl sm:text-7xl font-bold text-primary dark:text-primary-dark mb-2">William Craig!</h1>
           <h2 className="text-3xl sm:text-4xl mb-2">{t('greeting.role')}</h2>
@@ -71,11 +80,21 @@ const AboutMe = () => {
             className="mt-1 flex bottom-4  static flex-row  space-x-4
           lg:fixed lg:space-y-4 lg:space-x-0 lg:flex-col lg:bottom-14 lg:mb-4 lg:left-4"
           >
-            <a href="https://github.com/craigraphics" target="_blank">
+            <a
+              href="https://github.com/craigraphics"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit William Craig's GitHub profile (opens in new tab)"
+            >
               <span className="sr-only">GitHub</span>
               <Icon icon="mdi:github" width="28" height="28" className="text-accent dark:text-accent-dark dark:hover:text-secondary-dark" />
             </a>
-            <a href="https://linkedin.com/in/willcraigz" target="_blank">
+            <a
+              href="https://linkedin.com/in/willcraigz"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit William Craig's LinkedIn profile (opens in new tab)"
+            >
               <span className="sr-only">LinkedIn</span>
               <Icon
                 icon="mdi:linkedin"
@@ -84,7 +103,12 @@ const AboutMe = () => {
                 className="text-accent dark:text-accent-dark dark:hover:text-secondary-dark"
               />
             </a>
-            <a href="https://behance.net/willcraigz" target="_blank">
+            <a
+              href="https://behance.net/willcraigz"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit William Craig's Behance profile (opens in new tab)"
+            >
               <span className="sr-only">Behance</span>
               <Icon
                 icon="mdi:behance"
@@ -93,7 +117,12 @@ const AboutMe = () => {
                 className="text-accent dark:text-accent-dark dark:hover:text-secondary-dark"
               />
             </a>
-            <a href="https://instagram.com/willcrg" target="_blank">
+            <a
+              href="https://instagram.com/willcrg"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit William Craig's Instagram profile (opens in new tab)"
+            >
               <span className="sr-only">Instagram</span>
               <Icon
                 icon="mdi:instagram"

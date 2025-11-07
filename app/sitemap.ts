@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { getBlogPosts } from '@/lib/getBlogPosts';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://craigraphics.com';
@@ -22,6 +23,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: new Date(),
         changeFrequency: page.changeFrequency,
         priority: page.priority,
+      });
+    });
+  });
+
+  // Add blog posts for each locale
+  locales.forEach(locale => {
+    const posts = getBlogPosts(locale);
+    posts.forEach(post => {
+      const blogPath = `/blog/${post.slug}`;
+      sitemapEntries.push({
+        url: locale === 'en' ? `${baseUrl}${blogPath}` : `${baseUrl}/${locale}${blogPath}`,
+        lastModified: new Date(post.date),
+        changeFrequency: 'monthly',
+        priority: 0.7,
       });
     });
   });

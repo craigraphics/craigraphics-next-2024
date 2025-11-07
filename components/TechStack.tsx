@@ -131,7 +131,7 @@ const TechnologyBadge = ({ tech }: TechnologyBadgeProps) => {
     <div className="relative inline-block" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <Badge
         variant="secondary"
-        className="cursor-pointer transition-all duration-300 px-3 py-1 text-sm bg-muted dark:bg-muted-dark text-muted-foreground dark:text-muted-foreground hover:bg-primary/10 dark:hover:bg-primary-dark/10 hover:text-primary dark:hover:text-primary-dark hover:scale-105"
+        className="cursor-pointer transition-all duration-300 px-3 py-1 text-sm bg-muted dark:bg-muted-dark text-muted-foreground/110 dark:text-muted-foreground-dark/70 hover:bg-primary/10 dark:hover:bg-primary-dark/10 hover:text-primary dark:hover:text-primary-dark hover:scale-105"
       >
         {tech}
       </Badge>
@@ -139,31 +139,31 @@ const TechnologyBadge = ({ tech }: TechnologyBadgeProps) => {
       {/* Tooltip */}
       {isHovered && techData && (
         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-50 animate-in fade-in-0 slide-in-from-bottom-2 duration-200">
-          <div className="bg-card dark:bg-card border border-muted dark:border-muted-dark rounded-lg shadow-lg p-3 min-w-[200px] max-w-[280px]">
+          <div className="bg-card dark:bg-background-dark border border-muted dark:border-muted-dark rounded-lg shadow-lg p-3 min-w-[200px] max-w-[280px]">
             {/* Tooltip Arrow */}
             <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-muted dark:border-t-muted-dark"></div>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <h4 className="font-semibold text-foreground dark:text-foreground-dark text-sm">{tech}</h4>
-                <span className="text-xs text-muted-foreground dark:text-muted-foreground">
+                <h4 className="font-semibold text-card-foreground dark:text-foreground-dark text-sm">{tech}</h4>
+                <span className="text-xs text-muted-foreground dark:text-muted-foreground-dark">
                   {t('since')} {techData.learned}
                 </span>
               </div>
 
               <div>
-                <p className="text-xs font-medium text-foreground dark:text-foreground-dark mb-1">{t('usedIn')}</p>
+                <p className="text-xs font-medium text-card-foreground dark:text-foreground-dark mb-1">{t('usedIn')}</p>
                 <div className="flex flex-wrap gap-1">
                   {techData.projects.slice(0, 2).map((project, index) => (
                     <span
                       key={index}
-                      className="text-xs bg-muted/50 dark:bg-muted-dark/50 px-2 py-0.5 rounded text-muted-foreground dark:text-muted-foreground"
+                      className="text-xs bg-muted/50 dark:bg-muted-dark/50 px-2 py-0.5 rounded text-muted-foreground dark:text-muted-foreground-dark"
                     >
                       {project}
                     </span>
                   ))}
                   {techData.projects.length > 2 && (
-                    <span className="text-xs text-muted-foreground dark:text-muted-foreground">
+                    <span className="text-xs text-muted-foreground dark:text-muted-foreground-dark">
                       +{techData.projects.length - 2} {t('more')}
                     </span>
                   )}

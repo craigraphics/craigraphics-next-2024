@@ -36,10 +36,11 @@ const ProjectShowcase = () => {
                 <div className="relative h-64 lg:h-auto lg:w-1/2">
                   <Image
                     src={project.image}
-                    alt={project.title}
+                    alt={`Screenshot of ${project.title} project`}
                     fill
                     className="rounded-t-lg lg:rounded-l-lglg:rounded-tr-none object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    loading="lazy"
                   />
                 </div>
                 <div className="p-6 lg:w-1/2">
@@ -61,13 +62,15 @@ const ProjectShowcase = () => {
                         href={project.githubLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary dark:text-primary-dark hover:text-primary/80 dark:hover:text-primary-dark/80"
+                        className="text-primary dark:text-primary-dark hover:text-primary/80 dark:hover:text-primary-dark/80 focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark focus:ring-offset-2 rounded"
+                        aria-label={`View ${project.title} source code on GitHub (opens in new tab)`}
                       >
                         <Icon
                           icon="mdi:github"
                           width="24"
                           height="24"
                           className="text-primary dark:text-primary-dark hover:text-primary/80 dark:hover:text-primary-dark/80"
+                          aria-hidden="true"
                         />
                       </a>
                     )}
@@ -76,9 +79,10 @@ const ProjectShowcase = () => {
                         href={project.liveLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary dark:text-primary-dark hover:text-primary/80 dark:hover:text-primary-dark/80"
+                        className="text-primary dark:text-primary-dark hover:text-primary/80 dark:hover:text-primary-dark/80 focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark focus:ring-offset-2 rounded"
+                        aria-label={`Visit ${project.title} live site (opens in new tab)`}
                       >
-                        <ExternalLink size={24} />
+                        <ExternalLink size={24} aria-hidden="true" />
                       </a>
                     )}
                   </div>
