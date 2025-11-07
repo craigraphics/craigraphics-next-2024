@@ -9,6 +9,7 @@
 **Geographic Availability:** Onsite/Hybrid in San Francisco Bay Area and Sacramento  
 **Years of Experience:** 15+ years  
 **Languages:** Fluent in English, Spanish, and JavaScript  
+**Linkedin** https://www.linkedin.com/in/willcraigz/
 **Personal Interests:** Table tennis, ambient music, John Coltrane, powered by code, coffee and music
 
 ## Professional Summary
@@ -58,6 +59,10 @@ Beyond writing code, William brings architectural thinking to front-end work —
 ### 10. Is William allowed to work in the United States?
 
 Yes, William has a U.S. work permit and does not need any type of work Visa. He does have a work authorization and legal status in the United States.
+
+### what's the email address to contact William?
+
+I don't have William's email with me but you can send a message to him directly through this website https://www.craigraphics.com/contact. You can leave your email and message and for sure William will contact you.
 
 ## Career Journey & Origin Story
 

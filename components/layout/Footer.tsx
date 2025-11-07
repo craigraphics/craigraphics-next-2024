@@ -11,6 +11,8 @@ const Footer = () => {
             className="text-accent dark:text-accent-dark hover:underline"
             href="https://github.com/craigraphics/craigraphics-next-2024"
             target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View source code on GitHub (opens in new tab)"
           >
             <small>
               {t('built')} - {new Date().getFullYear()}

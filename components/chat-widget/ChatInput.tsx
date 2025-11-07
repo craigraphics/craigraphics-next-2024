@@ -22,6 +22,7 @@ export const ChatInput = ({ inputMessage, setInputMessage, onSendMessage, onRese
         <div className="flex-1 relative">
           <input
             type="text"
+            id="chat-input"
             value={inputMessage}
             onChange={e => setInputMessage(e.target.value)}
             onKeyPress={onKeyPress}
@@ -29,15 +30,20 @@ export const ChatInput = ({ inputMessage, setInputMessage, onSendMessage, onRese
             className="w-full px-4 py-3 rounded-2xl border border-muted dark:border-muted-dark bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark focus:border-transparent transition-all duration-200"
             disabled={isLoading}
             maxLength={500}
+            aria-label={t('placeholder') || 'Chat message input'}
+            aria-describedby="chat-input-char-count"
           />
-          <div className="absolute bottom-1 right-2 text-xs text-muted-foreground opacity-50">{inputMessage.length}/500</div>
+          <div id="chat-input-char-count" className="absolute bottom-1 right-2 text-xs text-muted-foreground opacity-50" aria-live="polite">
+            {inputMessage.length}/500
+          </div>
         </div>
         <Button
           onClick={onSendMessage}
           disabled={!inputMessage.trim() || isLoading}
           className="h-12 w-12 rounded-full dark:text-secondary bg-primary dark:bg-primary-dark hover:bg-secondary dark:hover:bg-secondary-dark disabled:opacity-50 transition-all duration-200 hover:scale-105 disabled:hover:scale-100"
+          aria-label="Send message"
         >
-          <Send className="h-5 w-5 text-primary" />
+          <Send className="h-5 w-5 text-primary" aria-hidden="true" />
         </Button>
       </div>
 

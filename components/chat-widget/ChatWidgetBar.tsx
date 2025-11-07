@@ -11,13 +11,20 @@ interface ChatWidgetBarProps {
 export const ChatWidgetBar = ({ isVisible, onOpen }: ChatWidgetBarProps) => {
   const t = useTranslations('chatWidget');
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onOpen();
+    }
+  };
+
   return (
     <div
-      className={`fixed bottom-6 left-6 right-6 z-50 cursor-pointer group transition-all duration-500 ${
+      className={`fixed bottom-6 left-6 right-6 z-50 transition-all duration-500 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'
       }`}
     >
-      <div className="relative max-w-4xl mx-auto">
+      <div className="relative max-w-4xl mx-auto group">
         {/* Gradient glow background - slower pulse */}
         <div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent dark:from-primary-dark dark:via-secondary-dark dark:to-accent-dark rounded-xl blur-sm opacity-60 group-hover:opacity-80 animate-[pulse_3s_ease-in-out_infinite] transition-opacity duration-500" />
 
@@ -25,9 +32,12 @@ export const ChatWidgetBar = ({ isVisible, onOpen }: ChatWidgetBarProps) => {
         <div className="absolute -inset-2 bg-gradient-to-r from-primary/50 via-secondary/50 to-accent/50 dark:from-primary-dark/50 dark:via-secondary-dark/50 dark:to-accent-dark/50 rounded-xl blur-md opacity-0 group-hover:opacity-60 transition-all duration-500" />
 
         {/* Main input-style container */}
-        <div
-          className="relative bg-background/70 dark:bg-background-dark/90 backdrop-blur-lg rounded-xl border border-muted/30 dark:border-muted-dark/30 px-4 py-3 transition-all duration-300 group-hover:scale-[1.02] group-hover:bg-background/80 dark:group-hover:bg-background-dark/95"
+        <button
+          type="button"
+          className="relative w-full bg-background/70 dark:bg-background-dark/90 backdrop-blur-lg rounded-xl border border-muted/30 dark:border-muted-dark/30 px-4 py-3 transition-all duration-300 group-hover:scale-[1.02] group-hover:bg-background/80 dark:group-hover:bg-background-dark/95 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark focus:ring-offset-2"
           onClick={onOpen}
+          onKeyDown={handleKeyDown}
+          aria-label={t('placeholder') || 'Open chat widget'}
         >
           <div className="flex items-center space-x-4">
             {/* Chat icon */}
@@ -61,7 +71,7 @@ export const ChatWidgetBar = ({ isVisible, onOpen }: ChatWidgetBarProps) => {
 
           {/* Subtle bottom border glow */}
           <div className="absolute bottom-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-primary/30 dark:via-primary-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        </div>
+        </button>
       </div>
     </div>
   );

@@ -19,10 +19,52 @@ const components = {
 };
 
 const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://craigraphics.com';
+  const url = post.language === 'en' ? `${baseUrl}/blog/${post.slug}` : `${baseUrl}/${post.language}/blog/${post.slug}`;
+  const imageUrl = post.image ? `${baseUrl}${post.image}` : `${baseUrl}/images/profile.png`;
+  const excerpt = post.excerpt || (post.content ? post.content.substring(0, 160).replace(/[#*`]/g, '').trim() + '...' : 'Blog post by William Craig');
+  
+  // Parse date for structured data
+  const publishedDate = post.date ? new Date(post.date).toISOString() : new Date().toISOString();
+
+  const articleStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: excerpt,
+    image: imageUrl,
+    datePublished: publishedDate,
+    author: {
+      '@type': 'Person',
+      name: post.author,
+      url: baseUrl,
+    },
+    publisher: {
+      '@type': 'Person',
+      name: 'William Craig',
+      url: baseUrl,
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url,
+    },
+    keywords: post.tags?.join(', ') || '',
+  };
+
   return (
     <article className="mt-14 sm:max-w-4xl mx-auto">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleStructuredData) }}
+      />
       <header className="relative h-[60vh] mb-8">
-        <Image src={post.image || '/images/placeholder-image.jpg'} alt={post.title} fill className="object-cover rounded-md" priority />
+        <Image 
+          src={post.image || '/images/placeholder-image.jpg'} 
+          alt={`Featured image for blog post: ${post.title}`} 
+          fill 
+          className="object-cover rounded-md" 
+          priority 
+        />
         <div className="py-8 mx-auto max-w-screen-lg container">
           <div className="text-sm uppercase tracking-wide">{post.category}</div>
         </div>
@@ -31,8 +73,8 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
         <section className="container mx-auto max-w-screen-lg px-4">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center">
-              <Avatar className="h-12 w-12 mr-4">
-                <AvatarImage src={post.avatar || 'null'} alt={post.author} />
+              <Avatar className="h-12 w-12 mr-4" aria-label={`${post.author}'s profile picture`}>
+                <AvatarImage src={post.avatar || 'null'} alt={`${post.author}'s avatar`} />
                 <AvatarFallback>{post.author}</AvatarFallback>
               </Avatar>
               <div>

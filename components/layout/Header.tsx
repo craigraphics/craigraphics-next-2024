@@ -28,23 +28,37 @@ const Header = () => {
     router.push(`/${newLocale}${currentPathname}`);
   };
 
+  const rafIdRef = React.useRef<number | null>(null);
+
   const controlHeader = () => {
     if (typeof window !== 'undefined') {
-      if (window.scrollY > lastScrollY) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
+      // Cancel any pending animation frame
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current);
       }
-      setLastScrollY(window.scrollY);
+
+      // Batch DOM reads using requestAnimationFrame to avoid forced reflows
+      rafIdRef.current = requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        if (currentScrollY > lastScrollY) {
+          setIsVisible(false);
+        } else {
+          setIsVisible(true);
+        }
+        setLastScrollY(currentScrollY);
+      });
     }
   };
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', controlHeader);
+      window.addEventListener('scroll', controlHeader, { passive: true });
 
       return () => {
         window.removeEventListener('scroll', controlHeader);
+        if (rafIdRef.current !== null) {
+          cancelAnimationFrame(rafIdRef.current);
+        }
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

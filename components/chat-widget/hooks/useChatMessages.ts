@@ -13,7 +13,10 @@ export const useChatMessages = () => {
 
   // Auto scroll to bottom when new messages arrive
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Use requestAnimationFrame to avoid forced reflows
+    requestAnimationFrame(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    });
   }, [messages]);
 
   const sendMessage = async (message: string = inputMessage, onTypeWriter?: (text: string, callback?: () => void) => void) => {

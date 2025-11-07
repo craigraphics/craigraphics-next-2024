@@ -1,0 +1,13 @@
+# Target modern browsers to reduce legacy JavaScript polyfills
+# This reduces bundle size by not including polyfills for older browsers
+
+# Modern browsers (last 2 versions of each)
+last 2 Chrome versions
+last 2 Firefox versions
+last 2 Safari versions
+last 2 Edge versions
+
+# Exclude IE and very old browsers
+not dead
+not IE 11
+
