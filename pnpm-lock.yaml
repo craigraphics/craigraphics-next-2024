@@ -58,7 +58,7 @@ importers:
         version: 5.59.16(react@19.2.1)
       '@vercel/analytics':
         specifier: ^1.3.1
-        version: 1.3.1(next@15.0.5(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1)
+        version: 1.3.1(next@15.0.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1)
       '@vercel/kv':
         specifier: ^3.0.0
         version: 3.0.0
@@ -75,11 +75,11 @@ importers:
         specifier: ^0.446.0
         version: 0.446.0(react@19.2.1)
       next:
-        specifier: 15.0.5
-        version: 15.0.5(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+        specifier: 15.0.7
+        version: 15.0.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       next-intl:
         specifier: ^3.23.5
-        version: 3.23.5(next@15.0.5(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1)
+        version: 3.23.5(next@15.0.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1)
       next-mdx-remote:
         specifier: ^5.0.0
         version: 5.0.0(@types/react@19.2.7)(react@19.2.1)
@@ -127,8 +127,8 @@ importers:
         specifier: ^8
         version: 8.57.1
       eslint-config-next:
-        specifier: 15.0.5
-        version: 15.0.5(eslint@8.57.1)(typescript@5.6.2)
+        specifier: 15.0.7
+        version: 15.0.7(eslint@8.57.1)(typescript@5.6.2)
       postcss:
         specifier: ^8
         version: 8.4.47
@@ -414,11 +414,11 @@ packages:
       '@types/react': '>=16'
       react: '>=16'
 
-  '@next/env@15.0.5':
-    resolution: {integrity: sha512-rDeqk/QF6OxTSvQItPdtyR0O4QN5L2a794F4+i8/syHN92DqFXcLNhZgLtYhW3rrJ23vRR7B5wIamsgGM4I6UQ==}
+  '@next/env@15.0.7':
+    resolution: {integrity: sha512-g/v9G2Xmv9T6w/DcRdcdVkLuAHnGt5fcJ3C33PmPrrdtUrwrjXcT4jXasdedSbw+koXa4YeEA3nPgy6q2wmk2A==}
 
-  '@next/eslint-plugin-next@15.0.5':
-    resolution: {integrity: sha512-KgB0AN+6s97MHv9AIMMyuMt0nbXT8gfoawxR0oNSUcvYKkjuYuACqpFi4A5ePLNy4XtOtThUTQfKzWxfCsP25A==}
+  '@next/eslint-plugin-next@15.0.7':
+    resolution: {integrity: sha512-HDENkvtAWwk4s+x54E7BLCzygDfeQTuFKahHEzVFpM89boS4+JOObf/uzNSK0fjFBBtggoTbAi2nYS7RD5oWUQ==}
 
   '@next/mdx@15.0.5':
     resolution: {integrity: sha512-9SVhuGuKqvGGPGKARYk4u8BhC95seW5DtnhOlJ3YKkXjwP4hl3/UvRhjC4bHXv4tV9CBfWPN1miVeceHB4Cemg==}
@@ -1632,8 +1632,8 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  eslint-config-next@15.0.5:
-    resolution: {integrity: sha512-0mCMDbLeimbf+VFC1PG45f0GxkGt1mGDL4FblRgtre4mLAupdFEDKzBEIJvI+KmxtS/VtwWRljq4RLDqraU3gQ==}
+  eslint-config-next@15.0.7:
+    resolution: {integrity: sha512-NKcMxSxIA+bV9N72jInKCA/SOPv1g39ZbKE8KaDavoy+Pd5JC6CK1Y76CCaXabmCij4D1I0V9Od9GurOgUsv5A==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0 || ^9.0.0
       typescript: '>=3.3.1'
@@ -2518,8 +2518,8 @@ packages:
     peerDependencies:
       react: '>=16'
 
-  next@15.0.5:
-    resolution: {integrity: sha512-WTh/Rmxkn4J4vwSYiqEZGzoxjid83iCyN0qg7oJFKzHjYCzy5mwBRqWVlFotM9nAnxGGv5MzbMa4gMu88qeGLA==}
+  next@15.0.7:
+    resolution: {integrity: sha512-Vl6fLEuOP1MgtEmDrY51BQr6Bl8oC8vDSHdA10xZWPPZa6e+dOwYNDLWHjvTktNLZkKYySpsW3Yzy4Lo+JORkw==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
     hasBin: true
     peerDependencies:
@@ -3683,9 +3683,9 @@ snapshots:
       '@types/react': 19.2.7
       react: 19.2.1
 
-  '@next/env@15.0.5': {}
+  '@next/env@15.0.7': {}
 
-  '@next/eslint-plugin-next@15.0.5':
+  '@next/eslint-plugin-next@15.0.7':
     dependencies:
       fast-glob: 3.3.1
 
@@ -4312,11 +4312,11 @@ snapshots:
     dependencies:
       crypto-js: 4.2.0
 
-  '@vercel/analytics@1.3.1(next@15.0.5(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1)':
+  '@vercel/analytics@1.3.1(next@15.0.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1)':
     dependencies:
       server-only: 0.0.1
     optionalDependencies:
-      next: 15.0.5(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+      next: 15.0.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       react: 19.2.1
 
   '@vercel/kv@3.0.0':
@@ -5012,9 +5012,9 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-config-next@15.0.5(eslint@8.57.1)(typescript@5.6.2):
+  eslint-config-next@15.0.7(eslint@8.57.1)(typescript@5.6.2):
     dependencies:
-      '@next/eslint-plugin-next': 15.0.5
+      '@next/eslint-plugin-next': 15.0.7
       '@rushstack/eslint-patch': 1.10.4
       '@typescript-eslint/eslint-plugin': 8.7.0(@typescript-eslint/parser@8.7.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2)
       '@typescript-eslint/parser': 8.7.0(eslint@8.57.1)(typescript@5.6.2)
@@ -6205,11 +6205,11 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next-intl@3.23.5(next@15.0.5(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1):
+  next-intl@3.23.5(next@15.0.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1):
     dependencies:
       '@formatjs/intl-localematcher': 0.5.4
       negotiator: 1.0.0
-      next: 15.0.5(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+      next: 15.0.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       react: 19.2.1
       use-intl: 3.23.5(react@19.2.1)
 
@@ -6226,9 +6226,9 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  next@15.0.5(react-dom@19.2.1(react@19.2.1))(react@19.2.1):
+  next@15.0.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1):
     dependencies:
-      '@next/env': 15.0.5
+      '@next/env': 15.0.7
       '@swc/counter': 0.1.3
       '@swc/helpers': 0.5.13
       busboy: 1.6.0
