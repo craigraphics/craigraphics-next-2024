@@ -23,7 +23,7 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
   const url = post.language === 'en' ? `${baseUrl}/blog/${post.slug}` : `${baseUrl}/${post.language}/blog/${post.slug}`;
   const imageUrl = post.image ? `${baseUrl}${post.image}` : `${baseUrl}/images/profile.png`;
   const excerpt = post.excerpt || (post.content ? post.content.substring(0, 160).replace(/[#*`]/g, '').trim() + '...' : 'Blog post by William Craig');
-  
+
   // Parse date for structured data
   const publishedDate = post.date ? new Date(post.date).toISOString() : new Date().toISOString();
 
@@ -58,12 +58,12 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleStructuredData) }}
       />
       <header className="relative h-[60vh] mb-8">
-        <Image 
-          src={post.image || '/images/placeholder-image.jpg'} 
-          alt={`Featured image for blog post: ${post.title}`} 
-          fill 
-          className="object-cover rounded-md" 
-          priority 
+        <Image
+          src={post.image || '/images/placeholder-image.jpg'}
+          alt={`Featured image for blog post: ${post.title}`}
+          fill
+          className="object-cover rounded-md"
+          priority
         />
         <div className="py-8 mx-auto max-w-screen-lg container">
           <div className="text-sm uppercase tracking-wide">{post.category}</div>
@@ -78,8 +78,8 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
                 <AvatarFallback>{post.author}</AvatarFallback>
               </Avatar>
               <div>
-                <div className="font-semibold text-accent dark:text-accent-dark">{post?.author}</div>
-                <div className="text-sm text-secondary dark:text-secondary-dark">
+                <div className="font-semibold text-accent">{post?.author}</div>
+                <div className="text-sm text-secondary">
                   {post.date} · {post.readTime}
                 </div>
               </div>
@@ -89,20 +89,20 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
               <ShareButton title={post.title} url={`${process.env.NEXT_PUBLIC_BASE_URL}/blog/${post.slug}`} />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-primary dark:text-primary-dark mb-12 mt-6 underline-heading">{post.title}</h1>
-          <div className="prose dark:prose-invert max-w-none prose-headings:font-bold prose-headings:text-foreground dark:prose-headings:text-primary-dark prose-headings:mb-2 prose-p:text-foreground dark:prose-p:text-foreground-dark prose-a:text-secondary dark:prose-a:text-secondary-dark prose-ul:list-disc prose-ol:list-decimal prose-li:m-0 prose-pre:bg-transparent prose-pre:p-0 prose-code:text-current mdx-content">
+          <h1 className="text-4xl font-bold text-primary mb-12 mt-6 underline-heading">{post.title}</h1>
+          <div className="prose dark:prose-invert max-w-none prose-headings:font-bold prose-headings:text-foreground prose-headings:mb-2 prose-p:text-foreground prose-a:text-secondary prose-ul:list-disc prose-ol:list-decimal prose-li:m-0 prose-pre:bg-transparent prose-pre:p-0 prose-code:text-current mdx-content">
             <MDXRemote source={post.content} components={components} />
           </div>
         </section>
       </main>
-      <hr className="border-t-1 border-primary dark:border-primary-dark border-dashed mt-14 mb-14" />
+      <hr className="border-t-1 border-primary border-dashed mt-14 mb-14" />
 
       {post.tags && post.tags.length > 0 && (
         <section className="container mx-auto max-w-screen-lg px-4 mt-0">
-          <h2 className="text-xl text-primary dark:text-primary-dark font-semibold mb-2 ">Tags</h2>
+          <h2 className="text-xl text-primary font-semibold mb-2 ">Tags</h2>
           <ul className="flex flex-wrap gap-2">
             {post.tags.map((tag, index) => (
-              <li key={index} className="text-xs bg-muted dark:bg-muted-dark px-2 py-1 rounded text-primary dark:text-primary-dark">
+              <li key={index} className="text-xs bg-muted px-2 py-1 rounded text-primary">
                 {tag}
               </li>
             ))}

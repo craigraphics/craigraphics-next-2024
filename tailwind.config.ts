@@ -3,12 +3,6 @@ import type { Config } from 'tailwindcss';
 const config: Config = {
   darkMode: ['class'],
   content: ['./pages/**/*.{js,ts,jsx,tsx,mdx}', './components/**/*.{js,ts,jsx,tsx,mdx}', './app/**/*.{js,ts,jsx,tsx,mdx}'],
-  safelist: [
-    {
-      pattern: /^(bg|text|border)-(white|gray|black)/,
-      variants: ['dark'],
-    },
-  ],
   theme: {
     container: {
       center: true,
@@ -22,39 +16,27 @@ const config: Config = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
-        background: {
-          DEFAULT: 'hsl(var(--background-light))',
-          dark: 'hsl(var(--background-dark))',
-        },
-        foreground: {
-          DEFAULT: 'hsl(var(--foreground-light))',
-          dark: 'hsl(var(--foreground-dark))',
-        },
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: 'hsl(var(--primary-light))',
-          foreground: 'hsl(var(--primary-foreground-light))',
-          dark: 'hsl(var(--primary-dark))',
-          'dark-foreground': 'hsl(var(--primary-foreground-dark))',
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
-          DEFAULT: 'hsl(var(--secondary-light))',
-          foreground: 'hsl(var(--secondary-foreground-light))',
-          dark: 'hsl(var(--secondary-dark))',
-          'dark-foreground': 'hsl(var(--secondary-foreground-dark))',
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',
         },
         muted: {
-          DEFAULT: 'hsl(var(--muted-light))',
+          DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))',
-          dark: 'hsl(var(--muted-dark))',
         },
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
-          dark: 'hsl(var(--accent-dark))',
         },
         popover: {
           DEFAULT: 'hsl(var(--popover))',

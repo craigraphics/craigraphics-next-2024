@@ -15,7 +15,7 @@ interface ClientCodeBlockProps {
 const ClientCodeBlock: React.FC<ClientCodeBlockProps> = ({ children, className }) => {
   if (!className) {
     // Render inline code (for single backticks) as a <code> tag
-    return <code className="bg-slate-900 !text-secondary-dark">{children}</code>;
+    return <code className="bg-slate-900 !text-secondary">{children}</code>;
   }
 
   // Render multi-line code blocks (for triple backticks) using Codeblock with syntax highlighting

@@ -32,7 +32,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title, url }) => {
   };
 
   return (
-    <Button variant="ghost" className="hover:bg-primary dark:hover:bg-primary-dark" size="sm" onClick={handleShare}>
+    <Button variant="ghost" className="hover:bg-primary" size="sm" onClick={handleShare}>
       <Share2 className="h-5 w-5 mr-2" />
       {t('share')}
     </Button>

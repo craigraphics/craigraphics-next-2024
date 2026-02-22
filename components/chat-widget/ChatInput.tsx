@@ -17,7 +17,7 @@ export const ChatInput = ({ inputMessage, setInputMessage, onSendMessage, onRese
   const t = useTranslations('chatWidget');
 
   return (
-    <div className="p-6 border-t border-muted dark:border-muted-dark bg-background/40 dark:bg-background-dark/60">
+    <div className="p-6 border-t border-muted bg-background/40 dark:bg-background/60">
       <div className="flex space-x-3">
         <div className="flex-1 relative">
           <input
@@ -27,7 +27,7 @@ export const ChatInput = ({ inputMessage, setInputMessage, onSendMessage, onRese
             onChange={e => setInputMessage(e.target.value)}
             onKeyPress={onKeyPress}
             placeholder={t('placeholder')}
-            className="w-full px-4 py-3 rounded-2xl border border-muted dark:border-muted-dark bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark focus:border-transparent transition-all duration-200"
+            className="w-full px-4 py-3 rounded-2xl border border-muted bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
             disabled={isLoading}
             maxLength={500}
             aria-label={t('placeholder') || 'Chat message input'}
@@ -40,10 +40,10 @@ export const ChatInput = ({ inputMessage, setInputMessage, onSendMessage, onRese
         <Button
           onClick={onSendMessage}
           disabled={!inputMessage.trim() || isLoading}
-          className="h-12 w-12 rounded-full dark:text-secondary bg-primary dark:bg-primary-dark hover:bg-secondary dark:hover:bg-secondary-dark disabled:opacity-50 transition-all duration-200 hover:scale-105 disabled:hover:scale-100"
+          className="h-12 w-12 rounded-full bg-primary hover:bg-secondary disabled:opacity-50 transition-all duration-200 hover:scale-105 disabled:hover:scale-100"
           aria-label="Send message"
         >
-          <Send className="h-5 w-5 text-primary" aria-hidden="true" />
+          <Send className="h-5 w-5 text-primary-foreground" aria-hidden="true" />
         </Button>
       </div>
 
@@ -51,7 +51,7 @@ export const ChatInput = ({ inputMessage, setInputMessage, onSendMessage, onRese
         {t('disclaimer')}
         <button
           onClick={onReset}
-          className="ml-1 text-primary dark:text-primary-dark hover:text-secondary dark:hover:text-secondary-dark underline"
+          className="ml-1 text-primary hover:text-secondary underline"
         >
           {t('resetConversation')}
         </button>

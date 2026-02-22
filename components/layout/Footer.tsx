@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="container mx-auto px-6 py-4">
         <div className="text-center">
           <a
-            className="text-accent dark:text-accent-dark hover:underline"
+            className="text-accent hover:underline"
             href="https://github.com/craigraphics/craigraphics-next-2024"
             target="_blank"
             rel="noopener noreferrer"
