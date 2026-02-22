@@ -1,5 +1,3 @@
-import { MDXRemoteSerializeResult } from 'next-mdx-remote';
-
 export interface BlogPost {
   slug: string;
   title: string;
@@ -13,8 +11,4 @@ export interface BlogPost {
   author: string;
   avatar?: string | null;
   tags?: string[];
-}
-
-export interface SerializedBlogPost extends BlogPost {
-  serializedContent: MDXRemoteSerializeResult;
 }
