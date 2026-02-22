@@ -121,7 +121,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ChatRespo
 
     // Call OpenAI API
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4.1-mini',
+      model: 'gpt-4o-mini',
       messages: [
         { role: 'system', content: generateSystemPrompt() },
         { role: 'user', content: message.trim() },
