@@ -34,26 +34,23 @@ interface OpenAIError {
   message?: string;
 }
 
+// Vercel max function duration in seconds (requires Pro plan for >10s)
+export const maxDuration = 30;
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Load William Craig knowledge from markdown file
-function loadWilliamCraigKnowledge(): string {
+// Build the system prompt once at module initialisation — avoids a
+// synchronous file read + string allocation on every request.
+function buildSystemPrompt(): string {
+  let knowledge = 'Knowledge base temporarily unavailable.';
   try {
     const knowledgePath = path.join(process.cwd(), 'william-craig-knowledge.md');
-    const content = fs.readFileSync(knowledgePath, 'utf8');
-    console.log('Successfully loaded knowledge base, length:', content.length);
-    return content;
+    knowledge = fs.readFileSync(knowledgePath, 'utf8');
   } catch (error) {
     console.error('Error loading William Craig knowledge:', error);
-    return 'Knowledge base temporarily unavailable.';
   }
-}
-
-// Generate system prompt with fresh knowledge on each request
-function generateSystemPrompt(): string {
-  const knowledge = loadWilliamCraigKnowledge();
   return `You are an AI assistant representing William Craig, a Senior Software Engineer and Full Stack Developer. Your role is to answer questions about William's professional experience, skills, projects, and career.
 
 IMPORTANT GUIDELINES:
@@ -70,6 +67,8 @@ ${knowledge}
 
 Remember: You represent William professionally, so maintain a helpful and engaging tone while staying focused on his career and technical expertise.`;
 }
+
+const SYSTEM_PROMPT = buildSystemPrompt();
 
 async function getRateLimitInfo(ip: string): Promise<RateLimitInfo> {
   const limit = 10;
@@ -123,7 +122,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ChatRespo
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [
-        { role: 'system', content: generateSystemPrompt() },
+        { role: 'system', content: SYSTEM_PROMPT },
         { role: 'user', content: message.trim() },
       ],
       max_tokens: 300,
