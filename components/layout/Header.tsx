@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
@@ -14,77 +14,62 @@ import { Menu, X } from 'lucide-react';
 import Logo from '@/components/layout/Logo';
 import Link from '@/components/ui/NavLink';
 
-const Header = () => {
+const NavItems = ({ closeMenu }: { closeMenu?: () => void }) => {
   const t = useTranslations('common');
   const locale = useLocale();
+  return (
+    <>
+      <Link href={`/${locale}/`} onClick={closeMenu}>
+        {t('home')}
+      </Link>
+      <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
+      <Link href={`/${locale}/work`} onClick={closeMenu}>
+        {t('projects')}
+      </Link>
+      <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
+      <Link href={`/${locale}/blog`} onClick={closeMenu}>
+        {t('blog')}
+      </Link>
+      <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
+      <Link href={`/${locale}/contact`} onClick={closeMenu}>
+        {t('contact')}
+      </Link>
+    </>
+  );
+};
+
+const Header = () => {
+  const locale = useLocale();
+  const t = useTranslations('common');
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollYRef = useRef(0);
 
   const changeLanguage = (newLocale: string) => {
     const currentPathname = pathname?.substring(3) || '/';
     router.push(`/${newLocale}${currentPathname}`);
   };
 
-  const rafIdRef = React.useRef<number | null>(null);
+  const rafIdRef = useRef<number | null>(null);
 
-  const controlHeader = () => {
-    if (typeof window !== 'undefined') {
-      // Cancel any pending animation frame
-      if (rafIdRef.current !== null) {
-        cancelAnimationFrame(rafIdRef.current);
-      }
-
-      // Batch DOM reads using requestAnimationFrame to avoid forced reflows
-      rafIdRef.current = requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY;
-        if (currentScrollY > lastScrollY) {
-          setIsVisible(false);
-        } else {
-          setIsVisible(true);
-        }
-        setLastScrollY(currentScrollY);
-      });
-    }
-  };
+  const controlHeader = useCallback(() => {
+    if (rafIdRef.current !== null) cancelAnimationFrame(rafIdRef.current);
+    rafIdRef.current = requestAnimationFrame(() => {
+      const currentScrollY = window.scrollY;
+      setIsVisible(currentScrollY <= lastScrollYRef.current);
+      lastScrollYRef.current = currentScrollY;
+    });
+  }, []);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', controlHeader, { passive: true });
-
-      return () => {
-        window.removeEventListener('scroll', controlHeader);
-        if (rafIdRef.current !== null) {
-          cancelAnimationFrame(rafIdRef.current);
-        }
-      };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lastScrollY]);
-
-  const NavItems = ({ closeMenu }: { closeMenu?: () => void }) => {
-    return (
-      <>
-        <Link href={`/${locale}/`} onClick={closeMenu}>
-          {t('home')}
-        </Link>
-        <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
-        <Link href={`/${locale}/work`} onClick={closeMenu}>
-          {t('projects')}
-        </Link>
-        <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
-        <Link href={`/${locale}/blog`} onClick={closeMenu}>
-          {t('blog')}
-        </Link>
-        <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
-        <Link href={`/${locale}/contact`} onClick={closeMenu}>
-          {t('contact')}
-        </Link>
-      </>
-    );
-  };
+    window.addEventListener('scroll', controlHeader, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', controlHeader);
+      if (rafIdRef.current !== null) cancelAnimationFrame(rafIdRef.current);
+    };
+  }, [controlHeader]);
 
   return (
     <header

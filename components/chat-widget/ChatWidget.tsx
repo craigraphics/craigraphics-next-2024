@@ -56,8 +56,8 @@ export default function ModernChatWidget() {
                 <WelcomeMessage suggestions={suggestions} suggestionsLoading={suggestionsLoading} onSendMessage={handleSendMessage} />
               ) : (
                 <>
-                  {messages.map((message, index) => (
-                    <MessageBubble key={index} message={message} />
+                  {messages.map((message) => (
+                    <MessageBubble key={`${message.role}-${message.timestamp.getTime()}`} message={message} />
                   ))}
 
                   {isLoading && <LoadingIndicator />}

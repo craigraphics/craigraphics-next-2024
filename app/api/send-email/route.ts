@@ -1,6 +1,15 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
+}
+
 export async function POST(req: Request) {
   console.log('API route hit - Starting email send process');
 
@@ -27,6 +36,8 @@ export async function POST(req: Request) {
     }
 
     // Construct email message
+    const safeEmail = escapeHtml(body.email);
+    const safeMessage = escapeHtml(body.message);
     const { data, error } = await resend.emails.send({
       from: process.env.FROM_EMAIL,
       to: [process.env.TO_EMAIL],
@@ -34,9 +45,9 @@ export async function POST(req: Request) {
       text: `From: ${body.email}\nMessage: ${body.message}`,
       html: `
         <h2>New Contact Form Submission</h2>
-        <p><strong>From:</strong> ${body.email}</p>
+        <p><strong>From:</strong> ${safeEmail}</p>
         <p><strong>Message:</strong></p>
-        <p>${body.message}</p>
+        <p>${safeMessage}</p>
       `,
     });
 
