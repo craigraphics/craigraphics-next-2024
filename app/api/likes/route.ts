@@ -9,8 +9,12 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Slug is required' }, { status: 400 });
   }
 
-  const likes = (await kv.get<number>(`likes:${slug}`)) || 0;
-  return NextResponse.json({ likes });
+  try {
+    const likes = (await kv.get<number>(`likes:${slug}`)) || 0;
+    return NextResponse.json({ likes });
+  } catch {
+    return NextResponse.json({ likes: 0 });
+  }
 }
 
 export async function POST(request: Request) {
@@ -20,6 +24,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Slug is required' }, { status: 400 });
   }
 
-  const newLikes = await kv.incr(`likes:${slug}`);
-  return NextResponse.json({ likes: newLikes });
+  try {
+    const newLikes = await kv.incr(`likes:${slug}`);
+    return NextResponse.json({ likes: newLikes });
+  } catch {
+    return NextResponse.json({ error: 'Failed to update likes' }, { status: 500 });
+  }
 }

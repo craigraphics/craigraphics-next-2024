@@ -14,13 +14,13 @@
 
 ## Professional Summary
 
-I'm a passionate code enthusiast with over 15 years of experience turning coffee into high-performance web applications. I specialize in creating seamless user experiences and have had the privilege of working with major brands like Autodesk, General Motors, Frontier Communications, Carnival Cruise, Telmex, Mexico's Presidency, and Coca-Cola.
+I'm a passionate code enthusiast with over 15 years of experience turning coffee into high-performance web applications. I specialize in creating seamless user experiences and have had the privilege of working with major brands like Disney, Autodesk, General Motors, Frontier Communications, Carnival Cruise, Telmex, Mexico's Presidency, and Coca-Cola.
 
 ## Frequently Asked Questions (FAQ)
 
 ### 1. What projects has William worked on?
 
-William has worked on large-scale web apps for companies like Autodesk, General Motors, and Frontier. In most cases, he was the lead front-end developer or a senior engineer on the team. He's rebuilt legacy systems, improved performance, and helped define architecture decisions. At Autodesk, for example, he led the front-end direction for a Profile Management project that scaled to thousands of users.
+William has worked on large-scale web apps for companies like Disney, Autodesk, General Motors, and Frontier. In most cases, he was the lead front-end developer or a senior engineer on the team. He's rebuilt legacy systems, improved performance, and helped define architecture decisions. At Autodesk, for example, he led the front-end direction for a Profile Management project that scaled to thousands of users.
 
 ### 2. How does William build modern web apps?
 
