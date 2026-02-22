@@ -12,16 +12,16 @@ export const ChatHeader = ({ onClose }: ChatHeaderProps) => {
   const t = useTranslations('chatWidget');
 
   return (
-    <div className="p-6 border-b border-muted dark:border-muted-dark bg-background/40 dark:bg-background-dark/60 flex items-center justify-between">
+    <div className="p-6 border-b border-muted bg-background/40 dark:bg-background/60 flex items-center justify-between">
       <div className="flex items-center space-x-3">
         <div className="relative">
-          <div className="w-10 h-10 bg-gradient-to-br from-primary-dark to-secondary-dark dark:from-primary-dark dark:to-secondary-dark rounded-full flex items-center justify-center">
-            <Bot className="w-5 h-5 text-primary" />
+          <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
+            <Bot className="w-5 h-5 text-primary-foreground" />
           </div>
-          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-accent dark:bg-accent-dark rounded-full border-2 border-background dark:border-background-dark animate-[pulse_2s_ease-in-out_infinite]" />
+          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-accent rounded-full border-2 border-background animate-[pulse_2s_ease-in-out_infinite]" />
         </div>
         <div>
-          <h3 className="font-semibold text-lg text-foreground dark:text-primary-dark">{t('title')}</h3>
+          <h3 className="font-semibold text-lg text-foreground">{t('title')}</h3>
           <p className="text-sm text-muted-foreground">{t('subtitle')}</p>
         </div>
       </div>

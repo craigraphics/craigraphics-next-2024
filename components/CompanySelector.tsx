@@ -24,20 +24,18 @@ const CompanySelector: React.FC<CompanySelectorProps> = ({ companies, activeTab,
       {/* Mobile view */}
       <div className="sm:hidden w-full">
         <Select onValueChange={handleSelectChange} value={activeTab.toString()}>
-          <SelectTrigger className="w-full dark:bg-background-dark border-primary border dark:border-primary-dark dark:text-secondary-dark">
+          <SelectTrigger className="w-full bg-background border-primary border">
             <SelectValue placeholder="Select a company" />
           </SelectTrigger>
-          <SelectContent className="bg-background dark:bg-background-dark">
+          <SelectContent className="bg-background">
             {companies.map((company, index) => (
               <SelectItem
                 key={index}
                 value={index.toString()}
-                className=" 
-                hover:text-primary-dark hover:bg-secondary :hover:font-semibold
-                dark:hover:text-primary dark:hover:bg-secondary-dark
-                data-[state=checked]:bg-primary data-[state=checked]:text-foreground-dark
-                dark:data-[state=checked]:bg-primary-dark dark:data-[state=checked]:text-slate-800  
-              cursor-pointer"
+                className="
+                hover:text-primary hover:bg-secondary hover:font-semibold
+                data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground
+                cursor-pointer"
               >
                 {company.title}
               </SelectItem>
@@ -55,8 +53,8 @@ const CompanySelector: React.FC<CompanySelectorProps> = ({ companies, activeTab,
             className={`w-full text-left py-2 px-4 mb-2 font-medium transition border-l-2 border-transparent
               ${
                 activeTab === index
-                  ? 'bg-transparent border-primary border-l-2 dark:border-l-primary-dark dark:text-secondary-dark font-semibold'
-                  : 'hover:bg-transparent hover:text-background dark:hover:text-primary-dark hover:border-secondary hover:dark:border-l-secondary-dark'
+                  ? 'bg-transparent border-primary border-l-2 text-secondary font-semibold'
+                  : 'hover:bg-transparent hover:text-primary hover:border-secondary'
               }`}
           >
             {company.title}

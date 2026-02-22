@@ -24,6 +24,15 @@ const geistMono = localFont({
 
 const validLocales = ['en', 'es'] as const;
 
+// Inline script to set the theme class synchronously before first paint, preventing flash
+const themeScript = `(function(){
+  try {
+    var t = localStorage.getItem('theme');
+    if (!t) { t = window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'; }
+    document.documentElement.classList.add(t);
+  } catch(e) {}
+})();`;
+
 export function generateStaticParams() {
   return validLocales.map(locale => ({ locale }));
 }
@@ -123,6 +132,7 @@ export default async function RootLayout(props: { children: React.ReactNode; par
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <link rel="manifest" href="/manifest.webmanifest" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>

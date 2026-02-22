@@ -20,20 +20,20 @@ export default function BlogList({ posts, locale, t }: BlogListProps) {
   return (
     <Layout>
       <div className="pt-14 mt-12 sm:max-w-4xl mx-auto">
-        <h1 className="text-3xl font-extrabold text-primary dark:text-primary-dark sm:text-3xl underline-heading mb-4">{t('title')}</h1>
-        <p className="text-secondary dark:text-secondary-dark text-lg font-medium mb-4">{t('description')}</p>
+        <h1 className="text-3xl font-extrabold text-primary sm:text-3xl underline-heading mb-4">{t('title')}</h1>
+        <p className="text-secondary text-lg font-medium mb-4">{t('description')}</p>
 
         {featuredPost && (
-          <article className="my-12 grid md:grid-cols-2 gap-8 items-center rounded-md pl-7 border border-muted dark:border-muted-dark shadow-md shadow-black:20 dark:shadow-black:80 p-7 md:p-0 md:pl-7">
+          <article className="my-12 grid md:grid-cols-2 gap-8 items-center rounded-md pl-7 border border-muted shadow-md shadow-black:20 dark:shadow-black:80 p-7 md:p-0 md:pl-7">
             <header>
               <Link href={`/${locale}/blog/${featuredPost.slug}`}>
-                <h2 className="text-4xl text-primary dark:text-primary-dark font-bold mb-4 ">{featuredPost.title}</h2>
+                <h2 className="text-4xl text-primary font-bold mb-4 ">{featuredPost.title}</h2>
               </Link>
 
               <p className="text-gray-600 dark:text-gray-300 mb-4">{featuredPost.excerpt}</p>
               <Link
                 href={`/${locale}/blog/${featuredPost.slug}`}
-                className="underline text-secondary dark:text-secondary-dark hover:no-underline hover:text-primary dark:hover:text-primary-dark"
+                className="underline text-secondary hover:no-underline hover:text-primary"
               >
                 {t('readMore')}
               </Link>
@@ -57,7 +57,7 @@ export default function BlogList({ posts, locale, t }: BlogListProps) {
           {otherPosts.map(post => (
             <article
               key={post.slug}
-              className=" border border-muted dark:border-muted-dark shadow-md shadow-black:20 dark:shadow-black:80 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300"
+              className=" border border-muted shadow-md shadow-black:20 dark:shadow-black:80 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300"
             >
               <Link href={`/${locale}/blog/${post.slug}`} className="group">
                 <figure className="relative h-48">
@@ -72,10 +72,10 @@ export default function BlogList({ posts, locale, t }: BlogListProps) {
                 </figure>
                 <div className="p-4">
                   <header>
-                    <h3 className="text-xl font-semibold mb-2 text-primary dark:text-primary-dark  group-hover:text-secondary dark:group-hover:text-secondary-dark transition-colors duration-300">
+                    <h3 className="text-xl font-semibold mb-2 text-primary group-hover:text-secondary transition-colors duration-300">
                       {post.title}
                     </h3>
-                    <time className="text-sm text-muted-dark dark:text-muted mb-2" dateTime={post.date}>
+                    <time className="text-sm text-muted-foreground mb-2" dateTime={post.date}>
                       {new Date(post.date).toLocaleDateString()}
                     </time>
                   </header>

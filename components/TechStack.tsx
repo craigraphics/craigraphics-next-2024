@@ -130,7 +130,7 @@ const TechnologyBadge = ({ tech }: TechnologyBadgeProps) => {
     <div className="relative inline-block" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <Badge
         variant="secondary"
-        className="cursor-pointer transition-all duration-300 px-3 py-1 text-sm bg-muted dark:bg-muted-dark text-muted-foreground/110 dark:text-muted-foreground-dark/70 hover:bg-primary/10 dark:hover:bg-primary-dark/10 hover:text-primary dark:hover:text-primary-dark hover:scale-105"
+        className="cursor-pointer transition-all duration-300 px-3 py-1 text-sm bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary hover:scale-105"
       >
         {tech}
       </Badge>
@@ -138,31 +138,31 @@ const TechnologyBadge = ({ tech }: TechnologyBadgeProps) => {
       {/* Tooltip */}
       {isHovered && techData && (
         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-50 animate-in fade-in-0 slide-in-from-bottom-2 duration-200">
-          <div className="bg-card dark:bg-background-dark border border-muted dark:border-muted-dark rounded-lg shadow-lg p-3 min-w-[200px] max-w-[280px]">
+          <div className="bg-background border border-muted rounded-lg shadow-lg p-3 min-w-[200px] max-w-[280px]">
             {/* Tooltip Arrow */}
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-muted dark:border-t-muted-dark"></div>
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-muted"></div>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <h4 className="font-semibold text-card-foreground dark:text-foreground-dark text-sm">{tech}</h4>
-                <span className="text-xs text-muted-foreground dark:text-muted-foreground-dark">
+                <h4 className="font-semibold text-foreground text-sm">{tech}</h4>
+                <span className="text-xs text-muted-foreground">
                   {t('since')} {techData.learned}
                 </span>
               </div>
 
               <div>
-                <p className="text-xs font-medium text-card-foreground dark:text-foreground-dark mb-1">{t('usedIn')}</p>
+                <p className="text-xs font-medium text-foreground mb-1">{t('usedIn')}</p>
                 <div className="flex flex-wrap gap-1">
                   {techData.projects.slice(0, 2).map((project) => (
                     <span
                       key={project}
-                      className="text-xs bg-muted/50 dark:bg-muted-dark/50 px-2 py-0.5 rounded text-muted-foreground dark:text-muted-foreground-dark"
+                      className="text-xs bg-muted/50 px-2 py-0.5 rounded text-muted-foreground"
                     >
                       {project}
                     </span>
                   ))}
                   {techData.projects.length > 2 && (
-                    <span className="text-xs text-muted-foreground dark:text-muted-foreground-dark">
+                    <span className="text-xs text-muted-foreground">
                       +{techData.projects.length - 2} {t('more')}
                     </span>
                   )}
@@ -197,7 +197,7 @@ const TechnologyCategory = ({ IconComponent, iconColor, lineColor, title, techno
 
       {/* Category Title with Colored Line */}
       <div className="text-center">
-        <h3 className="text-3xl font-extrabold text-primary dark:text-primary-dark sm:text-xl mb-2">{title}</h3>
+        <h3 className="text-3xl font-extrabold text-primary sm:text-xl mb-2">{title}</h3>
         <div className={`w-12 h-0.5 ${lineColor} rounded-full mx-auto`}></div>
       </div>
 
@@ -209,7 +209,7 @@ const TechnologyCategory = ({ IconComponent, iconColor, lineColor, title, techno
       </div>
 
       {/* Years Badge */}
-      <Badge className="bg-accent dark:bg-accent-dark text-background dark:text-background-dark font-medium px-3 py-1">{t(yearsKey)}</Badge>
+      <Badge className="bg-accent text-background font-medium px-3 py-1">{t(yearsKey)}</Badge>
     </div>
   );
 };
@@ -280,7 +280,7 @@ const TechStack = () => {
     <section className="mt-14 lg:w-full">
       {/* Header */}
       <div className=" mb-12">
-        <h3 className="text-3xl font-bold text-primary dark:text-primary-dark underline-heading mb-4">{t('myToolbox')}</h3>
+        <h3 className="text-3xl font-bold text-primary underline-heading mb-4">{t('myToolbox')}</h3>
         <p className="mt-1 font-medium">{tToolbox('description')}</p>
       </div>
 
@@ -301,7 +301,7 @@ const TechStack = () => {
 
       {/* Note */}
       <div className="mt-10 mb-10 text-center">
-        <p className="text-sm text-muted-foreground dark:text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           <Lightbulb className="inline-block mr-1 relative -top-1" />
           {tToolbox('hoverTip')}
         </p>

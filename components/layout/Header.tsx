@@ -22,15 +22,15 @@ const NavItems = ({ closeMenu }: { closeMenu?: () => void }) => {
       <Link href={`/${locale}/`} onClick={closeMenu}>
         {t('home')}
       </Link>
-      <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
+      <Separator orientation="vertical" className="bg-muted h-5 hidden md:block" />
       <Link href={`/${locale}/work`} onClick={closeMenu}>
         {t('projects')}
       </Link>
-      <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
+      <Separator orientation="vertical" className="bg-muted h-5 hidden md:block" />
       <Link href={`/${locale}/blog`} onClick={closeMenu}>
         {t('blog')}
       </Link>
-      <Separator orientation="vertical" className="bg-muted-dark dark:bg-muted-dark h-5 hidden md:block" />
+      <Separator orientation="vertical" className="bg-muted h-5 hidden md:block" />
       <Link href={`/${locale}/contact`} onClick={closeMenu}>
         {t('contact')}
       </Link>
@@ -74,7 +74,7 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full
-        border-b border-muted dark:border-muted-dark
+        border-b border-muted
         bg-white dark:bg-gray-800 bg-opacity-50 dark:bg-opacity-50
         transition-transform duration-300 z-10
         ${isVisible ? 'translate-y-0' : '-translate-y-full'} backdrop-filter backdrop-blur-lg`}
@@ -95,15 +95,14 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <ThemeToggle />
             <Select onValueChange={changeLanguage} defaultValue={locale}>
-              <SelectTrigger className="w-[80px] dark:bg-background-dark border-primary border dark:border-primary-dark dark:text-secondary-dark">
+              <SelectTrigger className="w-[80px] bg-background border-primary border">
                 <SelectValue placeholder="Lang" />
               </SelectTrigger>
-              <SelectContent className="bg-background dark:bg-background-dark ">
+              <SelectContent className="bg-background">
                 <SelectItem
-                  className=" 
-                  dark:hover:text-primary dark:hover:bg-secondary-dark
-                  data-[state=checked]:bg-primary data-[state=checked]:text-foreground-dark
-                  dark:data-[state=checked]:bg-primary-dark dark:data-[state=checked]:text-slate-800  
+                  className="
+                  hover:text-primary hover:bg-secondary
+                  data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground
                   cursor-pointer"
                   value="en"
                 >
@@ -111,9 +110,8 @@ const Header = () => {
                 </SelectItem>
                 <SelectItem
                   className="
-                  dark:hover:text-primary dark:hover:bg-secondary-dark
-                  data-[state=checked]:bg-primary data-[state=checked]:text-foreground-dark
-                  dark:data-[state=checked]:bg-primary-dark dark:data-[state=checked]:text-slate-800  
+                  hover:text-primary hover:bg-secondary
+                  data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground
                   cursor-pointer"
                   value="es"
                 >
@@ -128,26 +126,25 @@ const Header = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="md:hidden text-secondary dark:text-secondary-dark 
-                  hover:bg-secondary dark:hover:bg-primary-dark
-                  hover:text-foreground-dark dark:hover:text-primary"
+                  className="md:hidden text-secondary
+                  hover:bg-secondary hover:text-primary-foreground"
                 >
                   <Menu className="h-6 w-6" />
                   <span className="sr-only">{t('open_menu')}</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[240px] sm:w-[300px] bg-background-dark/70">
+              <SheetContent side="right" className="w-[240px] sm:w-[300px] bg-background/80">
                 <SheetHeader className="mb-4">
                   <SheetTitle>{t('menu')}</SheetTitle>
                   <SheetDescription className="pb-2">{t('menu_description')}</SheetDescription>
-                  <Separator orientation="horizontal" className="bg-accent dark:bg-accent-dark" />
+                  <Separator orientation="horizontal" className="bg-accent" />
                 </SheetHeader>
                 <div className="absolute top-1 right-1 ">
                   <SheetClose asChild>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-secondary dark:text-secondary-dark hover:bg-transparent hover:text-primary hover:dark:text-primary-dark"
+                      className="text-secondary hover:bg-transparent hover:text-primary"
                     >
                       <X className="h-6 w-6" />
                       <span className="sr-only">{t('close_menu')}</span>

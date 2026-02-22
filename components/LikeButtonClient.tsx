@@ -51,7 +51,7 @@ const LikeButtonClient: React.FC<LikeButtonClientProps> = ({ slug }) => {
     <button
       onClick={handleLike}
       className={`flex items-center space-x-1 duration-300 transition-colors ${
-        liked ? 'text-secondary dark:text-secondary-dark' : 'text-foreground dark:text-foreground-dark'
+        liked ? 'text-secondary' : 'text-foreground'
       }`}
       disabled={liked || likeMutation.isPending}
     >

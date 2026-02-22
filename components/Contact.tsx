@@ -73,7 +73,7 @@ const EmailForm: FC = () => {
 
   return (
     <div className="max-w-md mx-auto p-4 flex flex-col content-center place-self-centerpy-14 mt-12 px-4 sm:px-6 lg:px-8">
-      <h2 className="text-3xl font-extrabold text-primary dark:text-primary-dark sm:text-3xl underline-heading mt-4">{t('title')}</h2>
+      <h2 className="text-3xl font-extrabold text-primary sm:text-3xl underline-heading mt-4">{t('title')}</h2>
       <p className="my-8 font-medium ">{t('description')}</p>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Label htmlFor="email">{t('form.email')} </Label>
@@ -104,7 +104,7 @@ const EmailForm: FC = () => {
         <Button
           type="submit"
           disabled={mutation.isPending}
-          className="w-full p-2 rounded bg-accent text-background dark:bg-accent-dark dark:text-background-dark hover:bg-secondary dark:hover:bg-secondary-dark disabled:bg-gray-400"
+          className="w-full p-2 rounded bg-accent text-background hover:bg-secondary disabled:bg-gray-400"
         >
           {mutation.isPending ? t('form.sending') : t('form.send')}
         </Button>

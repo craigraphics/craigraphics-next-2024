@@ -46,7 +46,7 @@ export default function ModernChatWidget() {
 
       {/* Chat Container */}
       <div className="fixed inset-4 md:inset-8 lg:inset-16 z-50 flex items-center justify-center">
-        <Card className="w-full max-w-4xl h-full max-h-[800px] flex flex-col shadow-2xl border-0 overflow-hidden bg-background/80 dark:bg-background-dark/95 backdrop-blur-xl">
+        <Card className="w-full max-w-4xl h-full max-h-[800px] flex flex-col shadow-2xl border-0 overflow-hidden bg-background/80 backdrop-blur-xl">
           <ChatHeader onClose={closeChat} />
 
           {/* Messages Area */}

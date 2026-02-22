@@ -22,14 +22,14 @@ const ProjectShowcase = () => {
   return (
     <section>
       <div className="pt-14 mt-12 max-w-2xl mx-auto">
-        <h2 className="text-3xl font-extrabold text-primary dark:text-primary-dark sm:text-3xl underline-heading mb-4">{t('title')}</h2>
-        <p className="text-secondary dark:text-secondary-dark text-lg font-medium mb-4">{t('description')}</p>
+        <h2 className="text-3xl font-extrabold text-primary sm:text-3xl underline-heading mb-4">{t('title')}</h2>
+        <p className="text-secondary text-lg font-medium mb-4">{t('description')}</p>
       </div>
       <div className="pt-4 mt-4 max-w-2xl lg:max-w-5xl mx-auto">
         {apps.map((project: ProjectData) => (
           <Card
             key={project.title}
-            className="w-full bg-transparent border-muted dark:border-muted-dark shadow-md shadow-black:20 dark:shadow-black:80 overflow-hidden mb-14"
+            className="w-full bg-transparent border-muted shadow-md shadow-black:20 dark:shadow-black:80 overflow-hidden mb-14"
           >
             <CardContent className="p-0">
               <div className="flex flex-col lg:flex-row">
@@ -44,13 +44,13 @@ const ProjectShowcase = () => {
                   />
                 </div>
                 <div className="p-6 lg:w-1/2">
-                  <h3 className="text-2xl font-bold text-primary dark:text-primary-dark mb-2">{project.title}</h3>
-                  <p className="text-foreground dark:text-foreground-dark mb-4">{project.description}</p>
+                  <h3 className="text-2xl font-bold text-primary mb-2">{project.title}</h3>
+                  <p className="text-foreground mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.tools.map((tool, index) => (
                       <span
                         key={index}
-                        className="text-xs bg-muted dark:bg-muted-dark px-2 py-1 rounded text-primary dark:text-primary-dark"
+                        className="text-xs bg-muted px-2 py-1 rounded text-primary"
                       >
                         {tool}
                       </span>
@@ -62,14 +62,14 @@ const ProjectShowcase = () => {
                         href={project.githubLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary dark:text-primary-dark hover:text-primary/80 dark:hover:text-primary-dark/80 focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark focus:ring-offset-2 rounded"
+                        className="text-primary hover:text-primary/80 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
                         aria-label={`View ${project.title} source code on GitHub (opens in new tab)`}
                       >
                         <Icon
                           icon="mdi:github"
                           width="24"
                           height="24"
-                          className="text-primary dark:text-primary-dark hover:text-primary/80 dark:hover:text-primary-dark/80"
+                          className="text-primary hover:text-primary/80"
                           aria-hidden="true"
                         />
                       </a>
@@ -79,7 +79,7 @@ const ProjectShowcase = () => {
                         href={project.liveLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary dark:text-primary-dark hover:text-primary/80 dark:hover:text-primary-dark/80 focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark focus:ring-offset-2 rounded"
+                        className="text-primary hover:text-primary/80 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
                         aria-label={`Visit ${project.title} live site (opens in new tab)`}
                       >
                         <ExternalLink size={24} aria-hidden="true" />

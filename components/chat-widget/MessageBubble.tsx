@@ -16,14 +16,14 @@ export const MessageBubble = ({ message }: MessageBubbleProps) => {
       <div
         className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
           isUser
-            ? 'bg-primary dark:bg-primary-dark'
-            : 'bg-gradient-to-br from-secondary to-primary dark:from-secondary-dark dark:to-primary-dark'
+            ? 'bg-primary'
+            : 'bg-gradient-to-br from-secondary to-primary'
         }`}
       >
         {isUser ? (
-          <User className="w-4 h-4 text-foreground-dark dark:text-primary" />
+          <User className="w-4 h-4 text-primary-foreground" />
         ) : (
-          <Bot className="w-4 h-4 text-foreground-dark dark:text-primary" />
+          <Bot className="w-4 h-4 text-primary-foreground" />
         )}
       </div>
 
@@ -32,8 +32,8 @@ export const MessageBubble = ({ message }: MessageBubbleProps) => {
         <div
           className={`inline-block p-4 rounded-2xl shadow-sm ${
             isUser
-              ? 'bg-primary dark:bg-primary-dark text-white dark:text-slate-900 rounded-br-md'
-              : 'bg-muted dark:bg-muted-dark text-foreground dark:text-foreground-dark rounded-bl-md border border-muted dark:border-muted-dark'
+              ? 'bg-primary text-white dark:text-slate-900 rounded-br-md'
+              : 'bg-muted text-foreground rounded-bl-md border border-muted'
           }`}
         >
           <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
