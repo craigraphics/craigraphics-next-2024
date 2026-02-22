@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import fs from 'fs';
 import path from 'path';
+import { kv } from '@vercel/kv';
 
 // Type definitions
 interface RequestBody {
@@ -21,8 +22,8 @@ interface ErrorResponse {
 }
 
 interface RateLimitInfo {
-  count: number;
-  resetTime: number;
+  allowed: boolean;
+  remaining: number;
 }
 
 interface OpenAIError {
@@ -70,45 +71,31 @@ ${knowledge}
 Remember: You represent William professionally, so maintain a helpful and engaging tone while staying focused on his career and technical expertise.`;
 }
 
-const rateLimitMap = new Map<string, RateLimitInfo>();
-
-function getRateLimitInfo(ip: string): { allowed: boolean; remaining: number } {
-  const now = Date.now();
-  const windowMs = 15 * 60 * 1000; // 15 minutes
-  const limit = 10; // 10 requests per 15 minutes
-
-  const key = ip;
-  const current = rateLimitMap.get(key);
-
-  // Clean up expired entries
-  for (const [k, v] of rateLimitMap.entries()) {
-    if (now > v.resetTime) {
-      rateLimitMap.delete(k);
-    }
+async function getRateLimitInfo(ip: string): Promise<RateLimitInfo> {
+  const limit = 10;
+  const windowSecs = 15 * 60;
+  const key = `ratelimit:${ip}`;
+  try {
+    const count = await kv.incr(key);
+    if (count === 1) await kv.expire(key, windowSecs);
+    if (count > limit) return { allowed: false, remaining: 0 };
+    return { allowed: true, remaining: limit - count };
+  } catch {
+    console.error('Rate limit KV error, allowing request');
+    return { allowed: true, remaining: 1 };
   }
-
-  if (!current || now > current.resetTime) {
-    // New window
-    rateLimitMap.set(key, { count: 1, resetTime: now + windowMs });
-    return { allowed: true, remaining: limit - 1 };
-  }
-
-  if (current.count >= limit) {
-    return { allowed: false, remaining: 0 };
-  }
-
-  current.count++;
-  return { allowed: true, remaining: limit - current.count };
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse<ChatResponse | ErrorResponse>> {
   try {
     // Get client IP for rate limiting
-    const forwarded = request.headers.get('x-forwarded-for');
-    const ip = forwarded ? forwarded.split(',')[0] : 'unknown';
+    const ip =
+      request.headers.get('x-real-ip') ||
+      request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+      'unknown';
 
     // Check rate limit
-    const rateLimit = getRateLimitInfo(ip);
+    const rateLimit = await getRateLimitInfo(ip);
     if (!rateLimit.allowed) {
       return NextResponse.json({ error: 'Too many requests. Please try again in 15 minutes.' }, { status: 429 });
     }

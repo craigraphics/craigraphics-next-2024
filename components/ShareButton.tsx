@@ -4,6 +4,7 @@ import React from 'react';
 import { Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTranslations } from 'next-intl';
+import { toast } from '@/hooks/use-toast';
 
 interface ShareButtonProps {
   title: string;
@@ -25,7 +26,8 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title, url }) => {
       }
     } else {
       // Fallback for browsers that don't support the Web Share API
-      alert(`Share this article:\n\nTitle: ${title}\nURL: ${url}`);
+      navigator.clipboard?.writeText(url).catch(() => {});
+      toast({ title: t('share'), description: url });
     }
   };
 

@@ -119,7 +119,6 @@ const detailedTechData: { [key: string]: { learned: string; projects: string[] }
 
 interface TechnologyBadgeProps {
   tech: string;
-  locale: 'en' | 'es';
 }
 
 const TechnologyBadge = ({ tech }: TechnologyBadgeProps) => {
@@ -154,9 +153,9 @@ const TechnologyBadge = ({ tech }: TechnologyBadgeProps) => {
               <div>
                 <p className="text-xs font-medium text-card-foreground dark:text-foreground-dark mb-1">{t('usedIn')}</p>
                 <div className="flex flex-wrap gap-1">
-                  {techData.projects.slice(0, 2).map((project, index) => (
+                  {techData.projects.slice(0, 2).map((project) => (
                     <span
-                      key={index}
+                      key={project}
                       className="text-xs bg-muted/50 dark:bg-muted-dark/50 px-2 py-0.5 rounded text-muted-foreground dark:text-muted-foreground-dark"
                     >
                       {project}
@@ -184,10 +183,9 @@ interface TechnologyCategoryProps {
   title: string;
   technologies: string[];
   yearsKey: string;
-  locale: 'en' | 'es';
 }
 
-const TechnologyCategory = ({ IconComponent, iconColor, lineColor, title, technologies, yearsKey, locale }: TechnologyCategoryProps) => {
+const TechnologyCategory = ({ IconComponent, iconColor, lineColor, title, technologies, yearsKey }: TechnologyCategoryProps) => {
   const t = useTranslations('about.toolbox');
 
   return (
@@ -205,8 +203,8 @@ const TechnologyCategory = ({ IconComponent, iconColor, lineColor, title, techno
 
       {/* Technologies with Tooltips */}
       <div className="flex flex-wrap justify-center gap-2 max-w-sm">
-        {technologies.map((tech, index) => (
-          <TechnologyBadge key={index} tech={tech} locale={locale} />
+        {technologies.map((tech) => (
+          <TechnologyBadge key={tech} tech={tech} />
         ))}
       </div>
 
@@ -219,7 +217,6 @@ const TechnologyCategory = ({ IconComponent, iconColor, lineColor, title, techno
 const TechStack = () => {
   const t = useTranslations('about');
   const tToolbox = useTranslations('about.toolbox');
-  const locale = useTranslations('common')('home') === 'Home' ? 'en' : 'es';
 
   const categories = [
     {
@@ -298,7 +295,6 @@ const TechStack = () => {
             title={category.title}
             technologies={category.technologies}
             yearsKey={category.yearsKey}
-            locale={locale as 'en' | 'es'}
           />
         ))}
       </div>

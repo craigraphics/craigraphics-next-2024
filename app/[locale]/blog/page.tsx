@@ -1,8 +1,6 @@
-import { use } from 'react';
 import { getBlogPosts } from '@/lib/getBlogPosts';
-import { setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import BlogList from '@/components/BlogList';
-import { useTranslations } from 'next-intl';
 
 export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params;
@@ -48,13 +46,11 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
   };
 }
 
-export default function BlogPage(props: { params: Promise<{ locale: string }> }) {
-  const params = use(props.params);
-
+export default async function BlogPage(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
   const { locale } = params;
-
   setRequestLocale(locale);
-  const t = useTranslations('blog');
+  const t = await getTranslations('blog');
   const posts = getBlogPosts(locale);
   return <BlogList posts={posts} locale={locale} t={t} />;
 }
