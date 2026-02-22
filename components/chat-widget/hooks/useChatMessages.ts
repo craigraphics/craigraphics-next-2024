@@ -41,11 +41,19 @@ export const useChatMessages = () => {
         body: JSON.stringify({ message: message.trim() }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.error || t('errorMessage'));
+        const text = await response.text();
+        let errorMsg = t('errorMessage');
+        try {
+          const data = JSON.parse(text);
+          errorMsg = data.error || errorMsg;
+        } catch {
+          // response was not JSON (e.g. Vercel 500 page) — use default message
+        }
+        throw new Error(errorMsg);
       }
+
+      const data = await response.json();
 
       if (onTypeWriter) {
         onTypeWriter(data.response, () => {
