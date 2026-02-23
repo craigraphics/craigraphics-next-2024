@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import CompanySelector from '@/components/CompanySelector';
 
 const WorkExperience = () => {
-  const [activeTab, setActiveTab] = useState<number>(1);
+  const [activeTab, setActiveTab] = useState<number>(0);
   const t = useTranslations('work');
 
   const companies = t.raw('companies');

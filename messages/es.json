@@ -94,64 +94,79 @@
   },
   "work": {
     "title": "Experiencia laboral",
-    "description": "Aquí están algunos de los proyectos en los que he trabajado. Haz clic en las pestañas para aprender más sobre cada proyecto.",
+    "description": "He tenido el privilegio de trabajar con diferentes empresas y agencias a lo largo de los años, lo que ha sido una experiencia enriquecedora y de gran aprendizaje.",
     "companies": [
       {
-        "title": "Freelance",
-        "period": "Julio 2024 - Presente",
-        "location": "San Francisco, CA",
-        "role": "Desarrollador Full Stack & Diseñador UI/UX",
-        "description": "<li>Trabajando como freelancer creando aplicaciones web y diseñando para diferentes clientes y proyectos</li>",
-        "tags": ["Next.js", "React", "TypeScript", "Node.js", "Firebase", "React Native", "Tailwind CSS", "Angular", "Figma", "Adobe XD"]
+        "title": "Disney",
+        "period": "Nov 2025 - Presente",
+        "location": "Área de la Bahía de San Francisco, CA",
+        "role": "Ingeniero de Software Senior",
+        "description": "<li>Construyo dos aplicaciones en producción con Next.js y TypeScript: una plataforma de soporte al cliente que gestiona incidencias, pagos, historial de cuenta y cambios de servicio a escala, y una plataforma interna de integraciones que conecta flujos de trabajo y procesos entre equipos de toda la empresa.</li><li>Ambas apps están impulsadas por IA con múltiples agentes de chatbot especializados que trabajan en conjunto para asistir a los agentes de soporte, automatizar resoluciones y mostrar la información correcta en el momento adecuado, todo conectado via Model Context Protocol (MCP) a herramientas como Jira, GitHub, LaunchDarkly y Datadog.</li><li>Soy dueño del ciclo de vida completo de cada feature: diseño de APIs, UI, pruebas, feature flags, monitoreo en producción y CI/CD, manteniendo ambas plataformas confiables y en constante evolución.</li>",
+        "tags": ["React", "TypeScript", "Next.js", "MUI", "AWS", "MCP", "AI Agents", "Datadog", "LaunchDarkly", "CI/CD"]
       },
       {
-        "title": "Globant",
-        "period": "Ago 2015 - Julio 2024",
-        "location": "Dallas, TX / San Francisco, CA",
-        "role": "Ingeniero de Software Senior Nivel II",
-        "description": "<li>Responsable de la planificación y ejecución de la aplicación de una sola página de perfil de alto tráfico de Autodesk, lo que resultó en una mejora del 30% en el rendimiento, un diseño de marca más unificado y una mejor experiencia de usuario utilizando React, GraphQL, Node, AWS, Microservicios.</li> <li>Desarrollo de un módulo de paquete altamente configurable y una biblioteca de componentes reutilizables, lo que permitió una fácil integración en otros proyectos por equipos externos. Este módulo permite a los usuarios actualizar y guardar sus configuraciones y preferencias de perfil.</li> <li>Líder del equipo en el diseño y desarrollo de un blog de WordPress para Frontier Communications, reconocido como finalista para el Mejor Blog 2020 en los US Social Media Awards en Pub-Con.</li> <li>Líder técnico para la aplicación de cine de Carnival Cruise, que permitió elegir películas, leer reseñas, ver tráilers, obtener horarios, comprar boletos y canjearlos en el cine utilizando Angular como el framework front-end y API REST.</li> <li>Desarrollo de una herramienta interactiva con D3.js y AngularJS que permitió visualizar todos los diferentes productos y sus interrelaciones a través de un gráfico de árbol animado para Autodesk PLM 360.</li>",
-        "tags": [
-          "React",
-          "TypeScript",
-          "GraphQL",
-          "Node.js",
-          "Express",
-          "MongoDB",
-          "Tailwind CSS",
-          "AWS",
-          "D3.js",
-          "Angular",
-          "WordPress",
-          "Jenkins",
-          "CI/CD",
-          "Docker",
-          "Lerna",
-          "SASS"
-        ]
+        "title": "SQOR.ai",
+        "period": "May 2025 - Nov 2025",
+        "location": "Área de la Bahía de San Francisco, CA",
+        "role": "Desarrollador Full-Stack & Diseñador",
+        "description": "<li>Me uní a una startup de inteligencia analítica con IA de ritmo acelerado y trabajé de punta a punta: construí las APIs que alimentan el ciclo de inteligencia, almacenando y sirviendo resultados de múltiples LLMs mientras analizaban datos de clientes en tiempo real y generaban gráficas y recomendaciones dinámicas.</li><li>Diseñé y construí interfaces de dashboard personalizadas donde las visualizaciones y KPIs se actualizaban en vivo según los descubrimientos de la IA, haciendo que datos complejos se sintieran intuitivos y accesibles para usuarios no técnicos.</li><li>Aporté estructura y liderazgo de diseño al equipo: introduje procesos de desarrollo más claros, tomé ownership de decisiones clave de UI/UX y ayudé a transformar ideas del pizarrón a features listos para producción.</li>",
+        "tags": ["React", "TypeScript", "MUI", "TanStack Query", "Node.js", "MongoDB", "Next.js", "Tailwind CSS", "LLM APIs", "Data Visualization"]
+      },
+      {
+        "title": "Craigraphics",
+        "period": "Ago 2024 - Dic 2025",
+        "location": "Área de la Bahía de San Francisco, CA",
+        "role": "Desarrollador Full Stack & Fundador",
+        "description": "<li>Reconstruí de cero la presencia digital completa de ECUcomm con un nuevo diseño y stack moderno (Next.js 15, TypeScript, Tailwind, Sanity CMS), entregando métricas de rendimiento, SEO y accesibilidad dramáticamente mejoradas.</li><li>Me encargué de todo de extremo a extremo: conecté AWS SES para correo transaccional, configuré pipelines de CI/CD en Vercel y entregué al cliente un CMS autogestionado para que las actualizaciones de contenido nunca más requieran un desarrollador.</li>",
+        "tags": ["Next.js", "TypeScript", "Tailwind CSS", "Sanity CMS", "AWS SES", "Vercel", "CI/CD"]
+      },
+      {
+        "title": "Autodesk",
+        "period": "Feb 2020 - Jul 2024",
+        "location": "San Francisco, CA",
+        "role": "Ingeniero de Software Senior",
+        "description": "<li>Participé en el lanzamiento de la app de Perfil de Autodesk desde el primer día, el hub de identidad para más de 1M de usuarios mensuales en todo el ecosistema Autodesk, construida con React, GraphQL y Node.js usando arquitectura de micro-frontend con una mejora del 30% en tiempos de carga.</li><li>Diseñé un sistema de componentes escalable y reutilizable con TypeScript y Next.js que múltiples equipos podían integrar, reduciendo trabajo duplicado y manteniendo la consistencia visual a escala.</li><li>Construí una biblioteca compartida de componentes React (Lerna + Rollup) que se convirtió en la base de diseño para todos los equipos, y conecté el front-end con AWS Lambda e infraestructura serverless para mayor flexibilidad en el backend.</li><li>Mentoré a desarrolladores juniors en calidad de código, estrategias de rendimiento y patrones de ingeniería modernos.</li>",
+        "tags": ["React", "TypeScript", "GraphQL", "Node.js", "Next.js", "AWS", "Microfrontend", "Lerna", "Rollup", "Storybook"]
+      },
+      {
+        "title": "Frontier",
+        "period": "Jun 2016 - Feb 2020",
+        "location": "Dallas, TX",
+        "role": "Desarrollador Web UI Senior",
+        "description": "<li>Lideré el rediseño del blog corporativo de Frontier de principio a fin, obteniendo un lugar como finalista en los Best Blog Awards 2020 (US Social Media Awards en Pub-Con).</li><li>Construí y desplegué páginas de alertas de emergencia bajo presión real durante eventos de clima severo, entregando comunicaciones críticas confiables para millones de clientes.</li><li>Desarrollé una galería de videos impulsada por YouTube con integración de redes sociales, y colaboré con equipos de Comercial, Digital y TI para mantener las iniciativas digitales avanzando.</li>",
+        "tags": ["WordPress", "React", "JavaScript", "jQuery", "CSS3", "SASS", "PHP"]
+      },
+      {
+        "title": "Carnival Cruise",
+        "period": "Jun 2015 - May 2016",
+        "location": "Ciudad de México, MX",
+        "role": "Desarrollador Web UI",
+        "description": "<li>Construí el front-end de una app kiosko con AngularJS que los pasajeros de cruceros usaban para explorar películas, comprar boletos y canjearlos en el cine a bordo, llevando la experiencia de cine completa al mar.</li><li>Lideré un pequeño equipo de desarrollo y aseguré que la experiencia funcionara impecablemente en todas las configuraciones de pantalla disponibles a bordo.</li>",
+        "tags": ["AngularJS", "REST API", "JavaScript", "CSS3"]
       },
       {
         "title": "5M2",
         "period": "Feb 2014 - Ago 2015",
-        "location": "Ciudad de México, México",
-        "role": "Desarrollador Front End Sr.",
-        "description": "<li>Supervisión del desarrollo front-end de GOB.mx. Transformación de muchos trámites gubernamentales de presenciales a digitales, mejorando la accesibilidad y eficiencia para cientos de millones de usuarios, centrándose en el rendimiento, la experiencia de usuario y la accesibilidad.</li> <li>Dirigió la creación de un marco de guía de estilo para agencias y ministerios de la administración pública. Organizó y lideró reuniones con directores técnicos de todo el país, implementando con éxito un diseño de marca unificado con un código detallado y pautas de integración a nivel nacional.</li>",
+        "location": "Ciudad de México, MX",
+        "role": "Desarrollador Front-End Senior",
+        "description": "<li>Lideré el desarrollo front-end de GOB.mx, el portal nacional del gobierno mexicano, ayudando a llevar trámites burocráticos al mundo digital y haciéndolos accesibles para millones de ciudadanos en todo el país.</li><li>Creé un sistema de diseño unificado adoptado por agencias gubernamentales de todo el país, estandarizando la apariencia y el código de toda la infraestructura digital pública de México.</li>",
         "tags": ["AngularJS", "Bootstrap", "SASS", "Grunt", "Ruby on Rails", "WordPress"]
       },
       {
         "title": "Telmex",
-        "period": "Mayo 2013 - Ene 2014",
-        "location": "Ciudad de México, México",
-        "role": "Desarrollador Front End Sr.",
-        "description": "<li>Contribuyó al rediseño y reconstrucción de telmex.com, transformándolo efectivamente en uno de los sitios web más visitados de América Latina.</li>",
+        "period": "May 2013 - Ene 2014",
+        "location": "Ciudad de México, MX",
+        "role": "Desarrollador Front-End Senior",
+        "description": "<li>Contribuí al rediseño completo de Telmex.com, uno de los sitios más visitados de América Latina, usando Liferay, JavaScript puro, jQuery y SASS para servir a decenas de millones de usuarios.</li>",
         "tags": ["Liferay", "Bootstrap", "SASS", "Grunt", "jQuery", "JavaScript"]
       },
       {
         "title": "Interalia",
-        "period": "Ene 2010 - Mayo 2013",
-        "location": "Ciudad de México, México",
-        "role": "Diseñador Web Sr. / Desarrollador Front End",
-        "description": "<li>Desarrollo de múltiples sitios web que promocionaban diferentes nuevas marcas y modelos de General Motors como Chevrolet, Buick y Cadillac utilizando JS puro y jQuery para sus sitios altamente interactivos.</li><li>Dirigió el diseño y desarrollo de micro-sitios, campañas web, páginas de fans y sitios móviles para Coca-Cola Latinoamérica.</li><li>Rediseño del logo y la marca de la empresa, siendo seleccionado entre docenas de otras propuestas hechas por otros diseñadores gráficos.</li>",
-        "tags": ["ActionScript 3", "HTML5", "jQuery", "CSS3", "Objective-C", "JavaScript"]
+        "period": "Ene 2010 - May 2013",
+        "location": "Ciudad de México, MX",
+        "role": "Desarrollador Front-End Senior",
+        "description": "<li>Creé campañas digitales ricas e interactivas para marcas de General Motors incluyendo Chevrolet, Buick y Cadillac, construyendo experiencias web inmersivas que hacían que los autos se sintieran emocionantes mucho antes de que las redes sociales tomaran el control.</li><li>Lideré el desarrollo de micro-sitios y campañas móviles para Coca-Cola América Latina, y gané el rediseño de la identidad de marca de la agencia, seleccionado entre decenas de propuestas de otros diseñadores.</li>",
+        "tags": ["ActionScript 3", "HTML5", "jQuery", "CSS3", "JavaScript"]
       }
     ]
   },
