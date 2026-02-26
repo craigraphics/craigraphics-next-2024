@@ -26,7 +26,7 @@ const AboutMe = () => {
           <small className="text-xl mb-1 font-medium text-secondary block">{t('greeting.hello')}</small>
           <h1 className="text-6xl sm:text-7xl font-bold text-primary mb-2">William Craig!</h1>
           <h2 className="text-3xl sm:text-4xl mb-2">{t('greeting.role')}</h2>
-          <h2 className="text-2xl mb-2 text-secondary">Fullstack, Frontend, UX</h2>
+          <p className="text-2xl font-bold mb-2 text-secondary">Fullstack, Frontend, UX</p>
           <p className=" text-primary text-2xl font-medium">{t('greeting.title')}</p>
         </section>
 

@@ -54,6 +54,7 @@ const LikeButtonClient: React.FC<LikeButtonClientProps> = ({ slug }) => {
         liked ? 'text-secondary' : 'text-foreground'
       }`}
       disabled={liked || likeMutation.isPending}
+      aria-label={liked ? `Liked, ${likeCount} likes` : `Like this post, ${likeCount} likes`}
     >
       <Heart className={`w-5 h-5 ${liked ? 'fill-current' : ''}`} />
       <span>{likeCount}</span>

@@ -9,7 +9,8 @@
     "open_menu": "Abrir Menú",
     "close_menu": "Cerrar Menú",
     "menu_description": "Alternar menú de navegación",
-    "share": "Compartir"
+    "share": "Compartir",
+    "selectLanguage": "Seleccionar idioma"
   },
   "about": {
     "greeting": {
@@ -228,6 +229,7 @@
     "thinking": "Pensando...",
     "disclaimer": "Este es un asistente AI. Para contacto directo, usa el formulario de contacto.",
     "resetConversation": "Reiniciar conversación",
-    "errorMessage": "Lo siento, algo salió mal. Por favor intenta de nuevo."
+    "errorMessage": "Lo siento, algo salió mal. Por favor intenta de nuevo.",
+    "closeChat": "Cerrar chat"
   }
 }

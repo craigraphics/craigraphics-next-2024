@@ -34,10 +34,12 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
     description: excerpt,
     image: imageUrl,
     datePublished: publishedDate,
+    inLanguage: post.language,
     author: {
       '@type': 'Person',
       name: post.author,
       url: baseUrl,
+      image: `${baseUrl}/images/profile.png`,
     },
     publisher: {
       '@type': 'Person',
@@ -57,7 +59,7 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleStructuredData) }}
       />
-      <header className="relative h-[60vh] mb-8">
+      <header className="relative h-[40vh] sm:h-[50vh] lg:h-[60vh] mb-8">
         <Image
           src={post.image || '/images/placeholder-image.jpg'}
           alt={`Featured image for blog post: ${post.title}`}

@@ -1,7 +1,9 @@
+import dynamic from 'next/dynamic';
 import Header from './Header';
 import Footer from './Footer';
-import ChatWidget from '../ChatWidget';
 import ClientProvider from '../ClientProvider';
+
+const ChatWidget = dynamic(() => import('../ChatWidget'));
 
 interface LayoutProps {
   children: React.ReactNode;

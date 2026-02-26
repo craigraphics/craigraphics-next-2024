@@ -95,7 +95,7 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <ThemeToggle />
             <Select onValueChange={changeLanguage} defaultValue={locale}>
-              <SelectTrigger className="w-[80px] bg-background border-primary border">
+              <SelectTrigger className="w-[80px] bg-background border-primary border" aria-label={t('selectLanguage')}>
                 <SelectValue placeholder="Lang" />
               </SelectTrigger>
               <SelectContent className="bg-background">

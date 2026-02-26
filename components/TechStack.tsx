@@ -122,22 +122,36 @@ interface TechnologyBadgeProps {
 }
 
 const TechnologyBadge = ({ tech }: TechnologyBadgeProps) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const t = useTranslations('about.toolbox');
   const techData = detailedTechData[tech];
+  const tooltipId = `tooltip-${tech.replace(/[\s/]+/g, '-').toLowerCase()}`;
 
   return (
-    <div className="relative inline-block" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+    <div
+      className="relative inline-block"
+      onMouseEnter={() => setIsVisible(true)}
+      onMouseLeave={() => setIsVisible(false)}
+    >
       <Badge
         variant="secondary"
-        className="cursor-pointer transition-all duration-300 px-3 py-1 text-sm bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary hover:scale-105"
+        tabIndex={0}
+        role="button"
+        aria-describedby={techData ? tooltipId : undefined}
+        onFocus={() => setIsVisible(true)}
+        onBlur={() => setIsVisible(false)}
+        className="cursor-pointer transition-all duration-300 px-3 py-1 text-sm bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
       >
         {tech}
       </Badge>
 
       {/* Tooltip */}
-      {isHovered && techData && (
-        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-50 animate-in fade-in-0 slide-in-from-bottom-2 duration-200">
+      {isVisible && techData && (
+        <div
+          role="tooltip"
+          id={tooltipId}
+          className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-50 animate-in fade-in-0 slide-in-from-bottom-2 duration-200"
+        >
           <div className="bg-background border border-muted rounded-lg shadow-lg p-3 min-w-[200px] max-w-[280px]">
             {/* Tooltip Arrow */}
             <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-muted"></div>
