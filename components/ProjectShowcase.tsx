@@ -38,7 +38,7 @@ const ProjectShowcase = () => {
                     src={project.image}
                     alt={`Screenshot of ${project.title} project`}
                     fill
-                    className="rounded-t-lg lg:rounded-l-lglg:rounded-tr-none object-cover"
+                    className="rounded-t-lg lg:rounded-l-lg lg:rounded-tr-none object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     loading="lazy"
                   />

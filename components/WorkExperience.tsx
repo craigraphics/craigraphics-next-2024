@@ -19,7 +19,7 @@ const WorkExperience = () => {
         <div className=" w-full sm:w-1/5 lg:pr-4 pt-6">
           <CompanySelector companies={companies} activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
-        <div className="w-full sm:w-4/5">
+        <div className="w-full sm:w-4/5" role="tabpanel" id="company-tabpanel" aria-labelledby={`company-tab-${activeTab}`}>
           <Card className="border-none bg-transparent shadow-none">
             <CardContent className="pt-6 text-foreground border-none">
               <h3 className="text-xl font-semibold text-primary">{companies[activeTab].role}</h3>

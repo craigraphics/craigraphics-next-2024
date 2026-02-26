@@ -72,7 +72,7 @@ const EmailForm: FC = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 flex flex-col content-center place-self-centerpy-14 mt-12 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-md mx-auto p-4 flex flex-col content-center place-self-center py-14 mt-12 px-4 sm:px-6 lg:px-8">
       <h2 className="text-3xl font-extrabold text-primary sm:text-3xl underline-heading mt-4">{t('title')}</h2>
       <p className="my-8 font-medium ">{t('description')}</p>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -82,6 +82,7 @@ const EmailForm: FC = () => {
           name="email"
           id="email"
           required
+          aria-required="true"
           value={email}
           onChange={e => setEmail(e.target.value)}
           placeholder={t('form.emailPlaceholder')}
@@ -93,6 +94,7 @@ const EmailForm: FC = () => {
           name="message"
           id="message"
           required
+          aria-required="true"
           value={message}
           onChange={e => setMessage(e.target.value)}
           placeholder={t('form.messagePlaceholder')}

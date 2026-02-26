@@ -58,8 +58,27 @@ export default async function Home(props: Props) {
 
   setRequestLocale(locale);
 
+  const personJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'William Craig',
+    jobTitle: 'Senior Software Engineer',
+    url: 'https://craigraphics.com',
+    image: 'https://craigraphics.com/images/profile.png',
+    sameAs: [
+      'https://github.com/craigraphics',
+      'https://linkedin.com/in/willcraigz',
+      'https://behance.net/willcraigz',
+      'https://instagram.com/willcrg',
+    ],
+  };
+
   return (
     <Layout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
       <AboutMe />
     </Layout>
   );

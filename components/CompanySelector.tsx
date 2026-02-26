@@ -45,10 +45,14 @@ const CompanySelector: React.FC<CompanySelectorProps> = ({ companies, activeTab,
       </div>
 
       {/* Desktop view */}
-      <div className="hidden sm:block">
+      <div className="hidden sm:block" role="tablist" aria-label="Company selector">
         {companies.map((company, index) => (
           <button
             key={index}
+            role="tab"
+            id={`company-tab-${index}`}
+            aria-selected={activeTab === index}
+            aria-controls="company-tabpanel"
             onClick={() => setActiveTab(index)}
             className={`w-full text-left py-2 px-4 mb-2 font-medium transition border-l-2 border-transparent
               ${

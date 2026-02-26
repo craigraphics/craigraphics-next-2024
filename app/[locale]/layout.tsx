@@ -12,6 +12,7 @@ const geistSans = localFont({
   weight: '100 900',
   display: 'swap',
   preload: true,
+  fallback: ['system-ui', 'arial', 'sans-serif'],
 });
 
 const geistMono = localFont({
@@ -20,6 +21,7 @@ const geistMono = localFont({
   weight: '100 900',
   display: 'swap',
   preload: true,
+  fallback: ['ui-monospace', 'SFMono-Regular', 'monospace'],
 });
 
 const validLocales = ['en', 'es'] as const;

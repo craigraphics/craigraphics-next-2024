@@ -31,8 +31,9 @@ export const ChatHeader = ({ onClose }: ChatHeaderProps) => {
         size="icon"
         onClick={onClose}
         className="h-10 w-10 rounded-full hover:bg-red-500/10 hover:text-red-500 transition-colors text-muted-foreground"
+        aria-label={t('closeChat')}
       >
-        <X className="h-5 w-5" />
+        <X className="h-5 w-5" aria-hidden="true" />
       </Button>
     </div>
   );

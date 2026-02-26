@@ -20,7 +20,7 @@ export const ChatWidgetBar = ({ isVisible, onOpen }: ChatWidgetBarProps) => {
 
   return (
     <div
-      className={`fixed bottom-6 left-6 right-6 z-50 transition-all duration-500 ${
+      className={`fixed bottom-4 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 z-50 transition-all duration-500 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'
       }`}
     >

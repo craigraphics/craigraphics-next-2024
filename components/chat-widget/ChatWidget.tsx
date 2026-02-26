@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import {
   ChatHeader,
@@ -23,6 +24,16 @@ export default function ModernChatWidget() {
   const { data: suggestions = [], isLoading: suggestionsLoading } = useChatSuggestions(isOpen);
   const { typingMessage, isTyping, typeWriterEffect, resetTyping } = useTypeWriter();
   const { messages, inputMessage, setInputMessage, isLoading, messagesEndRef, sendMessage, handleKeyPress, resetChat } = useChatMessages();
+
+  // Close on Escape key
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeChat();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, closeChat]);
 
   // Enhanced send message with typewriter effect
   const handleSendMessage = (message?: string) => {

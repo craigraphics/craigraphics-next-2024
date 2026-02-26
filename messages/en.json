@@ -9,7 +9,8 @@
     "open_menu": "Open Menu",
     "close_menu": "Close Menu",
     "menu_description": "Toggle navigation menu",
-    "share": "Share"
+    "share": "Share",
+    "selectLanguage": "Select language"
   },
   "about": {
     "greeting": {
@@ -230,6 +231,7 @@
     "thinking": "Thinking...",
     "disclaimer": "This is an AI assistant. For direct contact, use the contact form.",
     "resetConversation": "Reset conversation",
-    "errorMessage": "Sorry, something went wrong. Please try again."
+    "errorMessage": "Sorry, something went wrong. Please try again.",
+    "closeChat": "Close chat"
   }
 }
