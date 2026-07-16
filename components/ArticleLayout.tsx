@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BlogPost } from '@/types/blog';
+import { formatDate } from '@/lib/utils';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import ClientCodeBlock from '@/components/ClientCodeBlock';
 import ShareButton from '@/components/ShareButton';
@@ -24,8 +25,10 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
   const imageUrl = post.image ? `${baseUrl}${post.image}` : `${baseUrl}/images/profile.png`;
   const excerpt = post.excerpt || (post.content ? post.content.substring(0, 160).replace(/[#*`]/g, '').trim() + '...' : 'Blog post by William Craig');
 
-  // Parse date for structured data
-  const publishedDate = post.date ? new Date(post.date).toISOString() : new Date().toISOString();
+  // Parse date for structured data (post.date is a raw ISO date string)
+  const parsedDate = post.date ? new Date(post.date) : null;
+  const publishedDate = parsedDate && !isNaN(parsedDate.getTime()) ? parsedDate.toISOString() : new Date().toISOString();
+  const displayDate = parsedDate && !isNaN(parsedDate.getTime()) ? formatDate(post.date, post.language) : post.date;
 
   const articleStructuredData = {
     '@context': 'https://schema.org',
@@ -82,7 +85,7 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
               <div>
                 <div className="font-semibold text-accent">{post?.author}</div>
                 <div className="text-sm text-secondary">
-                  {post.date} · {post.readTime}
+                  {displayDate} · {post.readTime}
                 </div>
               </div>
             </div>

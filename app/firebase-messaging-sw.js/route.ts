@@ -5,4 +5,3 @@ export async function GET() {
   // This prevents it from being matched by the [locale] route
   return new NextResponse(null, { status: 404 });
 }
-

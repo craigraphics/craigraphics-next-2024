@@ -48,8 +48,23 @@ const Header = () => {
   const lastScrollYRef = useRef(0);
 
   const changeLanguage = (newLocale: string) => {
-    const currentPathname = pathname?.substring(3) || '/';
-    router.push(`/${newLocale}${currentPathname}`);
+    // Persist the choice. With localePrefix: 'as-needed', next-intl's
+    // middleware redirects an unprefixed path (e.g. "/blog") to the locale
+    // stored in the NEXT_LOCALE cookie. Without updating it, switching back
+    // to English bounces straight back to "/es/blog".
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; samesite=lax`;
+
+    // Strip an existing locale prefix only if one is present. English URLs
+    // have no prefix, so we can't blindly slice the first segment (that
+    // turned "/blog" into "/esog").
+    const segments = (pathname || '/').split('/');
+    if (segments[1] === 'en' || segments[1] === 'es') {
+      segments.splice(1, 1);
+    }
+    const rest = segments.join('/') || '/';
+    // Default locale (en) is unprefixed; other locales get a prefix.
+    const target = newLocale === 'en' ? rest : `/${newLocale}${rest === '/' ? '' : rest}`;
+    router.push(target);
   };
 
   const rafIdRef = useRef<number | null>(null);

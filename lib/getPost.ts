@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { BlogPost } from '@/types/blog';
-import { formatDate } from '@/lib/utils';
 
 export async function getPost(slug: string, locale: string): Promise<BlogPost | null> {
   const fullPath = path.join(process.cwd(), 'content', 'blog', `${slug}.${locale}.mdx`);
@@ -37,7 +36,7 @@ export async function getPost(slug: string, locale: string): Promise<BlogPost | 
   return {
     slug,
     title: data.title,
-    date: formatDate(data.date, locale as 'en' | 'es'),
+    date: data.date,
     content,
     image: imagePath,
     avatar: avatar,
