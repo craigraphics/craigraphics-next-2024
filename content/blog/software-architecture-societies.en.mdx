@@ -1,0 +1,56 @@
+---
+title: "What Software Architecture Taught Me About How Societies Work"
+date: "2026-07-15"
+readTime: "7 min read"
+author: "William Craig"
+tags: ["Software Architecture", "Distributed Systems", "Observability", "Systems Thinking", "Technical Debt", "Reliability", "Engineering Culture"]
+excerpt: "The principles we use to build reliable software systems map surprisingly well onto how societies function and fail. Design for failure not virtue, keep coupling loose, make guardrails adjustable, and invest in observability above almost everything else."
+---
+
+After some years working in software architecture, I started noticing that the principles we use to build reliable systems map surprisingly well onto how societies function and fail. This isn't a political post, it's a systems post. I'm probably not the first person to make this comparison, but the more I sat with it the more the parallels held up, so I wanted to write it down.
+
+## A society is a distributed system
+
+Think about what a society actually is: a large set of loosely coupled services, each with its own responsibility. Education, justice, media, markets, healthcare. Each one exposes interfaces to the others and each one depends on the others working reasonably well, even when nobody explicitly designed it that way.
+
+That's a distributed system, and distributed systems have well-known failure modes. When one service degrades, stress redistributes to its neighbors. If the degradation isn't detected and isolated, it cascades. Anyone who has been paged at 3 AM because a single misbehaving dependency took down half the platform knows how this feels, and also knows the failure almost never started where the alert fired. You trace it back and back and the origin is some small thing that went unnoticed for weeks.
+
+Societies fail the same way. Rot in one institution rarely stays contained. It propagates through every interface that institution touches, and by the time it's visible everywhere, finding the origin is half the work.
+
+## Bad executioners and technical debt
+
+In software we know that a system's health isn't determined only by its design. It's determined by the people operating inside it. A developer introduces a fragile dependency or cuts a corner on validation, nothing breaks immediately, and the damage compounds quietly until months later it surfaces as a failure nobody can trace.
+
+We've built an entire discipline around this: code review, testing, documentation, shared standards. None of these mechanisms assume developers are perfect. They assume the opposite. They assume mistakes and bad practices are inevitable and they build detection and correction into the process itself.
+
+I think this is the key insight, and it took me a while to appreciate it. Good architecture doesn't trust individual virtue. It engineers around its absence. When I first learned about all the ceremony around reviews and approvals it felt like bureaucracy for its own sake. It's not. It's an admission about human nature, formalized into process.
+
+## Guardrails have a cost
+
+The trade-off is real in both domains though. Every safeguard adds friction. Mandatory reviews slow down releases, strict validation adds latency, approval chains block urgent hotfixes. Over-engineer the guardrails and your system becomes so rigid it can't respond when speed actually matters. Under-engineer them and you get the opposite failure: unchecked components accumulate influence over everything, and eventually you have a service that bypassed review for two years and is now an unmaintainable monolith that half the platform depends on. Nobody planned it. It just grew, because nothing stopped it.
+
+The systems that survive long-term aren't the ones with the most guardrails or the fewest. They're the ones that can adjust: tighten where risk concentrates, loosen where friction blocks necessary change. Adaptability beats any fixed design, which is an uncomfortable conclusion for those of us who like designing things.
+
+## Observability is everything
+
+You cannot fix what you cannot see.
+
+I'm living this right now. I'm currently working on a brand new project, first time building something from scratch with the latest AI tooling in the stack, and the part I've personally taken ownership of is not the shiny part. It's the observability: metrics, alerting, warnings, dashboards, escalation paths. And honestly, so far it's the most important thing about the whole project. With AI components in the loop, a failure that goes unnoticed for a long time wouldn't just be a bug, it would be catastrophic. Costs, wrong outputs, downstream systems consuming garbage. So before the product does anything impressive, it has to be able to tell us when it's sick. We instrument everything not because we expect the system to be healthy, but because we expect it not to be, and we want to know early.
+
+Societies need the same layer, and their observability layer is made of people who can evaluate information. Verify a claim, trace it to a source, tell signal from noise. When that capability erodes, faults go undetected and false alerts drown out real ones. Bad actors learn they can push broken changes to production because nobody is reading the logs.
+
+This is why I've come to think reasoning skills are infrastructure rather than a nice-to-have. A population that can evaluate evidence is a monitoring system. A population that can't is a system running blind, and blind systems don't degrade gracefully.
+
+## Why software is easier
+
+I'll be honest about the limits of the analogy. Software is easier to reason about because everything inside it is ultimately logical. You can profile a bottleneck, reproduce a bug, roll back a bad deploy. Societies have vastly more variables, feedback loops you can't isolate, and no rollback button. You also can't A/B test a policy on half a country and compare dashboards after a quarter, although I admit part of me wishes you could.
+
+But I think that difference points at the solution instead of invalidating it. The more a system's participants act on verified information instead of unexamined assumptions, the more predictably the system behaves, and the easier its failures become to detect and correct. You don't need everyone to hold the full architecture in their head. Nobody on my team holds our full architecture in their head either. You need enough shared reasoning that local faults get caught before they cascade.
+
+## The takeaway
+
+Design for failure, not virtue. Keep coupling loose so one failing service doesn't take down the rest. Make guardrails adjustable, because a rigid system dies slowly and an unguarded one dies fast. And invest in observability above almost everything else, because seeing a problem early is worth more than any amount of cleverness applied late.
+
+We didn't invent these principles for software. We rediscovered them there, under conditions where feedback is fast and failure is measurable. The systems that last are the ones built to notice when they're breaking. That's true of the platform I'm instrumenting right now, and I suspect it's true of everything else.
+
+If you work in architecture and see other parallels, or think I've stretched the analogy too far, I'd like to hear it.
