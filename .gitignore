@@ -34,3 +34,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local-only files (not for the repo)
+.playwright-mcp/
+RESEND_SETUP.md
+*.mp3
+squarespace_backup_codes_*.txt
