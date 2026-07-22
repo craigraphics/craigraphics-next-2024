@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, FormEvent, FC } from 'react';
+import React, { useState, useRef, FormEvent, FC } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
+import { Turnstile, TurnstileInstance } from '@marsidev/react-turnstile';
 import { useToast } from '@/hooks/use-toast';
 
 import { Textarea } from '@/components/ui/textarea';
@@ -14,6 +15,8 @@ import { Toaster } from '@/components/ui/toaster';
 interface EmailFormData {
   email: string;
   message: string;
+  company: string; // honeypot — must stay empty for real users
+  token: string; // Cloudflare Turnstile token
 }
 
 interface EmailResponse {
@@ -40,14 +43,22 @@ const sendEmail = async (formData: EmailFormData): Promise<EmailResponse> => {
 const EmailForm: FC = () => {
   const [email, setEmail] = useState<string>('');
   const [message, setMessage] = useState<string>('');
+  const [company, setCompany] = useState<string>(''); // honeypot
+  const [token, setToken] = useState<string>('');
+  const turnstileRef = useRef<TurnstileInstance>(null);
   const t = useTranslations('contact');
   const { toast } = useToast();
+
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
   const mutation = useMutation({
     mutationFn: sendEmail,
     onSuccess: () => {
       setEmail('');
       setMessage('');
+      setCompany('');
+      setToken('');
+      turnstileRef.current?.reset();
     },
   });
 
@@ -55,7 +66,7 @@ const EmailForm: FC = () => {
     event.preventDefault();
 
     try {
-      await mutation.mutateAsync({ email, message });
+      await mutation.mutateAsync({ email, message, company, token });
 
       toast({
         variant: 'success',
@@ -63,6 +74,10 @@ const EmailForm: FC = () => {
         className: 'font-medium',
       });
     } catch {
+      // token is single-use — reset so the user can retry
+      setToken('');
+      turnstileRef.current?.reset();
+
       toast({
         variant: 'error',
         description: t('form.error'),
@@ -103,9 +118,34 @@ const EmailForm: FC = () => {
           disabled={mutation.isPending}
         />
 
+        {/* Honeypot: hidden from real users, off-screen (not display:none) to catch more bots */}
+        <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', top: 'auto', width: '1px', height: '1px', overflow: 'hidden' }}>
+          <label htmlFor="company">Company</label>
+          <input
+            type="text"
+            name="company"
+            id="company"
+            tabIndex={-1}
+            autoComplete="off"
+            value={company}
+            onChange={e => setCompany(e.target.value)}
+          />
+        </div>
+
+        {siteKey && (
+          <Turnstile
+            ref={turnstileRef}
+            siteKey={siteKey}
+            options={{ theme: 'auto' }}
+            onSuccess={setToken}
+            onExpire={() => setToken('')}
+            onError={() => setToken('')}
+          />
+        )}
+
         <Button
           type="submit"
-          disabled={mutation.isPending}
+          disabled={mutation.isPending || (!!siteKey && !token)}
           className="w-full p-2 rounded bg-accent text-background hover:bg-secondary disabled:bg-gray-400"
         >
           {mutation.isPending ? t('form.sending') : t('form.send')}

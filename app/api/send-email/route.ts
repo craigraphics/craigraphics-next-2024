@@ -10,6 +10,31 @@ function escapeHtml(str: string): string {
     .replace(/'/g, '&#x27;');
 }
 
+async function verifyTurnstile(token: string, remoteip: string | null): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) {
+    console.error('Turnstile secret key is missing');
+    return false;
+  }
+
+  try {
+    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        secret,
+        response: token,
+        ...(remoteip ? { remoteip } : {}),
+      }),
+    });
+    const outcome = (await res.json()) as { success: boolean };
+    return outcome.success === true;
+  } catch (err) {
+    console.error('Turnstile verification request failed:', err);
+    return false;
+  }
+}
+
 export async function POST(req: Request) {
   console.log('API route hit - Starting email send process');
 
@@ -26,6 +51,31 @@ export async function POST(req: Request) {
     // Log the request body
     const body = await req.json();
 
+    // Honeypot: real users never fill this hidden field. Bots do.
+    // Silently accept (200) but drop the message so bots don't learn they were caught.
+    if (typeof body.company === 'string' && body.company.trim() !== '') {
+      console.warn('Honeypot triggered - dropping spam submission');
+      return NextResponse.json({ message: 'Email sent successfully' }, { status: 200 });
+    }
+
+    // Basic input validation
+    const email = typeof body.email === 'string' ? body.email.trim() : '';
+    const message = typeof body.message === 'string' ? body.message.trim() : '';
+    if (!email || !message) {
+      return NextResponse.json({ message: 'Email and message are required' }, { status: 400 });
+    }
+
+    // Captcha verification (server-side enforcement — the client check is not enough)
+    const token = typeof body.token === 'string' ? body.token : '';
+    if (!token) {
+      return NextResponse.json({ message: 'Captcha verification required' }, { status: 400 });
+    }
+    const remoteip = req.headers.get('cf-connecting-ip') ?? req.headers.get('x-forwarded-for');
+    const captchaOk = await verifyTurnstile(token, remoteip);
+    if (!captchaOk) {
+      return NextResponse.json({ message: 'Captcha verification failed' }, { status: 400 });
+    }
+
     // Check if required environment variables exist
     if (!process.env.TO_EMAIL || !process.env.FROM_EMAIL) {
       console.error('Missing required email configuration:', {
@@ -36,13 +86,13 @@ export async function POST(req: Request) {
     }
 
     // Construct email message
-    const safeEmail = escapeHtml(body.email);
-    const safeMessage = escapeHtml(body.message);
+    const safeEmail = escapeHtml(email);
+    const safeMessage = escapeHtml(message);
     const { data, error } = await resend.emails.send({
       from: process.env.FROM_EMAIL,
       to: [process.env.TO_EMAIL],
       subject: 'New Message from craigraphics.com',
-      text: `From: ${body.email}\nMessage: ${body.message}`,
+      text: `From: ${email}\nMessage: ${message}`,
       html: `
         <h2>New Contact Form Submission</h2>
         <p><strong>From:</strong> ${safeEmail}</p>
