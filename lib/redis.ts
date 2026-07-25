@@ -78,10 +78,37 @@ export class RedisUnavailableError extends Error {
   }
 }
 
+/**
+ * Explains why the credentials were rejected, without echoing them. A rejected
+ * URL is otherwise invisible: the routes just return 503 with nothing logged.
+ */
+function misconfigurationReason(): string {
+  const rawUrl = (process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL)?.trim();
+
+  if (!rawUrl) return 'UPSTASH_REDIS_REST_URL is not set';
+
+  if (!url) {
+    const scheme = rawUrl.match(/^([a-z][a-z0-9+.-]*):\/\//i)?.[1].toLowerCase();
+    return scheme
+      ? `UPSTASH_REDIS_REST_URL uses "${scheme}://". The REST client needs the https:// endpoint from the Upstash console, not the Redis connection string.`
+      : 'UPSTASH_REDIS_REST_URL is not a parseable URL';
+  }
+
+  if (!token) return 'UPSTASH_REDIS_REST_TOKEN is not set';
+
+  return 'client construction failed; see the preceding error';
+}
+
+let warnedAboutConfig = false;
+
 export function client(): Redis {
   if (redis === undefined) redis = buildClient();
 
   if (!redis) {
+    if (!warnedAboutConfig) {
+      warnedAboutConfig = true;
+      console.error(`[redis] not configured: ${misconfigurationReason()}`);
+    }
     throw new RedisUnavailableError('Redis is not configured (missing or invalid UPSTASH_REDIS_REST_URL / _TOKEN)');
   }
   return redis;

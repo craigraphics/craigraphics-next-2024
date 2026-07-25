@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { addLike, getLikes, hasLiked, isLikesStoreConfigured, voterId } from '@/lib/likes-store';
+import { addLike, getLikes, hasLiked, voterId } from '@/lib/likes-store';
 
 const UNAVAILABLE = { error: 'Like counts are temporarily unavailable' } as const;
 
@@ -22,10 +22,9 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Slug is required' }, { status: 400 });
   }
 
-  if (!isLikesStoreConfigured) {
-    return NextResponse.json(UNAVAILABLE, { status: 503 });
-  }
-
+  // No early "is it configured?" return: a bad configuration should travel the
+  // same path as an outage so it gets logged with a reason rather than
+  // vanishing into a silent 503.
   try {
     const voter = await voterId(slug, clientIp(request));
     const [likes, liked] = await Promise.all([getLikes(slug), hasLiked(slug, voter)]);
@@ -50,10 +49,6 @@ export async function POST(request: Request) {
 
   if (typeof slug !== 'string' || !slug) {
     return NextResponse.json({ error: 'Slug is required' }, { status: 400 });
-  }
-
-  if (!isLikesStoreConfigured) {
-    return NextResponse.json(UNAVAILABLE, { status: 503 });
   }
 
   try {
