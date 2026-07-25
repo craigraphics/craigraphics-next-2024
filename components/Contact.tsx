@@ -136,7 +136,7 @@ const EmailForm: FC = () => {
           <Turnstile
             ref={turnstileRef}
             siteKey={siteKey}
-            options={{ theme: 'auto', appearance: 'interaction-only' }}
+            options={{ theme: 'auto', appearance: 'interaction-only', action: 'turnstile-spin-v2' }}
             onSuccess={setToken}
             onExpire={() => setToken('')}
             onError={() => setToken('')}
