@@ -16,21 +16,25 @@
     "greeting": {
       "hello": "Hola, Soy",
       "role": "Ingeniero de Software Senior",
+      "tagline": "Plataformas de IA, Arquitectura, UX",
       "title": "Apasionado por crear experiencias web increíbles."
     },
     "title": "Sobre Mí",
-    "intro": "Soy un entusiasta del código con más de 15 años de experiencia convirtiendo café en aplicaciones web de alto rendimiento. No tengo superpoderes, pero me encanta crear experiencias de usuario fluidas como el agua. He tenido el privilegio de trabajar con marcas geniales como Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidencia de México y Coca-Cola.",
+    "intro": "Soy un entusiasta del código con más de 15 años de experiencia convirtiendo café en software. Actualmente trabajo en infraestructura de plataformas de IA en Disney, orquestando múltiples LLMs y construyendo la observabilidad detrás de un asistente de autoservicio que usan millones de suscriptores. He tenido el privilegio de trabajar con marcas geniales como Disney, Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidencia de México y Coca-Cola.",
     "whatIDo": "Lo Que Hago",
     "skills": {
-      "fullStack": "Desarrollo full-stack con enfoque en front-end.",
-      "design": "Convierto ideas de diseñadores y productos en aplicaciones completamente funcionales con gran atención al diseño.",
-      "performance": "Creo sitios web rápidos y de alto rendimiento con tráfico pesado.",
-      "problemSolving": "Resuelvo problemas complejos y lidero equipos pequeños."
+      "fullStack": "Construyo <em>plataformas de IA</em> de extremo a extremo, desde la orquestación de LLMs y la observabilidad hasta la interfaz.",
+      "design": "Aporto una <em>mirada de diseñador</em> a las decisiones de producto y arquitectura, convirtiendo ideas ambiciosas en sistemas que da gusto usar.",
+      "performance": "Creo sitios web <em>rápidos</em> y de alto rendimiento con tráfico pesado.",
+      "problemSolving": "Resuelvo problemas <em>complejos</em> y <em>lidero equipos</em> pequeños."
     },
-    "myToolbox": "Stack Tecnológico y Experiencia",
+    "myToolbox": "Caja de Herramientas",
     "toolbox": {
+      "ai": {
+        "title": "IA y LLM"
+      },
       "fullstack": {
-        "title": "Full Stack"
+        "title": "Arquitectura y Práctica"
       },
       "description": "Las herramientas y tecnologías que uso para crear experiencias digitales excepcionales",
       "since": "Desde",
@@ -63,7 +67,7 @@
         "tools": ["Figma", "Adobe XD", "Diseño Responsivo", "Principios de UI/UX", "Diseño Gráfico"]
       },
       "devops": {
-        "title": "DevOps",
+        "title": "Cloud y DevOps",
         "tools": ["Docker", "Jenkins", "CI/CD", "GIT", "Netlify", "Vercel", "AWS"]
       },
       "build": {
@@ -81,8 +85,8 @@
     },
     "funFacts": {
       "title": "Datos Curiosos",
-      "languages": "Fluido en inglés, español y JavaScript.",
-      "power": "Impulsado por código, café y música.",
+      "languages": "Fluido en inglés, español y TypeScript.",
+      "power": "Impulsado por IA, código, café y música.",
       "music": "Banda sonora para depurar: Música ambiental y John Coltrane.",
       "hobby": "Cuando no estoy programando, me encontrarás jugando tenis de mesa."
     },
