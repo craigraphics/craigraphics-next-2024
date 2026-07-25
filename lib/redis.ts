@@ -16,12 +16,24 @@ const REQUEST_TIMEOUT_MS = 2500;
 const OPERATION_DEADLINE_MS = 5000;
 
 /**
+ * Removes wrapping quotes. Pasting a .env line's value into a dashboard field
+ * carries the quotes into the value itself, which then becomes part of the
+ * hostname and fails DNS in a way the error message barely explains.
+ */
+function unquote(raw: string | undefined): string | undefined {
+  return raw
+    ?.trim()
+    .replace(/^(['"])([\s\S]*)\1$/, '$2')
+    .trim();
+}
+
+/**
  * Upstash rejects a URL without a scheme, and some integrations supply a bare
  * hostname. Returns null for anything unusable so callers degrade to "not
  * configured" rather than throwing.
  */
 function normalizeUrl(raw: string | undefined): string | null {
-  const trimmed = raw?.trim();
+  const trimmed = unquote(raw);
   if (!trimmed) return null;
 
   // A non-HTTP scheme means the wrong variable was supplied (KV_URL holds a
@@ -31,8 +43,10 @@ function normalizeUrl(raw: string | undefined): string | null {
 
   const withScheme = scheme ? trimmed : `https://${trimmed}`;
   try {
-    new URL(withScheme);
-    return withScheme;
+    // `new URL` is lenient enough to accept a mangled value and hand back
+    // nonsense like `"https` as the hostname, so check the host itself.
+    const { hostname } = new URL(withScheme);
+    return /^[a-z0-9.-]+$/i.test(hostname) ? withScheme : null;
   } catch {
     return null;
   }
@@ -40,8 +54,8 @@ function normalizeUrl(raw: string | undefined): string | null {
 
 // The legacy KV_* names are what the old Vercel KV integration injected; they
 // stay as a fallback so an older deployment keeps working mid-migration.
-const url = normalizeUrl(process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL);
-const token = process.env.UPSTASH_REDIS_REST_TOKEN?.trim() || process.env.KV_REST_API_TOKEN?.trim();
+const url = normalizeUrl(process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL);
+const token = unquote(process.env.UPSTASH_REDIS_REST_TOKEN) || unquote(process.env.KV_REST_API_TOKEN);
 
 /** False when no usable credentials are present, so callers can degrade instead of hanging. */
 export const isRedisConfigured = Boolean(url && token);
@@ -83,15 +97,16 @@ export class RedisUnavailableError extends Error {
  * URL is otherwise invisible: the routes just return 503 with nothing logged.
  */
 function misconfigurationReason(): string {
-  const rawUrl = (process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL)?.trim();
+  const rawUrl = unquote(process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL);
 
   if (!rawUrl) return 'UPSTASH_REDIS_REST_URL is not set';
 
   if (!url) {
     const scheme = rawUrl.match(/^([a-z][a-z0-9+.-]*):\/\//i)?.[1].toLowerCase();
-    return scheme
-      ? `UPSTASH_REDIS_REST_URL uses "${scheme}://". The REST client needs the https:// endpoint from the Upstash console, not the Redis connection string.`
-      : 'UPSTASH_REDIS_REST_URL is not a parseable URL';
+    if (scheme && scheme !== 'http' && scheme !== 'https') {
+      return `UPSTASH_REDIS_REST_URL uses "${scheme}://". The REST client needs the https:// endpoint from the Upstash console, not the Redis connection string.`;
+    }
+    return 'UPSTASH_REDIS_REST_URL is not a usable https:// endpoint (check for stray quotes, spaces, or a copied .env line)';
   }
 
   if (!token) return 'UPSTASH_REDIS_REST_TOKEN is not set';
