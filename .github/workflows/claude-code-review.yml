@@ -33,6 +33,7 @@ jobs:
 
       - name: Run Claude Code Review
         id: claude-review
+        continue-on-error: true # Upstream action bug: intermittently crashes with is_error:true, $0 cost, ~2s after init (anthropics/claude-code-action#914). Don't let it block PR checks.
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
