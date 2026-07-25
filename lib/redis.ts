@@ -15,16 +15,48 @@ const REQUEST_TIMEOUT_MS = 2500;
 /** Hard ceiling for one logical operation, including retries. */
 const OPERATION_DEADLINE_MS = 5000;
 
+/**
+ * Upstash rejects a URL without a scheme, and some integrations supply a bare
+ * hostname. Returns null for anything unusable so callers degrade to "not
+ * configured" rather than throwing.
+ */
+function normalizeUrl(raw: string | undefined): string | null {
+  const trimmed = raw?.trim();
+  if (!trimmed) return null;
+
+  // A non-HTTP scheme means the wrong variable was supplied (KV_URL holds a
+  // redis:// connection string, which the REST client can't use).
+  const scheme = trimmed.match(/^([a-z][a-z0-9+.-]*):\/\//i)?.[1].toLowerCase();
+  if (scheme && scheme !== 'http' && scheme !== 'https') return null;
+
+  const withScheme = scheme ? trimmed : `https://${trimmed}`;
+  try {
+    new URL(withScheme);
+    return withScheme;
+  } catch {
+    return null;
+  }
+}
+
 // The legacy KV_* names are what the old Vercel KV integration injected; they
 // stay as a fallback so an older deployment keeps working mid-migration.
-const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
-const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
+const url = normalizeUrl(process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL);
+const token = process.env.UPSTASH_REDIS_REST_TOKEN?.trim() || process.env.KV_REST_API_TOKEN?.trim();
 
-/** False when no credentials are present, so callers can degrade instead of hanging. */
+/** False when no usable credentials are present, so callers can degrade instead of hanging. */
 export const isRedisConfigured = Boolean(url && token);
 
-const redis = isRedisConfigured
-  ? new Redis({
+// Built on first use, never at module scope: `next build` collects page data by
+// importing routes, so constructing the client here would turn a bad
+// environment variable into a failed build instead of a degraded endpoint.
+// `undefined` means "not yet attempted"; `null` means "attempted and failed".
+let redis: Redis | null | undefined;
+
+function buildClient(): Redis | null {
+  if (!url || !token) return null;
+
+  try {
+    return new Redis({
       url,
       token,
       // The default is 5 retries with exponential backoff, which is how an
@@ -32,8 +64,12 @@ const redis = isRedisConfigured
       // a fast, visible failure.
       retry: { retries: 1, backoff: () => 100 },
       signal: () => AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-    })
-  : null;
+    });
+  } catch (error) {
+    console.error('[redis] client construction failed:', error);
+    return null;
+  }
+}
 
 export class RedisUnavailableError extends Error {
   constructor(message: string, options?: { cause?: unknown }) {
@@ -43,8 +79,10 @@ export class RedisUnavailableError extends Error {
 }
 
 export function client(): Redis {
+  if (redis === undefined) redis = buildClient();
+
   if (!redis) {
-    throw new RedisUnavailableError('Redis is not configured (missing UPSTASH_REDIS_REST_URL / _TOKEN)');
+    throw new RedisUnavailableError('Redis is not configured (missing or invalid UPSTASH_REDIS_REST_URL / _TOKEN)');
   }
   return redis;
 }
