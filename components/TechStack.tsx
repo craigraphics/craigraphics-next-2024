@@ -3,34 +3,56 @@
 import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/badge';
 import { useState } from 'react';
-import { CodeXml, Server, Palette, Cloud, MonitorSpeaker, Layers, LucideIcon, Lightbulb } from 'lucide-react';
+import { CodeXml, Server, Palette, Cloud, MonitorSpeaker, Layers, LucideIcon, Lightbulb, Sparkles } from 'lucide-react';
 
-// Technology data organized by categories
+// Technology data organized by categories. Order here is the order rendered:
+// AI first, then the architecture and infrastructure work, with the UI layers
+// after it — matching where the day-to-day work actually sits now.
 const technologyData = {
+  ai: {
+    icon: Sparkles,
+    color: 'text-orange-500 dark:text-orange-400',
+    lineColor: 'bg-orange-500',
+    technologies: [
+      'AI',
+      'LLM Orchestration',
+      'LLM Observability',
+      'RAG',
+      'Agentic Workflows',
+      'MCP',
+      'LiteLLM',
+      'Prompt Engineering',
+    ],
+    yearsKey: 'years.threePlus',
+  },
   fullstack: {
     icon: Layers,
     color: 'text-green-500 dark:text-green-400',
     lineColor: 'bg-green-500',
     technologies: [
-      'AI',
-      'LLM Orchestration',
       'System Design',
-      'Next.js',
-      'Performance',
-      'Security',
       'Scalability',
+      'Security',
+      'Performance',
       'Logging',
+      'Testing',
       'Coaching',
       'Mentoring',
-      'Testing',
     ],
+    yearsKey: 'years.tenPlus',
+  },
+  devops: {
+    icon: Cloud,
+    color: 'text-indigo-500 dark:text-indigo-400',
+    lineColor: 'bg-indigo-500',
+    technologies: ['AWS', 'Terraform', 'Datadog', 'Docker', 'CI/CD', 'Vercel', 'Git', 'Monitoring', 'Infrastructure as Code', 'Auto Scaling'],
     yearsKey: 'years.fivePlus',
   },
   frontend: {
     icon: CodeXml,
     color: 'text-blue-600 dark:text-blue-400',
     lineColor: 'bg-blue-600',
-    technologies: ['React', 'TypeScript', 'Tailwind', 'Bundling', 'TansTack Query', 'HTML / CSS', 'Angular', 'State Management'],
+    technologies: ['React', 'TypeScript', 'Next.js', 'Tailwind', 'Bundling', 'TansTack Query', 'HTML / CSS', 'Angular', 'State Management'],
     yearsKey: 'years.fifteenPlus',
   },
   design: {
@@ -39,13 +61,6 @@ const technologyData = {
     lineColor: 'bg-pink-500',
     technologies: ['Figma', 'Adobe XD', 'Photoshop', 'A11y', 'UI Design Library', 'High-Fi Mockups', 'Brand', 'Usability'],
     yearsKey: 'years.tenPlus',
-  },
-  devops: {
-    icon: Cloud,
-    color: 'text-indigo-500 dark:text-indigo-400',
-    lineColor: 'bg-indigo-500',
-    technologies: ['Vercel', 'AWS', 'Terraform', 'Datadog', 'Docker', 'Git', 'CI/CD', 'Monitoring', 'Infrastructure as Code', 'Auto Scaling'],
-    yearsKey: 'years.threePlus',
   },
   mobile: {
     icon: MonitorSpeaker,
@@ -66,7 +81,13 @@ const technologyData = {
 // Enhanced technology data with learning info
 const detailedTechData: { [key: string]: { learned: string; projects: string[] } } = {
   AI: { learned: '2023', projects: ['Disney', 'SQOR.ai', 'Chatbots', 'AI Tools'] },
-  'LLM Orchestration': { learned: '2025', projects: ['Disney', 'SQOR.ai', 'Multi-Model Routing', 'RAG'] },
+  'LLM Orchestration': { learned: '2025', projects: ['Disney', 'SQOR.ai', 'Multi-Model Routing', 'Fallbacks'] },
+  'LLM Observability': { learned: '2025', projects: ['Disney', 'Token & Cost Tracking', 'Latency Monitoring', 'Alerting'] },
+  RAG: { learned: '2024', projects: ['Disney', 'Knowledge Retrieval', 'Grounded Answers'] },
+  'Agentic Workflows': { learned: '2024', projects: ['Disney', 'Felix', 'Multi-Agent Support Tools'] },
+  MCP: { learned: '2025', projects: ['Disney', 'Felix', 'Datadog / Jira / GitHub Integrations'] },
+  LiteLLM: { learned: '2025', projects: ['Disney', 'Multi-Provider Gateway', 'Usage Instrumentation'] },
+  'Prompt Engineering': { learned: '2023', projects: ['Disney', 'SQOR.ai', 'Craigraphics Chatbot'] },
   'System Design': { learned: '2017', projects: ['Scalable Architectures', 'High-Traffic Apps', 'Enterprise Solutions'] },
   Performance: { learned: '2012', projects: ['Optimization Projects', 'Speed Improvements', 'Web Vitals'] },
   Scalability: { learned: '2016', projects: ['High-Load Systems', 'Microservices', 'Cloud Architecture'] },
@@ -238,6 +259,15 @@ const TechStack = () => {
 
   const categories = [
     {
+      key: 'ai',
+      IconComponent: technologyData.ai.icon,
+      iconColor: technologyData.ai.color,
+      lineColor: technologyData.ai.lineColor,
+      technologies: technologyData.ai.technologies,
+      yearsKey: technologyData.ai.yearsKey,
+      title: tToolbox('ai.title'),
+    },
+    {
       key: 'fullstack',
       IconComponent: technologyData.fullstack.icon,
       iconColor: technologyData.fullstack.color,
@@ -247,15 +277,14 @@ const TechStack = () => {
       title: tToolbox('fullstack.title'),
     },
     {
-      key: 'frontend',
-      IconComponent: technologyData.frontend.icon,
-      iconColor: technologyData.frontend.color,
-      lineColor: technologyData.frontend.lineColor,
-      technologies: technologyData.frontend.technologies,
-      yearsKey: technologyData.frontend.yearsKey,
-      title: t('toolbox.frontend.title'),
+      key: 'devops',
+      IconComponent: technologyData.devops.icon,
+      iconColor: technologyData.devops.color,
+      lineColor: technologyData.devops.lineColor,
+      technologies: technologyData.devops.technologies,
+      yearsKey: technologyData.devops.yearsKey,
+      title: t('toolbox.devops.title'),
     },
-
     {
       key: 'backend',
       IconComponent: technologyData.backend.icon,
@@ -266,6 +295,15 @@ const TechStack = () => {
       title: t('toolbox.backend.title'),
     },
     {
+      key: 'frontend',
+      IconComponent: technologyData.frontend.icon,
+      iconColor: technologyData.frontend.color,
+      lineColor: technologyData.frontend.lineColor,
+      technologies: technologyData.frontend.technologies,
+      yearsKey: technologyData.frontend.yearsKey,
+      title: t('toolbox.frontend.title'),
+    },
+    {
       key: 'design',
       IconComponent: technologyData.design.icon,
       iconColor: technologyData.design.color,
@@ -273,15 +311,6 @@ const TechStack = () => {
       technologies: technologyData.design.technologies,
       yearsKey: technologyData.design.yearsKey,
       title: t('toolbox.design.title'),
-    },
-    {
-      key: 'devops',
-      IconComponent: technologyData.devops.icon,
-      iconColor: technologyData.devops.color,
-      lineColor: technologyData.devops.lineColor,
-      technologies: technologyData.devops.technologies,
-      yearsKey: technologyData.devops.yearsKey,
-      title: t('toolbox.devops.title'),
     },
     {
       key: 'mobile',

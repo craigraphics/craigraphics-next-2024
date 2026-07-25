@@ -8,11 +8,11 @@
 **Work Preferences:** Open to remote (anywhere), hybrid, or onsite positions  
 **Geographic Availability:** Onsite/Hybrid in San Francisco Bay Area and Sacramento  
 **Years of Experience:** 15+ years  
-**Languages:** Fluent in English, Spanish, and JavaScript  
+**Languages:** Fluent in English, Spanish, and TypeScript  
 **Certification:** Certified Professional for Software Architecture — Foundation Level (CPSA-F), iSAQB, April 2026  
 **Linkedin** https://www.linkedin.com/in/willcraigz/  
 **Contact:** craigraphics@gmail.com  
-**Personal Interests:** Table tennis, ambient music, John Coltrane, powered by code, coffee and music
+**Personal Interests:** Table tennis, ambient music, John Coltrane, powered by AI, code, coffee and music
 
 ## Professional Summary
 
@@ -236,4 +236,4 @@ Today I work on the infrastructure that makes LLM-powered products reliable: mul
 - I enjoy reading about philosophy, astronomy, particle physics, General Relativity, history and social psychology.
 - I am engaged with a beautiful woman and I am very fortunate man.
 
-**Current Professional Motto:** "Powered by code, coffee and music" - Combining technical expertise with creative problem-solving, focusing on creating seamless user experiences while maintaining high performance and scalability standards.
+**Current Professional Motto:** "Powered by AI, code, coffee and music" - Combining technical expertise with creative problem-solving, focusing on creating seamless user experiences while maintaining high performance and scalability standards.
