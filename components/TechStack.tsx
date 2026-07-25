@@ -13,6 +13,7 @@ const technologyData = {
     lineColor: 'bg-green-500',
     technologies: [
       'AI',
+      'LLM Orchestration',
       'System Design',
       'Next.js',
       'Performance',
@@ -43,7 +44,7 @@ const technologyData = {
     icon: Cloud,
     color: 'text-indigo-500 dark:text-indigo-400',
     lineColor: 'bg-indigo-500',
-    technologies: ['Vercel', 'AWS', 'Docker', 'Git', 'CI/CD', 'Monitoring', 'Infrastructure as Code', 'Auto Scaling'],
+    technologies: ['Vercel', 'AWS', 'Terraform', 'Datadog', 'Docker', 'Git', 'CI/CD', 'Monitoring', 'Infrastructure as Code', 'Auto Scaling'],
     yearsKey: 'years.threePlus',
   },
   mobile: {
@@ -64,7 +65,8 @@ const technologyData = {
 
 // Enhanced technology data with learning info
 const detailedTechData: { [key: string]: { learned: string; projects: string[] } } = {
-  AI: { learned: '2023', projects: ['Chatbots', 'AI Tools', 'Machine Learning'] },
+  AI: { learned: '2023', projects: ['Disney', 'SQOR.ai', 'Chatbots', 'AI Tools'] },
+  'LLM Orchestration': { learned: '2025', projects: ['Disney', 'SQOR.ai', 'Multi-Model Routing', 'RAG'] },
   'System Design': { learned: '2017', projects: ['Scalable Architectures', 'High-Traffic Apps', 'Enterprise Solutions'] },
   Performance: { learned: '2012', projects: ['Optimization Projects', 'Speed Improvements', 'Web Vitals'] },
   Scalability: { learned: '2016', projects: ['High-Load Systems', 'Microservices', 'Cloud Architecture'] },
@@ -73,9 +75,9 @@ const detailedTechData: { [key: string]: { learned: string; projects: string[] }
   Coaching: { learned: '2019', projects: ['Team Leadership', 'Junior Developer Mentoring', 'Code Reviews'] },
   Mentoring: { learned: '2020', projects: ['Career Guidance', 'Technical Mentorship', 'Knowledge Transfer'] },
   Testing: { learned: '2015', projects: ['Unit Tests', 'Integration Tests', 'E2E Testing'] },
-  React: { learned: '2018', projects: ['Autodesk', 'Frontier Communications', 'Craigraphics LLC'] },
-  'Next.js': { learned: '2020', projects: ['Craigraphics LLC', 'Autodesk', 'Business Website'] },
-  TypeScript: { learned: '2020', projects: ['Autodesk', 'Craigraphics LLC'] },
+  React: { learned: '2018', projects: ['Disney', 'Autodesk', 'Frontier Communications', 'Craigraphics LLC'] },
+  'Next.js': { learned: '2020', projects: ['Disney', 'Craigraphics LLC', 'Autodesk', 'Business Website'] },
+  TypeScript: { learned: '2020', projects: ['Disney', 'Autodesk', 'Craigraphics LLC'] },
   Tailwind: { learned: '2021', projects: ['Autodesk', 'Craigraphics LLC'] },
   Bundling: { learned: '2021', projects: ['Webpack', 'Vite', 'Build Optimization'] },
   'TansTack Query': { learned: '2023', projects: ['Craigraphics LLC'] },
@@ -84,7 +86,7 @@ const detailedTechData: { [key: string]: { learned: string; projects: string[] }
   Angular: { learned: '2015', projects: ['Carnival Cruise v1', 'Personal projects'] },
   'Node.js': { learned: '2015', projects: ['API Development', 'Server Applications'] },
   Express: { learned: '2015', projects: ['REST APIs', 'Backend Services'] },
-  Python: { learned: '2023', projects: ['Data Processing', 'Automation Scripts'] },
+  Python: { learned: '2023', projects: ['Disney', 'Data Processing', 'Automation Scripts'] },
   REST: { learned: '2013', projects: ['API Integrations', 'Microservices'] },
   PostgreSQL: { learned: '2016', projects: ['Relational Databases', 'Complex Queries'] },
   MongoDB: { learned: '2016', projects: ['Document Stores', 'NoSQL Apps'] },
@@ -105,6 +107,8 @@ const detailedTechData: { [key: string]: { learned: string; projects: string[] }
   Git: { learned: '2011', projects: ['Version Control', 'Team Collaboration'] },
   'CI/CD': { learned: '2016', projects: ['Automated Pipelines', 'Continuous Deployment', 'GitHub Actions'] },
   Monitoring: { learned: '2018', projects: ['Application Performance', 'Error Tracking', 'Uptime Monitoring'] },
+  Terraform: { learned: '2025', projects: ['Disney', 'Infrastructure Provisioning', 'AI Platform Services'] },
+  Datadog: { learned: '2025', projects: ['Disney', 'LLM Observability', 'APM & Monitors', 'Alerting'] },
   'Infrastructure as Code': { learned: '2019', projects: ['Terraform Scripts', 'CloudFormation', 'Automated Provisioning'] },
   'Auto Scaling': { learned: '2019', projects: ['Load Balancing', 'Traffic Management', 'Cost Optimization'] },
   'React Native': { learned: '2022', projects: ['Mobile Apps', 'Cross-Platform'] },

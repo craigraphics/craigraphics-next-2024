@@ -20,7 +20,7 @@
     },
 
     "title": "About Me",
-    "intro": "I'm a code enthusiast with 15+ years of turning coffee into high-performance web applications. I don't have superpowers, but I love creating smooth user experiences like water. I've had the privilege of working with some pretty cool brands like Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidency of Mexico and Coca-Cola.",
+    "intro": "I'm a code enthusiast with 15+ years of turning coffee into software. These days I work on AI platform infrastructure at Disney, orchestrating multiple LLMs and building the observability behind a self-service assistant used by millions of subscribers. I don't have superpowers, but I love creating smooth user experiences like water. I've had the privilege of working with some pretty cool brands like Disney, Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidency of Mexico and Coca-Cola.",
     "whatIDo": "What I Do",
     "skills": {
       "fullStack": "<em>Full-stack</em> with a focus on Front-end.",
