@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import fs from 'fs';
 import path from 'path';
-import { kv } from '@vercel/kv';
+import { client, isRedisConfigured, withDeadline } from '@/lib/redis';
 
 // Type definitions
 interface RequestBody {
@@ -74,13 +74,21 @@ async function getRateLimitInfo(ip: string): Promise<RateLimitInfo> {
   const limit = 10;
   const windowSecs = 15 * 60;
   const key = `ratelimit:${ip}`;
+
+  if (!isRedisConfigured) {
+    console.error('Rate limit store not configured, allowing request');
+    return { allowed: true, remaining: 1 };
+  }
+
   try {
-    const count = await kv.incr(key);
-    if (count === 1) await kv.expire(key, windowSecs);
+    const count = await withDeadline('rate limit', client().incr(key));
+    if (count === 1) await withDeadline('rate limit', client().expire(key, windowSecs));
     if (count > limit) return { allowed: false, remaining: 0 };
     return { allowed: true, remaining: limit - count };
-  } catch {
-    console.error('Rate limit KV error, allowing request');
+  } catch (error) {
+    // Fails open so an outage doesn't take the chat down — but that means an
+    // unreachable store leaves this endpoint unthrottled, so make it loud.
+    console.error('Rate limit store error, allowing request:', error);
     return { allowed: true, remaining: 1 };
   }
 }

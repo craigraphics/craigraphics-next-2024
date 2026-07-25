@@ -8,56 +8,90 @@ interface LikeButtonClientProps {
   slug: string;
 }
 
+interface LikesResponse {
+  likes: number;
+  liked: boolean;
+}
+
+const localKey = (slug: string) => `liked_${slug}`;
+
+function readLocalLiked(slug: string): boolean {
+  try {
+    return JSON.parse(localStorage.getItem(localKey(slug)) ?? 'false') === true;
+  } catch {
+    return false;
+  }
+}
+
 const LikeButtonClient: React.FC<LikeButtonClientProps> = ({ slug }) => {
   const queryClient = useQueryClient();
 
-  const { data: likeCount = 0 } = useQuery({
+  // Read after mount rather than during render: localStorage doesn't exist
+  // during SSR, and seeding state from it would desync hydration.
+  const [locallyLiked, setLocallyLiked] = React.useState(false);
+  React.useEffect(() => setLocallyLiked(readLocalLiked(slug)), [slug]);
+
+  const { data, isPending, isError } = useQuery<LikesResponse>({
     queryKey: ['likes', slug],
-    queryFn: () =>
-      fetch(`/api/likes?slug=${slug}`)
-        .then(res => res.json())
-        .then(data => data.likes),
-  });
-
-  const { data: liked = false } = useQuery({
-    queryKey: ['liked', slug],
-    queryFn: () => {
-      const storedLiked = localStorage.getItem(`liked_${slug}`);
-      return storedLiked ? JSON.parse(storedLiked) : false;
+    queryFn: async () => {
+      const response = await fetch(`/api/likes?slug=${encodeURIComponent(slug)}`);
+      if (!response.ok) throw new Error(`Failed to load likes (${response.status})`);
+      return response.json();
     },
+    retry: 1,
+    staleTime: 60_000,
   });
 
-  const likeMutation = useMutation({
-    mutationFn: () =>
-      fetch('/api/likes', {
+  const likeMutation = useMutation<LikesResponse>({
+    mutationFn: async () => {
+      const response = await fetch('/api/likes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ slug }),
-      }).then(res => res.json()),
-    onSuccess: data => {
-      queryClient.setQueryData(['likes', slug], data.likes);
-      queryClient.setQueryData(['liked', slug], true);
-      localStorage.setItem(`liked_${slug}`, JSON.stringify(true));
+      });
+      if (!response.ok) throw new Error(`Failed to save like (${response.status})`);
+      return response.json();
+    },
+    onSuccess: result => {
+      queryClient.setQueryData(['likes', slug], result);
+      setLocallyLiked(true);
+      try {
+        localStorage.setItem(localKey(slug), 'true');
+      } catch {
+        // Private browsing or a full quota — the server-side guard still holds.
+      }
     },
   });
 
+  // The server dedupes by address too, so a reader who cleared localStorage
+  // still sees their like reflected.
+  const liked = locallyLiked || data?.liked === true;
+  const unavailable = isError || likeMutation.isError;
+  const likeCount = data?.likes;
+
   const handleLike = () => {
-    if (!liked) {
-      likeMutation.mutate();
-    }
+    if (!liked && !unavailable) likeMutation.mutate();
   };
+
+  const label = unavailable
+    ? 'Likes are temporarily unavailable'
+    : liked
+      ? `Liked, ${likeCount ?? 0} likes`
+      : `Like this post, ${likeCount ?? 0} likes`;
 
   return (
     <button
       onClick={handleLike}
       className={`flex items-center space-x-1 duration-300 transition-colors ${
         liked ? 'text-secondary' : 'text-foreground'
-      }`}
-      disabled={liked || likeMutation.isPending}
-      aria-label={liked ? `Liked, ${likeCount} likes` : `Like this post, ${likeCount} likes`}
+      } ${unavailable ? 'opacity-50' : ''}`}
+      disabled={liked || isPending || unavailable || likeMutation.isPending}
+      aria-label={label}
+      title={unavailable ? label : undefined}
     >
       <Heart className={`w-5 h-5 ${liked ? 'fill-current' : ''}`} />
-      <span>{likeCount}</span>
+      {/* No count rather than a misleading 0 when the store is unreachable. */}
+      {typeof likeCount === 'number' && <span>{likeCount}</span>}
     </button>
   );
 };
