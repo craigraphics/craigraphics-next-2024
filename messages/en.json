@@ -21,7 +21,7 @@
     },
 
     "title": "About Me",
-    "intro": "I'm a software engineer with 15+ years building for the web — most of that career on the front end, and increasingly on the systems behind it. These days I work on AI platform infrastructure at Disney, orchestrating multiple LLMs and building the observability behind a self-service assistant used by millions of subscribers. I've had the privilege of working with some pretty cool brands like Disney, Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidency of Mexico and Coca-Cola.",
+    "intro": "I'm a software engineer with 15+ years building for the web, most of that career on the front end, and increasingly on the systems behind it. These days I work on AI platform infrastructure at Disney, orchestrating multiple LLMs and building the observability behind a self-service assistant used by millions of subscribers. I've had the privilege of working with some pretty cool brands like Disney, Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidency of Mexico and Coca-Cola.",
     "whatIDo": "What I Do",
     "skills": {
       "fullStack": "Build <em>AI platforms</em> end to end, from LLM orchestration and observability down to the interface.",
