@@ -16,11 +16,11 @@
     "greeting": {
       "hello": "Hola, Soy",
       "role": "Ingeniero de Software Senior",
-      "tagline": "Plataformas de IA, Arquitectura, UX",
-      "title": "Apasionado por crear experiencias web increíbles."
+      "tagline": "Plataformas de IA, Full-Stack, Arquitectura, UX",
+      "title": "Construyo las plataformas de IA detrás de productos en los que la gente confía, con la mirada de un ingeniero front-end puesta en quienes los usan."
     },
     "title": "Sobre Mí",
-    "intro": "Soy un entusiasta del código con más de 15 años de experiencia convirtiendo café en software. Actualmente trabajo en infraestructura de plataformas de IA en Disney, orquestando múltiples LLMs y construyendo la observabilidad detrás de un asistente de autoservicio que usan millones de suscriptores. He tenido el privilegio de trabajar con marcas geniales como Disney, Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidencia de México y Coca-Cola.",
+    "intro": "Soy un ingeniero de software con más de 15 años construyendo para la web — la mayor parte de mi carrera en el front-end, y cada vez más en los sistemas que hay detrás. Actualmente trabajo en infraestructura de plataformas de IA en Disney, orquestando múltiples LLMs y construyendo la observabilidad detrás de un asistente de autoservicio que usan millones de suscriptores. He tenido el privilegio de trabajar con marcas geniales como Disney, Autodesk, General Motors, Frontier, Carnival Cruise, Telmex, Presidencia de México y Coca-Cola.",
     "whatIDo": "Lo Que Hago",
     "skills": {
       "fullStack": "Construyo <em>plataformas de IA</em> de extremo a extremo, desde la orquestación de LLMs y la observabilidad hasta la interfaz.",
