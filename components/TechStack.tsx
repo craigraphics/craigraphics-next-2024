@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/badge';
 import { useState } from 'react';
-import { CodeXml, Server, Palette, Cloud, MonitorSpeaker, Layers, LucideIcon, Lightbulb, Sparkles } from 'lucide-react';
+import { CodeXml, Server, Palette, Cloud, Layers, LucideIcon, Lightbulb, Sparkles } from 'lucide-react';
 
 // Technology data organized by categories. Order here is the order rendered:
 // AI first, then the architecture and infrastructure work, with the UI layers
@@ -52,7 +52,7 @@ const technologyData = {
     icon: CodeXml,
     color: 'text-blue-600 dark:text-blue-400',
     lineColor: 'bg-blue-600',
-    technologies: ['React', 'TypeScript', 'Next.js', 'Tailwind', 'Bundling', 'TansTack Query', 'HTML / CSS', 'Angular', 'State Management'],
+    technologies: ['React', 'TypeScript', 'Next.js', 'Tailwind', 'Responsive', 'Bundling', 'TansTack Query', 'HTML / CSS', 'Angular', 'State Management'],
     yearsKey: 'years.fifteenPlus',
   },
   design: {
@@ -60,13 +60,6 @@ const technologyData = {
     color: 'text-pink-500 dark:text-pink-400',
     lineColor: 'bg-pink-500',
     technologies: ['Figma', 'Adobe XD', 'Photoshop', 'A11y', 'UI Design Library', 'High-Fi Mockups', 'Brand', 'Usability'],
-    yearsKey: 'years.tenPlus',
-  },
-  mobile: {
-    icon: MonitorSpeaker,
-    color: 'text-yellow-500 dark:text-yellow-400',
-    lineColor: 'bg-yellow-500',
-    technologies: ['React Native', 'PWA', 'Responsive', 'Electron', 'App Store', 'Mobile UI/UX', 'Touch', 'Cross-Platform'],
     yearsKey: 'years.tenPlus',
   },
   backend: {
@@ -311,15 +304,6 @@ const TechStack = () => {
       technologies: technologyData.design.technologies,
       yearsKey: technologyData.design.yearsKey,
       title: t('toolbox.design.title'),
-    },
-    {
-      key: 'mobile',
-      IconComponent: technologyData.mobile.icon,
-      iconColor: technologyData.mobile.color,
-      lineColor: technologyData.mobile.lineColor,
-      technologies: technologyData.mobile.technologies,
-      yearsKey: technologyData.mobile.yearsKey,
-      title: t('toolbox.mobile.title'),
     },
   ];
 
