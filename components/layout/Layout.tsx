@@ -7,9 +7,11 @@ const ChatWidget = dynamic(() => import('../ChatWidget'));
 
 interface LayoutProps {
   children: React.ReactNode;
+  /** Articles opt out: the docked bar covers the interactive figures. */
+  showChat?: boolean;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, showChat = true }: LayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen ">
       <a
@@ -20,9 +22,11 @@ const Layout = ({ children }: LayoutProps) => {
       </a>
       <Header />
       <main id="main-content" className="flex-grow container mx-auto px-6 py-8">{children}</main>
-      <ClientProvider>
-        <ChatWidget />
-      </ClientProvider>
+      {showChat && (
+        <ClientProvider>
+          <ChatWidget />
+        </ClientProvider>
+      )}
       <Footer />
     </div>
   );

@@ -1,61 +1,150 @@
 ---
-title: "El Bucle de Eventos de JavaScript: Una Guía Amigable"
-date: "2024-09-28"
-readTime: "2 mins de lectura"
+title: "Un hilo, dos colas: cómo JavaScript decide qué corre después"
+date: "2026-07-26"
+readTime: "12 mins de lectura"
 author: "William Craig"
-tags: ["JavaScript", "Bucle de Eventos", "Desarrollo Web"]
-excerpt: "El Bucle de Eventos de JavaScript es lo que permite que JavaScript sea tan versátil. Es la razón por la que tu navegador web no se congela mientras carga una imagen grande, o por qué puedes escribir en un cuadro de chat mientras recibes mensajes."
+tags: ["JavaScript", "Event Loop", "Promesas", "Desarrollo Web", "Interactivo"]
+excerpt: "Un modelo puede escribir cuarenta líneas de JavaScript asíncrono que se ven perfectas y corren en el orden equivocado. El event loop es lo que te dice cuáles. Un hilo, dos colas, y un botón que congela la página que estás leyendo."
 ---
 
-Imagina que eres un chef en una cocina ocupada. Tienes varios platos que preparar, pero solo puedes hacer una cosa a la vez. ¿Cómo lo manejas todo sin quemar la comida o hacer esperar a los clientes? Bueno, JavaScript enfrenta un desafío similar, y su solución se llama el Bucle de Eventos.
+Hoy la mayoría revisamos más JavaScript del que escribimos. Un modelo produce cuarenta líneas, se ven bien, las pruebas pasan, y se despacha.
 
-## ¿Qué es el Bucle de Eventos, de todos modos?
+Lo cual está perfecto, hasta que el bug es de *orden*. El código generado es buenísimo para tener la forma correcta y estar sutilmente equivocado sobre cuándo corre cada cosa. Un valor leído después de un `await` que otra cosa ya cambió. Un `await` metido dentro de un bucle, convirtiendo en silencio veinte peticiones paralelas en veinte secuenciales. Una limpieza que se dispara un tick tarde. Nada de eso parece un bug. Se lee precioso, no tiene ningún subrayado rojo, y ninguna prueba lo atrapa a menos que ya sospecharas que estaba ahí.
 
-El Bucle de Eventos es como el chef principal en nuestra analogía de la cocina. Es el cerebro maestro que mantiene JavaScript funcionando sin problemas, incluso cuando hay mucho sucediendo. JavaScript es monohilo, lo que significa que solo puede hacer una cosa a la vez, al igual que nuestro chef. Pero con el Bucle de Eventos, puede malabarear múltiples tareas eficientemente.
+Hay una sola forma confiable de detectar esa clase de error, y es saber cómo decide el runtime qué corre a continuación. No más o menos. Exactamente.
 
-## ¿Cómo funciona?
+Por suerte, la máquina que toma esas decisiones es pequeña: un hilo, dos colas, y una sola regla sobre cuál de las dos gana. Eso es casi todo. Es una de las pocas partes de esta plataforma que de verdad puedes terminar de aprender, y una vez que la tienes deja de tratarse solo de asincronía. El mismo modelo te explica por qué un solo bucle pesado congela una página entera, dónde se enchufan al lenguaje las APIs del navegador como los temporizadores o `fetch`, cuánto cuesta de verdad un `await`, por qué una promesa que ya tiene su valor igual te hace esperar, y en qué momento de todo esto el navegador encuentra un hueco para pintar.
 
-Vamos a desglosarlo en partes simples:
+Así que este artículo no describe la máquina, te la entrega. Abajo hay un botón que congela la página que estás leyendo, cuatro runtimes que puedes recorrer instrucción por instrucción, y una promesa desarmada hasta los slots internos que la especificación realmente le da.
 
-1. **La Pila de Llamadas**: Piensa en esto como la tarea actual del chef. Cuando inicias una función, va a la parte superior de la pila. Cuando la función termina, se saca de la pila.
+Todo lo que sigue corre en tu navegador mientras lees. Si dudas de alguna afirmación, puedes presionarla.
 
-2. **La Cola de Devolución de Llamada**: Esto es como una línea de cocineros de preparación esperando para ayudar. Cuando las operaciones asíncronas (como temporizadores o solicitudes de red) terminan, se unen a esta cola.
+## Un solo hilo. Aquí está la prueba.
 
-3. **La Cola de Microtareas**: Esta es un carril especial y expreso para ciertas tareas, principalmente relacionadas con Promesas. Es como un servicio VIP en nuestra cocina.
+Todo el mundo repite que JavaScript es de un solo hilo. Casi nadie te lo hace sentir.
 
-4. **El Bucle de Eventos**: Este es nuestro chef principal, constantemente verificando si el chef principal (Pila de Llamadas) está libre. Si lo está, el chef principal primero revisa el carril VIP (Cola de Microtareas), luego la línea regular (Cola de Devolución de Llamada), y asigna la siguiente tarea.
+Abajo hay dos barras en movimiento. La verde la mueve tu JavaScript, un paso por cada `requestAnimationFrame`. La ámbar es una animación `transform` de CSS y nada más. También hay un campo de texto. Escribe en él, después presiona el botón rojo y sigue escribiendo.
 
-## Viéndolo en acción
+<ThreadProof lang="es" />
 
-Veamos un ejemplo simple:
+La barra verde se muere en seco. El contador de cuadros deja de contar. Tus teclas no se pierden: se acumulan en algún lado y aparecen todas juntas cuando el bucle termina. Y la barra ámbar, en la mayoría de los navegadores, la pasa de largo, porque una animación de `transform` se le entrega a un hilo compositor aparte al que no le importa que tu código esté atascado.
+
+Ese último detalle vale la pena guardarlo. "El hilo principal" y "el navegador" no son lo mismo. Una página puede verse viva mientras nada de tu código puede correr. Por eso una app congelada sigue mostrando un spinner girando, y por eso ese spinner te está mintiendo.
+
+Ese bucle bloqueante es todo el problema en miniatura. Hay un hilo que ejecuta tu código, ejecuta una cosa a la vez, y no se detiene hasta que esa cosa retorna. Todo el resto del artículo existe para responder una sola pregunta: qué pasa con el trabajo que aparece mientras el hilo está ocupado.
+
+## Dónde esperan los callbacks de verdad
+
+En este fragmento hay tres cosas compitiendo, y terminan en un orden que sorprende la primera vez.
+
+Recórrelo paso a paso. La máquina de abajo muestra cada push y cada pop. Usa los botones, arrastra el deslizador, o haz clic en el panel y usa las flechas del teclado.
+
+<RuntimeMachine scenario="queues" lang="es" />
+
+Cuatro cosas que vale la pena sacar de ahí.
+
+**Tu archivo entero es una tarea.** Evaluar el script no es nada especial. Es un trabajo que el event loop tomó, y hasta que retorne nadie más tiene turno. Por eso todos los callbacks de este ejemplo corren después de `console.log('D')`, incluso aquel cuyo temporizador venció hace rato.
+
+**`setTimeout` no es JavaScript.** Busca en la especificación del lenguaje y no lo vas a encontrar. Es una función que te presta el navegador. Llamarla le entrega un callback al navegador y retorna de inmediato. La espera ocurre en un lugar donde tu hilo no está.
+
+**Cero milisegundos es una petición, no una promesa.** `setTimeout(fn, 0)` significa "pon esto en la cola de tareas apenas venza el temporizador". No significa pronto. Significa después del trabajo actual, después de todas las microtareas, y después de lo que ya estuviera encolado.
+
+**Las dos colas no son iguales.** La cola de microtareas se vacía por completo. La cola de tareas entrega un solo trabajo y después el bucle vuelve a revisar las microtareas. Esa asimetría es lo más útil que puedes saber de toda esta máquina.
+
+## Una promesa es un objeto, no un evento
+
+Aquí es donde la mayoría de las explicaciones se ponen vagas, y donde deja de dar miedo apenas lo ves.
+
+Una promesa no es una suscripción, ni un listener, ni un valor mágico que llega después. Es un objeto común y corriente con un puñado de slots internos que tu código no puede tocar. La especificación los escribe entre dobles corchetes: `[[PromiseState]]`, `[[PromiseResult]]`, `[[PromiseFulfillReactions]]`, `[[PromiseRejectReactions]]`, `[[PromiseIsHandled]]`.
+
+Esa es toda la estructura de datos. Dos campos para el resultado, dos listas de qué hacer al respecto, y una bandera.
+
+Recorre este ejemplo con el panel de promesas abierto y mira cómo se van llenando los slots.
+
+<RuntimeMachine scenario="promise-object" lang="es" />
+
+Hay dos momentos ahí que conviene mirar despacio.
+
+El executor, esa función que le pasas a `new Promise`, corre **de inmediato y de forma síncrona**. No se difiere, no se encola, no tiene nada de asíncrono. `new Promise(...)` lo llama antes de que el constructor retorne. Toda la asincronía que consigas viene de lo que pongas *adentro*, normalmente una API del navegador como un temporizador o `fetch`.
+
+Y `.then` hace dos trabajos distintos que es fácil confundir en uno solo. Construye un registro de reacción, un objeto pequeño que guarda tu callback, y retorna una promesa **nueva**. Si la promesa sobre la que lo llamaste sigue pendiente, la reacción se guarda dentro de su lista `[[PromiseFulfillReactions]]`. Si ya está resuelta, no hay nada que esperar, así que la reacción va directo a la cola de microtareas.
+
+En cualquier caso, llamar a `resolve()` nunca llama a tu handler. Escribe dos slots y mueve las reacciones guardadas a la cola. Ejecutarlas es una vuelta aparte.
+
+## Lo que cuesta una cadena
+
+Como `.then` retorna una promesa nueva, puedes encadenar. Y como cada eslabón es su propia promesa, cada eslabón es su propia vuelta por la cola de microtareas.
+
+<RuntimeMachine scenario="chaining" lang="es" />
+
+Tres llamadas a `.then`, tres visitas distintas a la cola. Fíjate en que los tres registros de reacción se crean de forma síncrona, en una sola pasada, antes de que corra un solo callback. Dos de ellos quedan guardados dentro de promesas que todavía no tienen ningún valor.
+
+Esto no es una advertencia de rendimiento. Una microtarea es realmente barata, y si estás encadenando doce tienes problemas de diseño más grandes que la cola. Es una corrección al modelo mental: una cadena no es un cálculo diferido, son N promesas que despiertan al bucle una vez cada una.
+
+`async` / `await` es la misma máquina con mejor sintaxis. Cada `await` suspende la función, registra una reacción sobre la promesa esperada, y retoma dentro de una microtarea. Una función async con cuatro awaits hace cuatro vueltas. Por eso esto retorna al llamador *antes* de imprimir nada:
 
 ```javascript
-console.log('Empezando a cocinar');
-setTimeout(() => {
-  console.log('La sopa está lista');
-}, 0);
-Promise.resolve().then(() => {
-  console.log('La ensalada está preparada');
-});
-console.log('El plato principal está servido');
+async function run() {
+  await null;
+  console.log('adentro');
+}
+
+run();
+console.log('afuera');
 ```
 
-Esto es lo que sucede:
-1. "Empezando a cocinar" se registra inmediatamente.
-2. Establecemos un temporizador para la sopa (aunque sean 0 segundos, va a la Cola de Devolución de Llamada).
-3. Prometemos hacer una ensalada (esto va a la Cola de Microtareas).
-4. "El plato principal está servido" se registra.
-5. El Bucle de Eventos revisa primero la Cola de Microtareas, así que "La ensalada está preparada" se registra.
-6. Finalmente, "La sopa está lista" se registra desde la Cola de Devolución de Llamada.
+`await null` igual encola una microtarea, así que `afuera` se imprime primero. No existe un await que salga gratis.
 
-## ¿Por qué es esto importante?
+## La regla que de verdad importa
 
-El Bucle de Eventos permite a JavaScript manejar muchas operaciones sin atascarse. Es como si nuestro chef pudiera comenzar un plato que necesita hervir a fuego lento, luego trabajar en otros platos mientras espera. Así es como los sitios web pueden permanecer receptivos mientras cargan datos o cómo las aplicaciones de chat pueden escuchar nuevos mensajes mientras estás escribiendo.
+Casi todos aprenden que "las microtareas tienen prioridad sobre las tareas" y se quedan ahí. La versión precisa es más útil:
 
-## Técnicas avanzadas de cocina
+> La cola de microtareas se vacía por completo después de cada tarea, no solo al final del script. Y cualquier microtarea que encole otra microtarea se vacía en esa misma pasada.
 
-Al igual que en una cocina real, las cosas pueden volverse más complejas. A veces, las tareas en la Cola de Devolución de Llamada pueden agregar más tareas a la Cola de Microtareas. Es como un plato que requiere guarniciones de último minuto. El Bucle de Eventos siempre se asegura de que estas "guarniciones" (microtareas) se manejen antes de pasar al siguiente plato principal (tarea de la Cola de Devolución de Llamada).
+Lo que significa que un bucle de microtareas puede matar de hambre al navegador entero, mientras que el mismo bucle escrito con `setTimeout` no puede. Renderizar es un paso del event loop, y ese paso no llega hasta que la cola de microtareas esté vacía.
 
-## Conclusión
+Corre los dos. El mismo bucle, el mismo presupuesto de tiempo, resultados opuestos.
 
-El Bucle de Eventos puede parecer complicado al principio, pero es lo que permite que JavaScript sea tan versátil. Es la razón por la que tu navegador web no se congela mientras carga una imagen grande, o por qué puedes escribir en un cuadro de chat mientras recibes mensajes. La próxima vez que uses una aplicación web fluida y receptiva, dale un pequeño guiño al Bucle de Eventos: ¡el héroe no reconocido de la cocina de JavaScript!
+<StarvationLab lang="es" />
+
+La cantidad de callbacks es la parte interesante. En mi máquina la versión con microtareas ejecuta unos dos millones de callbacks y pinta un cuadro. La de tareas ejecuta unos 260 y pinta setenta. El mismo presupuesto, el mismo cuerpo del bucle.
+
+Ahí hay dos cosas distintas pasando. La versión con microtareas mata de hambre al paso de render, porque el navegador nunca llega a él. La de tareas es lenta por callback a propósito: los navegadores limitan los `setTimeout` anidados a unos 4ms después de unos cinco niveles, que es exactamente los 4.6ms por callback que dan esos números.
+
+Si alguna vez necesitas masticar mucho trabajo sin congelar la página, ese es el intercambio que estás haciendo. Pártelo en tareas y dale al navegador la oportunidad de dibujar entre una y otra. O muévelo a un worker, que es la única forma de conseguir un segundo hilo de verdad.
+
+## Ahora adivina
+
+Dos fragmentos. Elige antes de seguir bajando.
+
+<PredictQuiz quiz="challenge" lang="es" />
+
+Aquí está ese mismo caso paso a paso, por si la respuesta se sintió como una trampa:
+
+<RuntimeMachine scenario="challenge" lang="es" />
+
+`resolve(2)` corre en la línea 3. El log de ese valor sale al final. En el código no se movió nada, solo tu modelo de cuándo corren los handlers.
+
+El segundo, y este es el que agarra desprevenida a la gente que ya se considera cómoda con todo esto:
+
+<PredictQuiz quiz="between-tasks" lang="es" />
+
+## Para qué sirve todo esto
+
+Cuatro cosas para las que uso este modelo de verdad.
+
+**Leer condiciones de carrera.** Cuando dos callbacks salen en un orden que no esperabas, la pregunta casi nunca es "cuál es más rápido". Es "en qué cola está cada uno". Un callback de promesa y uno de temporizador no compiten por velocidad, compiten por categoría, y la promesa gana siempre.
+
+**Detectar UI congelada antes de que llegue a producción.** Cualquier bucle síncrono sobre un arreglo grande, cualquier `JSON.parse` pesado, cualquier layout thrashing en un bucle apretado es exactamente el botón rojo de arriba. Si tarda 200ms, la página está muerta 200ms. No hay puntos parciales.
+
+**Saber que `await` es un punto de rendición.** El estado puede cambiar entre la línea anterior a un `await` y la siguiente. Otro código corrió en ese hueco. Ahí nacen muchos bugs sutiles en código que se ve perfectamente secuencial.
+
+**No confiar en `setTimeout(fn, 0)`.** No significa "ejecuta esto a continuación". Significa "ejecuta esto después de todo lo que ya está encolado, más todas las microtareas que eso produzca, más un límite que yo no controlo".
+
+## Dónde leer más
+
+El mecanismo no es folclore, está escrito. Las colas y el paso de render viven en el [modelo de procesamiento del event loop de la especificación HTML](https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model). Los slots de las promesas y los registros de reacción están en [ECMA-262, sección 27.2](https://tc39.es/ecma262/#sec-promise-objects). Los dos son más áridos que cualquier artículo de blog, y los dos zanjan una discusión como ningún artículo puede.
+
+Una advertencia antes de que te vayas: todo lo de arriba es el event loop del navegador. Node.js corre uno distinto, con fases, más `process.nextTick`, que se cuela incluso por delante de la cola de microtareas, y sin ningún paso de render, porque no hay nada que renderizar. La mitad de este artículo que habla de promesas se traslada intacta. La mitad que habla de la cola de tareas, no.
+
+Todo lo demás, solo tienes que presionarlo.

@@ -1,61 +1,150 @@
 ---
-title: "The JavaScript Event Loop: A Friendly Guide"
-date: "2024-09-28"
-readTime: "2 min read"
+title: "One Thread, Two Queues: How JavaScript Decides What Runs Next"
+date: "2026-07-26"
+readTime: "12 min read"
 author: "William Craig"
-tags: ["JavaScript", "Event Loop", "Web Development"]
-excerpt: "The JavaScript Event Loop is what allows JavaScript to be so versatile. It's the reason your web browser doesn't freeze while loading a big image, or why you can type in a chat box while receiving messages.."
+tags: ["JavaScript", "Event Loop", "Promises", "Web Development", "Interactive"]
+excerpt: "A model can write forty lines of async JavaScript that look perfect and run in the wrong order. The event loop is the thing that tells you which. One thread, two queues, and a button that freezes the page you are reading."
 ---
 
-Imagine you're a chef in a busy kitchen. You've got multiple dishes to prepare, but you can only do one thing at a time. How do you manage it all without burning the food or keeping customers waiting? Well, JavaScript faces a similar challenge, and its solution is called the Event Loop.
+Most of us now review more JavaScript than we write. A model produces forty lines, they look right, the tests pass, and it ships.
 
-## What's the Event Loop, Anyway?
+Which is fine, until the bug is about *order*. Generated code is very good at being shaped correctly and subtly wrong about when things run. A value read after an `await` that something else already changed. An `await` sitting inside a loop, quietly turning twenty parallel requests into twenty sequential ones. A cleanup that fires one tick too late. None of that looks like a bug. It reads beautifully, it has no red squiggle, and no test catches it unless you already suspected it was there.
 
-The Event Loop is like the head chef in our kitchen analogy. It's the mastermind that keeps JavaScript running smoothly, even when there's a lot going on. JavaScript is single-threaded, which means it can only do one thing at a time, just like our chef. But with the Event Loop, it can juggle multiple tasks efficiently.
+There is one reliable way to spot that class of mistake, and it is knowing how the runtime decides what runs next. Not roughly. Exactly.
 
-## How Does It Work?
+Happily, the machine that makes those decisions is small: one thread, two queues, and a single rule about which queue wins. That is most of it. It is one of the few parts of this platform you can genuinely finish learning, and once you have it, it stops being only about async. The same model tells you why one heavy loop freezes an entire page, where browser APIs like timers and `fetch` actually plug into the language, what an `await` really costs, why a promise that already holds its value still makes you wait, and where in all of this the browser finds a gap to paint.
 
-Let's break it down into simple parts:
+So this article does not describe the machine, it hands it to you. There is a button below that freezes the page you are reading, four runtimes you can step through one instruction at a time, and a promise pulled apart down to the internal slots the specification actually gives it.
 
-1. **The Call Stack**: Think of this as the chef's current task. When you start a function, it goes on top of the stack. When the function finishes, it's taken off the stack.
+Everything below runs in your browser, right now, as you scroll. If you doubt a claim, press it.
 
-2. **The Callback Queue**: This is like a line of prep cooks waiting to help. When asynchronous operations (like timers or network requests) finish, they join this queue.
+## One thread. Here is the proof.
 
-3. **The Microtask Queue**: This is a special, express lane for certain tasks, mainly related to Promises. It's like VIP service in our kitchen.
+Everyone repeats that JavaScript is single threaded. Almost nobody makes you feel it.
 
-4. **The Event Loop**: This is our head chef, constantly checking if the main chef (Call Stack) is free. If it is, the head chef first checks the VIP lane (Microtask Queue), then the regular line (Callback Queue), and assigns the next task.
+Below are two moving bars. The green one is moved by your JavaScript, one step per `requestAnimationFrame`. The amber one is a plain CSS `transform` animation. There is also a text field. Type into it, then hit the red button and keep typing.
 
-## Seeing It in Action
+<ThreadProof lang="en" />
 
-Let's look at a simple example:
+The green bar stops dead. The frame counter stops counting. Your keystrokes do not vanish, they queue up somewhere and land all at once when the loop finishes. And the amber bar, in most browsers, sails right past it, because a `transform` animation is handed to a separate compositor thread that does not care that your code is stuck.
+
+That last detail is worth keeping. "The main thread" and "the browser" are not the same thing. A page can look alive while none of your code can run. This is exactly why a frozen app still shows a spinning loader, and why that loader is lying to you.
+
+That busy loop is the whole problem in miniature. There is one thread that runs your code, it runs one thing at a time, and it does not stop until that thing returns. Everything else in this article exists to answer one question: what happens to the work that shows up while the thread is busy?
+
+## Where callbacks actually wait
+
+Three things are competing in this snippet, and they finish in an order that surprises people the first time.
+
+Step through it. The machine below shows every push and pop. Use the buttons, drag the slider, or click the panel and use the arrow keys.
+
+<RuntimeMachine scenario="queues" lang="en" />
+
+Four things worth pulling out of that.
+
+**Your whole file is a task.** Script evaluation is not special. It is a job the event loop picked up, and until it returns, nothing else gets a turn. That is why every callback in this example runs after `console.log('D')`, even the one whose timer expired ages ago.
+
+**`setTimeout` is not JavaScript.** Look at the spec for the language and you will not find it. It is a function the browser lends you. Calling it hands a callback to the browser and returns immediately. The waiting happens somewhere your thread is not.
+
+**Zero milliseconds is a request, not a promise.** `setTimeout(fn, 0)` means "put this in the task queue as soon as the timer fires". It does not mean soon. It means after the current job, after every microtask, and after whatever else was already queued.
+
+**The two queues are not equal.** The microtask queue is drained completely. The task queue gives up one job and then the loop checks the microtasks again. That asymmetry is the single most useful thing to know about this whole machine.
+
+## A promise is an object, not an event
+
+Here is where most explanations get vague, and where it stops being intimidating once you see it.
+
+A promise is not a subscription, or a listener, or a magic value that arrives later. It is an ordinary object with a handful of internal slots that your code cannot reach. The specification writes them in double brackets: `[[PromiseState]]`, `[[PromiseResult]]`, `[[PromiseFulfillReactions]]`, `[[PromiseRejectReactions]]`, `[[PromiseIsHandled]]`.
+
+That is the entire data structure. Two fields for the outcome, two lists of things to do about it, one flag.
+
+Step through this one with the promise panel open and watch the slots fill in.
+
+<RuntimeMachine scenario="promise-object" lang="en" />
+
+Two moments in there are worth slowing down on.
+
+The executor, the function you pass to `new Promise`, runs **immediately and synchronously**. It is not deferred, not queued, not async in any way. `new Promise(...)` calls it before the constructor returns. Whatever asynchrony you get comes from what you put *inside* it, usually a browser API like a timer or `fetch`.
+
+And `.then` does two separate jobs that are easy to blur together. It builds a reaction record, a small object holding your callback, and it returns a **new** promise. If the promise it was called on is still pending, the reaction is parked inside that promise's `[[PromiseFulfillReactions]]` list. If the promise has already settled, there is nothing to wait for, so the reaction goes straight to the microtask queue.
+
+Either way, calling `resolve()` never calls your handler. It writes two slots and moves any parked reactions into the queue. Running them is a separate trip.
+
+## What a chain costs
+
+Because `.then` returns a new promise, you can chain. Because each link is its own promise, each link is its own trip through the microtask queue.
+
+<RuntimeMachine scenario="chaining" lang="en" />
+
+Three `.then` calls, three separate visits to the queue. Notice that all three reaction records are created synchronously, in one pass, before a single callback runs. Two of them sit parked inside promises that have no value yet.
+
+This is not a performance warning. A microtask is genuinely cheap, and if you are chaining twelve of them you have bigger design questions than the queue. It is a mental model correction: a chain is not one deferred computation, it is N promises each waking the loop up once.
+
+`async` / `await` is the same machine with better syntax. Every `await` suspends the function, registers a reaction on the awaited promise, and resumes in a microtask. An async function with four awaits in it makes four trips. Which is why this returns to the caller *before* logging anything:
 
 ```javascript
-console.log('Starting to cook');
-setTimeout(() => {
-  console.log('Soup is ready');
-}, 0);
-Promise.resolve().then(() => {
-  console.log('Salad is prepared');
-});
-console.log('Main course is served');
+async function run() {
+  await null;
+  console.log('inside');
+}
+
+run();
+console.log('outside');
 ```
 
-Here's what happens:
-1. "Starting to cook" is logged immediately.
-2. We set a timer for the soup (even though it's 0 seconds, it goes to the Callback Queue).
-3. We promise to make a salad (this goes to the Microtask Queue).
-4. "Main course is served" is logged.
-5. The Event Loop checks the Microtask Queue first, so "Salad is prepared" is logged.
-6. Finally, "Soup is ready" is logged from the Callback Queue.
+`await null` still queues a microtask, so `outside` prints first. There is no such thing as an await that costs nothing.
 
-## Why Is This Important?
+## The rule that actually matters
 
-The Event Loop allows JavaScript to handle many operations without getting stuck. It's like our chef being able to start a dish that needs to simmer, then working on other dishes while waiting. This is how websites can stay responsive while loading data or how chat applications can listen for new messages while you're typing.
+Almost everyone learns "microtasks have priority over tasks" and stops there. The precise version is more useful:
 
-## Advanced Kitchen Techniques
+> The microtask queue is drained to empty after every single task, not just at the end of the script. And any microtask that queues another microtask gets drained in the same pass.
 
-Just like in a real kitchen, things can get more complex. Sometimes, tasks in the Callback Queue might add more tasks to the Microtask Queue. It's like a dish requiring last-minute garnishes. The Event Loop always ensures these "garnishes" (microtasks) are handled before moving to the next main dish (task from the Callback Queue).
+Which means a microtask loop can starve the browser completely, while the identical loop written with `setTimeout` cannot. Rendering is a step in the event loop, and that step does not come until the microtask queue is empty.
 
-## Wrapping Up
+Run both. Same loop, same time budget, opposite outcomes.
 
-The Event Loop might seem complicated at first, but it's what allows JavaScript to be so versatile. It's the reason your web browser doesn't freeze while loading a big image, or why you can type in a chat box while receiving messages. Next time you're using a smooth, responsive web application, give a little nod to the Event Loop – the unsung hero of JavaScript's kitchen!
+<StarvationLab lang="en" />
+
+The callback counts are the interesting part. On my machine the microtask version runs about two million callbacks and paints one frame. The task version runs about 260 and paints seventy. Same budget, same loop body.
+
+Two separate things are doing that. The microtask version starves the render step, because the browser never reaches it. The task version is slow per callback on purpose: browsers clamp nested `setTimeout` to roughly 4ms after about five levels, which is exactly the 4.6ms per callback those numbers work out to.
+
+If you ever need to chew through a lot of work without freezing the page, that is the trade you are making. Chunk it into tasks and give the browser a chance to draw between them. Or move it to a worker, which is the only way to get an actual second thread.
+
+## Now guess
+
+Two snippets. Pick before you scroll.
+
+<PredictQuiz quiz="challenge" lang="en" />
+
+Here is that one stepped out, if the answer felt like a trick:
+
+<RuntimeMachine scenario="challenge" lang="en" />
+
+`resolve(2)` runs on line 3. The log of that value comes last. Nothing in the code moved, only your model of when handlers run.
+
+Second one, and this is the one that catches people who already consider themselves comfortable with all of this:
+
+<PredictQuiz quiz="between-tasks" lang="en" />
+
+## What to do with this
+
+Four things I actually use this model for.
+
+**Reading race conditions.** When two callbacks fire in an order you did not expect, the question is almost never "which one is faster". It is "which queue is each one in". A promise callback and a timer callback are not competing on speed, they are competing on category, and the promise wins every time.
+
+**Spotting frozen UI before it ships.** Any synchronous loop over a big array, any large `JSON.parse`, any layout thrash in a tight loop is exactly the red button above. If it takes 200ms, the page is dead for 200ms. There is no partial credit.
+
+**Knowing that `await` is a yield point.** State can change between the line before an `await` and the line after it. Other code ran in the gap. That is the source of a lot of subtle bugs in code that looks perfectly sequential.
+
+**Not trusting `setTimeout(fn, 0)`.** It is not "run this next". It is "run this after everything currently queued, plus every microtask those produce, plus a clamp I do not control".
+
+## Where to read more
+
+The mechanism is not folklore, it is written down. The queues and the render step live in the [HTML specification's event loop processing model](https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model). The promise slots and reaction records are in [ECMA-262, section 27.2](https://tc39.es/ecma262/#sec-promise-objects). Both are drier than any blog post, and both will settle an argument in a way a blog post cannot.
+
+One caveat before you go: everything above is the browser event loop. Node.js runs a different one, with phases, plus `process.nextTick`, which cuts ahead of even the microtask queue, and no render step at all, because there is nothing to render. The promise half of this article carries over unchanged. The task queue half does not.
+
+Everything else, you can just press.
