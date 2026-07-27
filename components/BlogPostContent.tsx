@@ -8,7 +8,7 @@ interface BlogPostContentProps {
 
 export default function BlogPostContent({ post }: BlogPostContentProps) {
   return (
-    <Layout>
+    <Layout showChat={false}>
       <ArticleLayout post={post} />
     </Layout>
   );

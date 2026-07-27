@@ -90,6 +90,28 @@ body {
   }
 }
 
+/* Compositor-driven marker used by the event loop demos. It deliberately animates
+   only `transform`, so it keeps moving while the main thread is blocked. */
+@keyframes el-slide {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(614%);
+  }
+}
+
+.el-slide {
+  animation: el-slide 2.4s linear infinite alternate;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .el-slide {
+    animation-duration: 9.6s;
+  }
+}
+
 @layer components {
   .toast-success {
     @apply bg-accent text-background border-transparent;

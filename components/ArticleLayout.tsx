@@ -7,6 +7,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import ClientCodeBlock from '@/components/ClientCodeBlock';
 import ShareButton from '@/components/ShareButton';
 import LikeButton from '@/components/LikeButton';
+import { PredictQuiz, RuntimeMachine, StarvationLab, ThreadProof } from '@/components/event-loop';
 
 interface ArticleLayoutProps {
   post: BlogPost;
@@ -17,6 +18,11 @@ const components = {
   pre: (props: any) => <div className="my-pre-class">{props.children}</div>,
   /* eslint-disable @typescript-eslint/no-explicit-any */
   code: (props: any) => <ClientCodeBlock {...props} />,
+  // Interactive figures, available to any post that wants them.
+  RuntimeMachine,
+  ThreadProof,
+  StarvationLab,
+  PredictQuiz,
 };
 
 const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
