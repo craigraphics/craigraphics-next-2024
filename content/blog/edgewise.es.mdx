@@ -1,0 +1,168 @@
+---
+title: "Edgewise: Un tutor que pregunta antes de enseñar"
+date: "2026-08-21"
+readTime: "9 min de lectura"
+author: "William Craig"
+tags: ["IA", "LLM", "Herramientas de Aprendizaje", "Interfaces de Voz", "Diseño de Producto", "Next.js", "Edgewise"]
+excerpt: "Edgewise te hace preguntas primero, encuentra la idea que bloquea el resto, y enseña desde ahí. Cómo funciona, y a qué renuncié para mantenerlo gratis."
+---
+
+Cada vez que quiero aprender algo técnico por mi cuenta, siento el mismo problema. Y es por dónde empezar.
+
+Hay muchas explicaciones, y algunas hasta podrían ser buenas. Todos los cursos empiezan en algún punto. Pero yo nunca sé si ese punto es donde estoy. Así que a veces me trago 20 o 40 minutos de cosas que ya sabía. O a veces caigo en medio de algo que espera 3 ideas que tampoco conozco.
+
+<strong className="text-secondary">No tenemos las preguntas correctas cuando no entendemos algo.</strong> Y esa es toda la premisa de este concepto. Tu pregunta sale de un hueco que no puedes ver. Así que a veces te llevas una respuesta muy buena de la IA, pero era la pregunta equivocada, y eso nunca lo sabes.
+
+Así que construí algo que no explica primero. Se llama Edgewise (<a href="https://edgewise.craigraphics.com/" target="_blank" rel="noopener noreferrer">edgewise.craigraphics.com</a>). Y encuentra dónde se detiene tu comprensión.
+
+## Primero pregunta
+
+Lo abres y te hace una pregunta. Puedes contestar en voz alta. No se puntúa nada.
+
+> Imagina que quiero un programa que detecte correo basura. ¿Qué tendría que darle a un sistema de aprendizaje automático que no tendría que darle a un programa normal?
+
+Contestas con tus propias palabras:
+
+> Le darías un montón de correos ya etiquetados como basura o no basura, y él solo saca el patrón. Con un programa normal yo tendría que escribir las reglas a mano.
+
+Esa idea se pone verde y sigue. Unas preguntas después:
+
+> La gente dice que las redes neuronales están inspiradas en el cerebro. ¿Hasta dónde crees que llega realmente esa comparación?
+
+> Bastante lejos, cada neurona artificial es como una célula del cerebro, se dispara cuando recibe suficiente señal y se la pasa a la siguiente capa.
+
+Y esa no se pone verde, y tampoco se queda vacía. Es simplemente una **imagen equivocada** de la cosa, y las dos necesitan un trato distinto. Quien no tiene ninguna idea aprende rápido. Quien tiene una idea equivocada primero la tiene que soltar. Si enseñas encima de una idea rota, sale una tontería dicha con mucha seguridad.
+
+<figure>
+  <img src="/images/blog/edgewise/conversation.webp" alt="El panel de preguntas de Edgewise, con una caja de texto que dice: di lo que piensas, a medio formar está bien. Al lado de Enviar hay un botón de no lo sé." width="768" height="1102" loading="lazy" className="mx-auto max-w-[400px] rounded-lg border border-border block dark:hidden" />
+  <img src="/images/blog/edgewise/conversation-dark.webp" alt="El panel de preguntas en modo oscuro, preguntando qué tiene que pasarle a una fotografía antes de que un modelo pueda usarla. Debajo, un botón de enviar, uno de no lo sé, un micrófono, y un aviso de que Chrome envía la voz a Google." width="818" height="1610" loading="lazy" className="mx-auto max-w-[400px] rounded-lg border border-border hidden dark:block" />
+  <figcaption className="text-center">La cosa preguntando de verdad. Fíjate en que “no lo sé” es un botón, justo al lado de Enviar.</figcaption>
+</figure>
+
+Y sigue así. Tira de lo que acabas de decir. No va leyendo una lista. Para cuando encuentra dónde cree que ya no estás en suelo firme.
+
+Si una pregunta no está clara, le puedes pedir que lo diga de una forma más simple. También puedes decir "no lo sé", y eso no será ningún error. Mueve la conversación, y es de las cosas más útiles que le puedes decir.
+
+Puedes hacer la sesión entera por voz. Cuando hablas no puedes editar, y esa es una prueba distinta del conocimiento. Ahí es donde la memoria y la comprensión real se separan.
+
+## Después te enseña el mapa
+
+Hay 23 ideas sobre cómo funciona la IA. Van desde *aprender a partir de ejemplos* hasta *agentes*. Y cada una está detrás de la otra.
+
+Cada idea recibe 1 de 4 marcas: sólida, a medias, todavía no, o no revisada. No habrá puntuación, ni porcentaje, ni "correcto".
+
+<figure>
+  <img src="/images/blog/edgewise/map.webp" alt="El mapa de Edgewise en modo claro. Las ideas están rellenas donde son sólidas, una idea está marcada, y el resto están en tono claro." width="1600" height="1395" loading="lazy" className="rounded-lg border border-border block dark:hidden" />
+  <img src="/images/blog/edgewise/map-dark.webp" alt="El mapa de Edgewise en modo oscuro. Aprender a partir de ejemplos está relleno, Todo son números está marcado como la idea actual, y las ideas de abajo se difuminan." width="1600" height="1547" loading="lazy" className="rounded-lg border border-border hidden dark:block" />
+  <figcaption>Relleno donde lo tienes, marcado en la idea en la que estás, y en tono claro todo lo que todavía se apoya en ella.</figcaption>
+</figure>
+
+Entonces dice la frase por la que existe toda la aplicación:
+
+> Aprender a partir de ejemplos es el sitio por donde empezar, 22 de las ideas posteriores se apoyan en ella, y por eso gran parte del resto probablemente te ha resultado escurridizo.
+
+No te va a decir "esto lo tienes mal". Dice "esto es lo que está sosteniendo todo lo demás". Y eso es un punto de partida, no el resultado de un examen.
+
+Esa frase la escribe el código a partir de la forma del mapa. No es el modelo. Al principio dejé que lo intentara un modelo barato, y me dio *"hemos alcanzado el límite de donde necesitamos estar para esta parte de la conversación"*. Y eso es un recordatorio bastante bueno de qué partes te quedas tú.
+
+Y la IA es solo el ejemplo que uso aquí. Las 23 ideas viven en un fichero, que es un fichero JSON, `content/graph.json`. Nada más en la aplicación sabe de qué van. Si cambias ese fichero tienes la misma herramienta para química orgánica, o contabilidad, o la regla del fuera de juego. Va a funcionar.
+
+Un tema encaja si las ideas se construyen de verdad unas sobre otras. Encaja si la cadena es larga, porque así la gente llega por la mitad. Y encaja si las explicaciones populares fallan a menudo.
+
+Cómo funciona la IA puntúa muy alto en la última. *Una neurona es como una célula del cerebro*, no lo es. *Solo predice la siguiente palabra, así que no puede razonar*, eso mezcla para qué lo entrenaron con lo que puede hacer. *La atención significa que presta atención a las palabras importantes*, ahí no hay nada mirando nada.
+
+## Nada se mueve si no lo dices tú
+
+Hay una regla importante. <strong className="text-secondary">Que te enseñen algo no es la prueba de que ya lo sabes.</strong>
+
+Una buena explicación se siente casi igual que entenderla. Así que una lección no cambia nada en tu mapa. Tienes que explicarla de vuelta con tus propias palabras, que pueden ser palabras de todos los días, para saber que ahora tienes una comprensión sólida.
+
+<figure>
+  <img src="/images/blog/edgewise/explain-back.webp" alt="El panel de explicarlo de vuelta, con una caja que empieza: así que aprender a partir de ejemplos es básicamente." width="768" height="1102" loading="lazy" className="mx-auto max-w-[400px] rounded-lg border border-border block dark:hidden" />
+  <img src="/images/blog/edgewise/explain-back-dark.webp" alt="El panel de explicarlo de vuelta en modo oscuro sobre la idea Todo son números, con una caja que empieza: así que todo son números es básicamente, y botones para comprobar mi explicación, decirlo en voz alta, y ahora no." width="806" height="1168" loading="lazy" className="mx-auto max-w-[400px] rounded-lg border border-border hidden dark:block" />
+  <figcaption className="text-center">Lo único que mueve el mapa. La caja te empieza la frase.</figcaption>
+</figure>
+
+Esto cuenta:
+
+> Te llegan un montón de números, y cada uno tiene como una ruedita de importancia. Los multiplicas por eso y sumas el conjunto entero, y luego hay un trocito al final que lo aplasta. Ya está, de verdad, son sumas.
+
+Esto no:
+
+> Es una primitiva computacional de una arquitectura neuronal, y las propiedades de la red emergen de cómo se componen grandes cantidades de ellas a lo largo de las capas.
+
+Cada palabra de la segunda es correcta. Nunca dice qué hace la cosa.
+
+Puedes explicar cualquier idea en cualquier momento. Un intento te puede subir la marca y nunca te la puede bajar. Si le bajas la nota a alguien por intentarlo, no lo intenta una segunda vez.
+
+## Lo que costó mantenerlo gratis
+
+Quería que esto fuera gratis para el lector, y casi gratis para mí. Y de ahí salieron casi todas las decisiones.
+
+Escribí la primera pregunta a mano, así que no hace ninguna llamada al modelo. Y las otras 23 lecciones también las escribí a mano, así que la aplicación las lee tal cual. Las lecciones son instantáneas y gratis, y no se van a inventar nada. El precio es la parte aburrida que casi todos los proyectos se saltan. Alguien tiene que escribir esas 23 explicaciones, y ese fui yo.
+
+El modelo es `gemini-3.1-flash-lite`. Es el barato, y corre en una capa gratuita de Google, que no necesita tarjeta de crédito.
+
+Hay una idea asumida de que necesitas modelos grandes para cualquier cosa que juzgue. Hice una prueba sobre eso, y vi que un modelo grande cuesta **4 veces más**, tardó hasta 34 segundos en 1 solo turno, y me dio los mismos resultados. Una conversación entera cuesta alrededor de 1 céntimo.
+
+No hay base de datos. Así que tu progreso se queda en tu navegador, y no hay nada en el servidor. Borra los datos del sitio y desaparece, y no te sigue a otro dispositivo.
+
+Para que quede claro, una capa gratuita cuenta peticiones por proyecto, no por persona. Así que la aplicación entera puede compartir unas 1.500 peticiones al día, que son unas 75 sesiones como mucho. Sin un límite, un solo lector se las podría gastar todas y hacer que los demás vean "inténtalo más tarde". Así que 1 sesión tiene 25 turnos con modelo, y 1 navegador tiene 60 al día.
+
+La voz es gratis por la misma razón, y tiene el mismo problema. Usa el reconocimiento que trae el navegador, que no cuesta nada, y es también la parte más floja de la aplicación. Tampoco corre en tu máquina, así que el audio va a servidores de Google. La aplicación te lo dice antes de abrir el micrófono, y siempre puedes escribir.
+
+Las capas gratuitas traen una condición más. Los proveedores pueden usar esos prompts para mejorar sus productos. Para hablar de cómo funciona la IA en general, lo acepto. Para trabajo privado no.
+
+## Lo que te da tu propia clave
+
+Siempre tienes la opción dentro de la aplicación de poner tu propia clave de Google. Y todos los límites desaparecen. También puedes elegir el modelo de una lista que yo probé. Quédate tranquilo, que no se guarda nada.
+
+Todas las cosas que construiría están detrás de esa misma línea.
+
+Una voz alojada en vez de la del navegador. Es la mayor mejora que hay, y las dos direcciones ya están detrás de una interfaz, así que la puedo cambiar sin tocar la sesión.
+
+Un almacén de verdad, para que el progreso se pueda guardar, y si borras la caché te siga entre dispositivos.
+
+Y quizá sesiones más largas. Ahora mismo las preguntas y las explicaciones comparten cupo con la primera conversación.
+
+La opción gratuita me costó una cosa que no esperaba. Un servidor.
+
+La primera idea era que el navegador llamara al proveedor con tu clave, para que ninguna clave tocara un servidor. Y ese plan se rompe en cuanto hay una opción gratuita, porque la opción gratuita corre con mi clave, y mi clave dentro de un navegador es una clave robada.
+
+Así que ahora 1 ruta de servidor sirve los dos caminos, y tu clave está a salvo. Nunca la escribo y nunca la registro. Solo se queda en memoria durante 1 petición. Un script del repositorio comprueba que una llamada fallida no la puede filtrar a un log. Y el navegador está bloqueado, así que un script que lea tu clave no tiene a dónde enviarla.
+
+## Mantenerlo en su camino
+
+Esta fue la parte más difícil del proyecto, y es de la que te quiero avisar.
+
+Le doy muy poca libertad al modelo, a propósito. Una persona es la que escribe cada pregunta por adelantado, y la aplicación se las pasa al modelo en la misma petición. Así que el modelo solo elige lo que hay ahí, y nunca toma la dirección. Solo puede escoger entre 4 acciones contra un esquema estricto.
+
+Tampoco elige la siguiente idea, porque eso lo hace el código, a partir del mapa y de tus marcas.
+
+Y aun así se salió del camino. Una sesión real me dio 2 marcas donde las razones escritas hablaban de la idea *anterior*, no de la que se estaba respondiendo.
+
+Las preguntas sueltas no pueden capturarlo, porque no hay idea anterior. Así que tuve que escribir un segundo script. Reproduce la conversación entera, y juzga solo la última respuesta. Encontró el fallo enseguida.
+
+La solución obvia era decirle al modelo que no lo hiciera. Tuve que escribir esa regla 3 veces, y cada versión era más clara que la anterior. Y entonces los falsos positivos pasaron de 0, a 2, a 3 sobre 48.
+
+Así que la solución fue estructural. Las 2 comprobaciones pasaron a ser campos obligatorios del esquema de salida, y van colocadas antes que todas las opciones. Así el modelo tiene que escribir si respondiste a la pregunta, y si describiste un mecanismo. Y solo entonces puede elegir un resultado. Después el código lo obliga a respetar lo que escribió.
+
+De vuelta a 0 falsos positivos sobre 48, y ahora un test unitario cubre la regla en lugar de la esperanza.
+
+<strong className="text-secondary">Cuando una regla importa, ponla en el esquema y compruébala en el código. No reescribas el prompt por cuarta vez.</strong>
+
+La misma idea aparece en un sitio pequeño. Si interrumpes la lección y pides algo más simple, la aplicación le pasa al modelo la explicación escrita y le dice que trabaje a partir de ella. El modelo también puede responder `outsideWhatIKnow`, que quiere decir "esto no es lo que tengo aquí". Un esquema que no puede decir eso empuja a un modelo pequeño a inventar, y tú llegaste aquí porque no sabes cuándo se equivoca.
+
+## Dónde está de verdad
+
+Funciona de principio a fin, pero sigue siendo una prueba de concepto.
+
+Nadie de fuera del proyecto lo ha usado. Así que la pregunta de verdad sigue abierta. ¿Le dice este mapa a un desconocido algo que no sabía de sí mismo?
+
+Las 23 ideas y sus conexiones tienen la visión de una sola persona sobre el tema. Nadie las ha contrastado con un temario real.
+
+Un caso de prueba sigue fallando 2 de cada 3 veces. Lo dejé fallando y lo escribí. No reformulé el prompt hasta que el número se puso verde.
+
+Enseñar era solo una parte pequeña. Un buen modelo escribe un párrafo sobre backpropagation mejor que yo. La parte difícil es saber por dónde empezar, y saber si algo caló. Las dos resultaron ser problemas de estructura, y no problemas de escribir un prompt mejor.
+
+¿Has conseguido mantener a un modelo pequeño en un camino estrecho sin un esquema que lo obligue? Yo no pude. Y me gustaría saber cómo.
