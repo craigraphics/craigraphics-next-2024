@@ -16,7 +16,7 @@ export async function getPost(slug: string, locale: string): Promise<BlogPost | 
 
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents) as {
-    data: { title: string; date: string; readTime: string; author: string; tags: string[] };
+    data: { title: string; date: string; readTime: string; author: string; tags: string[]; excerpt?: string };
     content: string;
   };
 
@@ -37,6 +37,7 @@ export async function getPost(slug: string, locale: string): Promise<BlogPost | 
     slug,
     title: data.title,
     date: data.date,
+    excerpt: data.excerpt,
     content,
     image: imagePath,
     avatar: avatar,
