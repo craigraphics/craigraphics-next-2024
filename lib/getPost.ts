@@ -40,7 +40,7 @@ export async function getPost(slug: string, locale: string): Promise<BlogPost | 
     excerpt: data.excerpt,
     content,
     image: imagePath,
-    avatar: avatar,
+    avatar: avatar ?? '/images/profile.png', // posts without their own profile photo use the site one
     readTime: data.readTime,
     author: data.author,
     tags: data.tags,
