@@ -4,24 +4,24 @@ date: "2026-10-05"
 readTime: "10 min read"
 author: "William Craig"
 tags: ["AI", "LLM", "Jev", "Voice Interfaces", "Automation", "macOS", "Jarvis"]
-excerpt: "I wanted to understand what a model like Jev is really good for. The experiment became Jarvis, a voice assistant for my Mac that uses patterns, Jev and an LLM each for what they do best, at almost no cost."
+excerpt: "I wanted to understand what a model like Jev is really good for. The experiment became Jarvis, a voice assistant for my Mac that uses patterns, Jev and an LLM, at almost no cost."
 ---
 
-This project did not start as a voice assistant. It started as a question.
+I started this project because I had a question about Jev.
 
 TypeSafe released Jev, which they call a "System One" model. It is a strange kind of model. It does not write anything. You give it some text and a few multiple-choice questions, and it answers each one with a probability for every option and a confidence score. It takes about a tenth of a second.
 
-So I wanted to understand where something like that fits. <strong className="text-secondary">When would I use Jev instead of an LLM?</strong> Not in theory. In something I would really use.
+I wanted to understand where something like that fits. <strong className="text-secondary">When would I use Jev instead of an LLM?</strong>
 
-So I started to experiment, and I needed a real use case to test it on.
+So I started to experiment, and I needed something I would really use to test it on.
 
 ## The idea: talk to my Mac
 
-Choosing between options is exactly what you need to understand a command. "Volume up", "turn it up" and "it's too loud" are different sentences, but they all point to the same action. Jev does not have to write a single word to get that right. It only has to pick.
+Choosing between options is what you need to understand a command. "Volume up", "turn it up" and "it's too loud" are different sentences, but they all point to the same action. Jev can choose that action without writing anything.
 
-So the idea came to me: run voice commands on my Mac.
+I decided to try voice commands on my Mac.
 
-There are tools that already do this, but I wanted to go further and see how far a model like Jev could take it. And I already had half of it. I use superwhisper every day to dictate. So I only needed a hook. When I say a keyword at the start of a sentence, the text goes to Jev with a list of things it could mean, and a script does the rest.
+There are tools that already do this, but I wanted to see how far I could get with Jev. I use superwhisper every day to dictate, so I only needed to connect it. When I say a keyword at the start of a sentence, the text goes to Jev with a list of things it could mean, and a script does the rest.
 
 I picked the things I do every day:
 
@@ -36,15 +36,15 @@ The keyword was "Jev" at first, after the model. But the speech model heard "Jef
 
 The first three worked well. Jev picked the right action, a small piece of code pulled out the note text or the website, and a script did the work.
 
-The email was trickier, and it showed me exactly where Jev ends.
+The email was trickier.
 
-Jev can tell that "write an email to Maya about Friday" is an email. It can even pick between options I prepare for it. But it cannot write the email. It cannot turn "about Friday" into a subject and a body, and it cannot turn "tomorrow at 9" into a real date. <strong className="text-secondary">Jev is very good at choosing, and it cannot write.</strong>
+Jev can tell that "write an email to Maya about Friday" is an email. It can even pick between options I prepare for it. But it cannot write the email. It cannot turn "about Friday" into a subject and a body, and it cannot turn "tomorrow at 9" into a real date.
 
-That was the answer to my question, and it changed the goal. Jev would not replace an LLM. It would sit in front of one.
+For that I still needed an LLM, so I put Jev before it to choose the action.
 
-## The approach: each part does what it is best at
+## The approach: how the parts work together
 
-So the goal became broader. Instead of one model doing everything, every command goes down the same path, and each step only runs if the one before it could not answer.
+Every command goes down the same path, and each step only runs if the one before it could not answer.
 
 <figure>
   <img src="/images/blog/jarvis/decision-path.webp" alt="The decision path in Jarvis: you speak, the wake word is checked, then patterns decide 54% of commands, Jev decides 46%, the LLM and keywords decide none, then details are filled in and the action runs." width="1600" height="2227" loading="lazy" className="rounded-lg border border-border block dark:hidden" />
@@ -56,11 +56,11 @@ So the goal became broader. Instead of one model doing everything, every command
 
 **2. Jev when the patterns cannot answer.** "Make it darker in here" matches no pattern. Jev picks dark mode with 0.95 confidence, in 123 ms. It answers two questions in one call: which app is this for, and which action inside it. One option is always "unknown", for questions and small talk, so "did you take the picture?" does nothing.
 
-**3. An LLM only for what Jev cannot do.** Writing an email draft. Turning "Friday at 3" into a date. Finding the address behind a name. And choosing an action if Jev is ever unsure. It never writes code that runs, and it never sends anything.
+**3. An LLM only for what Jev cannot do.** It writes email drafts and fills in details, like turning "Friday at 3" into a date or finding the address behind a name. It can also choose an action if Jev is unsure. It never writes code that runs, and it never sends anything.
 
-**4. Scripts do the work.** Every action is a script written ahead of time. The models decide and write. Only scripts I have read can touch my computer.
+**4. Scripts do the work.** Every action is a script written ahead of time, and I have to read it before it can run on my computer. The models choose the action and write what it needs.
 
-The email flow shows all of it. A pattern or Jev recognises the request. The LLM writes the draft. A script opens it in Gmail with the recipient, subject and body filled in. I can ask for changes out loud. But it never sends. Even if I say "send it", it only tells me the draft is ready. Sending is my click.
+For an email, a pattern or Jev recognises the request, and the LLM writes the draft. A script opens it in Gmail with the recipient, subject and body filled in. I can ask for changes out loud. But it never sends. Even if I say "send it", it only tells me the draft is ready. I still have to click to send it.
 
 ## Almost no cost
 
@@ -68,7 +68,7 @@ This was important for me. I did not want an experiment that sends every sentenc
 
 - **Patterns and scripts** are free and run on the Mac.
 - **Jev** is one quick API call, only when a pattern cannot answer.
-- **The LLM** is GPT-5.6 Luna, and it runs on my ChatGPT Plus plan through the same sign in that Codex uses. So it counts against the plan I already pay for, not against a bill. It goes through LiteLLM, so any other model, or a local one, works too.
+- **The LLM** is GPT-5.6 Luna, and it runs on my ChatGPT Plus plan through the same sign in that Codex uses. It uses the plan I already pay for, so there is no extra bill. It goes through LiteLLM, so any other model, or a local one, works too.
 - **The tools** around it are free and open source.
 
 ## From script to tool
@@ -106,13 +106,13 @@ I measured 69 commands: every Jarvis command I had dictated through superwhisper
   </tbody>
 </table>
 
-So, back to the original question. **Where does Jev fill the gap?**
+This is where Jev helped:
 
-- **Natural phrasing.** "Put on some tunes", "it's too loud", "capture my face". No pattern knows them. Jev got all of them right.
-- **Telling questions from requests.** All 8 questions and comments came back as "unknown" with 0.96 confidence or more, so nothing ran.
-- **Speed.** I speak for about 5 seconds, and superwhisper needs about 200 ms to write it down. Jev adds about 116 ms. That is around 2% of the whole command.
+- "Put on some tunes", "it's too loud", "capture my face". None of these matched a pattern, and Jev got all of them right.
+- All 8 questions and comments came back as "unknown" with 0.96 confidence or more, so nothing ran.
+- I speak for about 5 seconds, and superwhisper needs about 200 ms to write it down. Jev adds about 116 ms. That is around 2% of the whole command.
 
-And where it does not: **writing.** The LLM ran 6 times, always to fill in a detail, like a recipient or a date. It took between 1 and 5 seconds, so it is the slowest step by far, and the reason it only runs when something required is missing.
+The LLM ran 6 times, always to fill in a detail, like a recipient or a date. It took between 1 and 5 seconds, so it is the slowest step by far. That is why it only runs when something required is missing.
 
 <figure>
   <img src="/images/blog/jarvis/timing.webp" alt="Three timelines. Volume up takes 0.47 seconds after you stop talking with no model. Put on some tunes takes 0.59 seconds, with Jev at 116 ms. An email takes about 5 seconds, almost all of it the LLM filling in the recipient." width="1600" height="759" loading="lazy" className="rounded-lg border border-border block dark:hidden" />
@@ -122,9 +122,9 @@ And where it does not: **writing.** The LLM ran 6 times, always to fill in a det
 
 ## What went wrong along the way
 
-**The second selfie.** I said "Jarvis, did you take the picture?", and it took another selfie. The word *picture* was enough for the simple rules. Jev fixed it, but only after two changes. I had described "unknown" as just "anything else", which tells a model very little. And my own code ignored a confident "unknown" and fell back to the rules anyway. <strong className="text-secondary">A confident "I don't know what you want" is an answer. Treat it like one.</strong>
+**The second selfie.** I said "Jarvis, did you take the picture?", and it took another selfie. The word *picture* was enough for the simple rules. Jev fixed it, but only after two changes. I had described "unknown" as just "anything else", which tells a model very little. And my own code ignored a confident "unknown" and fell back to the rules anyway. <strong className="text-secondary">My code needed to accept a confident "I don't know what you want" and stop there.</strong>
 
-**Speech is the weakest link.** Superwhisper wrote "github.com" as "OpenGeekHove.com", "Obsidian" as "of CDN", and one contact's name as a completely different name, three times. No model can fix a word that was never said. The fix lives in the speech tool's vocabulary list, not in a prompt.
+**Speech is the weakest link.** Superwhisper wrote "github.com" as "OpenGeekHove.com", "Obsidian" as "of CDN", and one contact's name as a completely different name, three times. For those errors, I needed to fix the speech tool's vocabulary list.
 
 **The boring bugs took the longest.** Photo Booth's "Take Photo" no longer has a keyboard shortcut. Contacts refused to open from a script. The ChatGPT plan only answers when the response is streamed. None of these were AI problems.
 
@@ -132,11 +132,11 @@ And where it does not: **writing.** The LLM ran 6 times, always to fill in a det
 
 It is still an experiment, and it has real limits.
 
-**It only knows the apps it has skills for.** Apps with a scripting dictionary, like Music or Mail, are easy. Apps without one need clicks and shortcuts, which break more easily. And some scripts have gaps: the calendar one often misses repeating events.
+It only knows the apps it has skills for. Apps with a scripting dictionary, like Music or Mail, are easy. Apps without one need clicks and shortcuts, which break more easily. And some scripts have gaps: the calendar one often misses repeating events.
 
-**It needs your permission for everything it touches.** macOS asks before a terminal can type into other apps, use the microphone, or control Contacts, Calendar or Reminders. That is how it should be. `jarvis doctor` tells you which permissions are missing and where to turn them on.
+It needs your permission for everything it touches. macOS asks before a terminal can type into other apps, use the microphone, or control Contacts, Calendar or Reminders. `jarvis doctor` tells you which permissions are missing and where to turn them on.
 
-**Until now, only one person has used it,** and that is me. The 69 commands were measured as a dry run. Some actions I have used for real, like the selfie, the notes and the email drafts. Others were only checked in dry runs and by compiling their scripts.
+Until now, only one person has used it, and that is me. The 69 commands were measured as a dry run. Some actions I have used for real, like the selfie, the notes and the email drafts. Others were only checked in dry runs and by compiling their scripts.
 
 ## Try it yourself
 
@@ -151,21 +151,21 @@ jarvis
 
 You need a Mac, Python 3.11 or newer, and <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener noreferrer">uv</a>. With nothing else, the exact commands already work: "volume up", "open Notes", "take a selfie". A Jev key from TypeSafe adds natural phrasing and ignores questions. An LLM adds email drafts and details like dates, and it can be your ChatGPT plan, an API key, or a model running on your Mac.
 
-If something breaks, please open an issue. That is exactly the feedback this experiment needs.
+If something breaks, please open an issue.
 
 ## What comes next
 
-The goal is simple: more voice commands that do more things on your Mac, at almost no cost.
+I want to add more voice commands that do more things on my Mac, and keep the cost almost nothing.
 
-That means two things. Making new apps easier to add, so the questionnaire in `jarvis add` is enough for most of them. And looking for more places where a fast, honest "pick one of these" model is the right tool, instead of a big model that writes.
+I want to make new apps easier to add, so the questionnaire in `jarvis add` is enough for most of them. And I want to try a fast "pick one of these" model in more places where I would normally use an LLM.
 
 ## FAQ
 
 **Do you really need Jev?**
-For a short scripted demo, patterns are enough. Jev matters when people speak naturally, when there are many apps, and when a question should do nothing.
+For a short scripted demo, patterns are enough. Jev helps with natural phrasing and with choosing between many apps. It also recognises questions that should do nothing.
 
 **Does Jarvis send emails?**
-No. It writes the draft and opens it. Sending is always your click.
+No. It writes the draft and opens it. You still have to click to send it.
 
 **What does it cost to run?**
 Patterns and scripts are free. Jev is one quick call when a pattern cannot answer. The LLM runs on my ChatGPT Plus plan, so there is no extra bill.
@@ -184,8 +184,8 @@ Yes. It is on GitHub under the MIT license, and the install is one line (see "Tr
 
 ## What I learned
 
-I started by asking where Jev fits instead of an LLM. The answer I found is that it does not replace one. It goes in front of one.
+I started by asking where Jev fits instead of an LLM. In this experiment, I ended up using it to choose the action before calling the LLM for anything still missing.
 
-A pattern is the right tool more than half the time. A small model that can only choose is the right tool for most of the rest, and it is honest when it does not know. The LLM is great at writing, and it should only write.
+Patterns handled more than half of what I tested. Jev chose the rest, including knowing when to do nothing. I still needed the LLM to write and fill in details.
 
 Where else do you think a model that only chooses would beat one that writes?

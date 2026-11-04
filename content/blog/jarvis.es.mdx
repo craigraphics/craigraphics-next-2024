@@ -4,24 +4,24 @@ date: "2026-10-05"
 readTime: "10 min de lectura"
 author: "William Craig"
 tags: ["IA", "LLM", "Jev", "Interfaces de Voz", "Automatización", "macOS", "Jarvis"]
-excerpt: "Quería entender para qué sirve de verdad un modelo como Jev. El experimento se convirtió en Jarvis, un asistente de voz para mi Mac que usa patrones, Jev y un LLM, cada uno para lo que mejor hace, casi sin costo."
+excerpt: "Quería entender para qué sirve de verdad un modelo como Jev. El experimento se convirtió en Jarvis, un asistente de voz para mi Mac que usa patrones, Jev y un LLM, casi sin costo."
 ---
 
-Este proyecto no empezó como un asistente de voz. Empezó como una pregunta.
+Empecé este proyecto porque tenía una pregunta sobre Jev.
 
 TypeSafe lanzó Jev, al que llaman un modelo "System One". Es un tipo de modelo raro. No escribe nada. Le das un texto y algunas preguntas de opción múltiple, y responde cada una con una probabilidad para cada opción y un nivel de confianza. Tarda como una décima de segundo.
 
-Así que quise entender dónde encaja algo así. <strong className="text-secondary">¿Cuándo usaría Jev en lugar de un LLM?</strong> No en teoría. En algo que de verdad fuera a usar.
+Quería entender dónde encaja algo así. <strong className="text-secondary">¿Cuándo usaría Jev en lugar de un LLM?</strong>
 
-Así que empecé a experimentar, y necesitaba un caso de uso real para probarlo.
+Así que empecé a experimentar, y necesitaba probarlo en algo que de verdad fuera a usar.
 
 ## La idea: hablarle a mi Mac
 
-Elegir entre opciones es justo lo que hace falta para entender un comando. "Sube el volumen", "súbele" y "está muy fuerte" son frases distintas, pero todas apuntan a la misma acción. Jev no tiene que escribir ni una palabra para acertar. Solo tiene que elegir.
+Elegir entre opciones es lo que hace falta para entender un comando. "Sube el volumen", "súbele" y "está muy fuerte" son frases distintas, pero todas apuntan a la misma acción. Jev puede elegir esa acción sin escribir nada.
 
-Así se me ocurrió la idea: ejecutar comandos de voz en mi Mac.
+Decidí probar con comandos de voz en mi Mac.
 
-Ya hay herramientas que hacen esto, pero yo quería ir más allá y ver hasta dónde podía llegar un modelo como Jev. Y ya tenía la mitad. Uso superwhisper todos los días para dictar. Así que solo necesitaba un gancho. Cuando digo una palabra clave al inicio de una frase, el texto va a Jev con una lista de cosas que podría significar, y un script hace el resto.
+Ya hay herramientas que hacen esto, pero quería ver hasta dónde podía llegar con Jev. Uso superwhisper todos los días para dictar, así que solo me faltaba conectarlo. Cuando digo una palabra clave al inicio de una frase, el texto va a Jev con una lista de cosas que podría significar, y un script hace el resto.
 
 Elegí cosas que hago todos los días:
 
@@ -36,15 +36,15 @@ Al principio la palabra clave era "Jev", como el modelo. Pero el modelo de voz e
 
 Los primeros tres funcionaron bien. Jev elegía la acción correcta, un poco de código sacaba el texto de la nota o el sitio web, y un script hacía el trabajo.
 
-El correo fue más complicado, y me mostró exactamente dónde termina Jev.
+El correo fue más complicado.
 
-Jev puede saber que "escribe un correo a Maya sobre el viernes" es un correo. Incluso puede elegir entre opciones que yo le preparo. Pero no puede escribir el correo. No puede convertir "sobre el viernes" en un asunto y un cuerpo, y no puede convertir "mañana a las 9" en una fecha real. <strong className="text-secondary">Jev es muy bueno eligiendo, y no puede escribir.</strong>
+Jev puede saber que "escribe un correo a Maya sobre el viernes" es un correo. Incluso puede elegir entre opciones que yo le preparo. Pero no puede escribir el correo. No puede convertir "sobre el viernes" en un asunto y un cuerpo, y no puede convertir "mañana a las 9" en una fecha real.
 
-Esa fue la respuesta a mi pregunta, y cambió el objetivo. Jev no iba a reemplazar a un LLM. Iba a ir delante de uno.
+Para eso seguía necesitando un LLM, así que puse Jev antes para elegir la acción.
 
-## El enfoque: cada parte hace lo que mejor sabe hacer
+## El enfoque: cómo trabajan las partes juntas
 
-Así que el objetivo se hizo más amplio. En lugar de un solo modelo haciéndolo todo, cada comando recorre el mismo camino, y cada paso solo corre si el anterior no pudo responder.
+Cada comando recorre el mismo camino, y cada paso solo se ejecuta si el anterior no pudo responder.
 
 <figure>
   <img src="/images/blog/jarvis/decision-path.webp" alt="El camino de decisión de Jarvis: hablas, se revisa la palabra de activación, los patrones deciden el 54% de los comandos, Jev decide el 46%, el LLM y las palabras clave no deciden ninguno, luego se completan los detalles y se ejecuta la acción." width="1600" height="2227" loading="lazy" className="rounded-lg border border-border block dark:hidden" />
@@ -56,11 +56,11 @@ Así que el objetivo se hizo más amplio. En lugar de un solo modelo haciéndolo
 
 **2. Jev cuando los patrones no pueden responder.** "Make it darker in here" no coincide con ningún patrón. Jev elige el modo oscuro con 0.95 de confianza, en 123 ms. Responde dos preguntas en una sola llamada: ¿para qué app es esto?, y ¿qué acción dentro de ella? Una opción siempre es "unknown" (desconocido), para preguntas y charla, así que "¿ya tomaste la foto?" no hace nada.
 
-**3. Un LLM solo para lo que Jev no puede hacer.** Escribir un borrador de correo. Convertir "el viernes a las 3" en una fecha. Encontrar la dirección detrás de un nombre. Y elegir una acción si Jev alguna vez no está seguro. Nunca escribe código que se ejecute, y nunca envía nada.
+**3. Un LLM solo para lo que Jev no puede hacer.** Escribe borradores de correo y completa detalles, como convertir "el viernes a las 3" en una fecha o encontrar la dirección de una persona a partir de su nombre. También puede elegir una acción si Jev no está seguro. Nunca escribe código que se ejecute, y nunca envía nada.
 
-**4. Los scripts hacen el trabajo.** Cada acción es un script escrito de antemano. Los modelos deciden y escriben. Solo los scripts que yo leí pueden tocar mi computadora.
+**4. Los scripts hacen el trabajo.** Cada acción es un script escrito de antemano, y tengo que leerlo antes de que pueda ejecutarse en mi computadora. Los modelos eligen la acción y escriben lo que necesita.
 
-El flujo de correo lo muestra todo. Un patrón o Jev reconoce la petición. El LLM escribe el borrador. Un script lo abre en Gmail con el destinatario, el asunto y el cuerpo listos. Puedo pedir cambios en voz alta. Pero nunca lo envía. Aunque diga "envíalo", solo me avisa que el borrador está listo. Enviar es mi clic.
+Para un correo, un patrón o Jev reconoce la petición, y el LLM escribe el borrador. Un script lo abre en Gmail con el destinatario, el asunto y el cuerpo listos. Puedo pedir cambios en voz alta. Pero nunca lo envía. Aunque diga "envíalo", solo me avisa que el borrador está listo. Todavía tengo que hacer clic para enviarlo.
 
 ## Casi sin costo
 
@@ -68,7 +68,7 @@ Esto era importante para mí. No quería un experimento que mandara cada frase a
 
 - **Los patrones y los scripts** son gratis y corren en la Mac.
 - **Jev** es una llamada rápida a la API, solo cuando un patrón no puede responder.
-- **El LLM** es GPT-5.6 Luna, y corre con mi plan de ChatGPT Plus a través del mismo inicio de sesión que usa Codex. Así que cuenta contra el plan que ya pago, no contra una factura. Pasa por LiteLLM, así que también funciona cualquier otro modelo, o uno local.
+- **El LLM** es GPT-5.6 Luna, y corre con mi plan de ChatGPT Plus a través del mismo inicio de sesión que usa Codex. Usa el plan que ya pago, así que no hay una factura extra. Pasa por LiteLLM, así que también funciona cualquier otro modelo, o uno local.
 - **Las herramientas** alrededor son gratuitas y de código abierto.
 
 ## De script a herramienta
@@ -106,13 +106,13 @@ Medí 69 comandos: todos los comandos de Jarvis que dicté con superwhisper, má
   </tbody>
 </table>
 
-Entonces, de vuelta a la pregunta original. **¿Dónde llena Jev el hueco?**
+Aquí es donde Jev ayudó:
 
-- **Frases naturales.** "Put on some tunes", "it's too loud", "capture my face". Ningún patrón las conoce. Jev acertó en todas.
-- **Distinguir preguntas de peticiones.** Las 8 preguntas y comentarios volvieron como "unknown" con 0.96 de confianza o más, así que no se ejecutó nada.
-- **Velocidad.** Hablo unos 5 segundos, y superwhisper necesita unos 200 ms para escribirlo. Jev agrega unos 116 ms. Es alrededor del 2% del comando completo.
+- "Put on some tunes", "it's too loud", "capture my face". Ninguna coincidía con un patrón, y Jev acertó en todas.
+- Las 8 preguntas y comentarios volvieron como "unknown" con 0.96 de confianza o más, así que no se ejecutó nada.
+- Hablo unos 5 segundos, y superwhisper necesita unos 200 ms para escribirlo. Jev agrega unos 116 ms. Es alrededor del 2% del comando completo.
 
-Y dónde no: **escribir.** El LLM corrió 6 veces, siempre para completar un detalle, como un destinatario o una fecha. Tardó entre 1 y 5 segundos, así que es por mucho el paso más lento, y por eso solo corre cuando falta algo obligatorio.
+El LLM corrió 6 veces, siempre para completar un detalle, como un destinatario o una fecha. Tardó entre 1 y 5 segundos, así que es por mucho el paso más lento. Por eso solo se ejecuta cuando falta algo obligatorio.
 
 <figure>
   <img src="/images/blog/jarvis/timing.webp" alt="Tres líneas de tiempo. Volume up tarda 0.47 segundos después de dejar de hablar, sin modelo. Put on some tunes tarda 0.59 segundos, con Jev en 116 ms. Un correo tarda unos 5 segundos, casi todo el LLM completando el destinatario." width="1600" height="759" loading="lazy" className="rounded-lg border border-border block dark:hidden" />
@@ -122,9 +122,9 @@ Y dónde no: **escribir.** El LLM corrió 6 veces, siempre para completar un det
 
 ## Lo que salió mal en el camino
 
-**La segunda selfie.** Dije "Jarvis, did you take the picture?", y tomó otra selfie. La palabra *picture* bastó para las reglas simples. Jev lo arregló, pero solo después de dos cambios. Yo había descrito "unknown" como "cualquier otra cosa", y eso le dice muy poco a un modelo. Y mi propio código ignoraba un "unknown" seguro y regresaba a las reglas de todos modos. <strong className="text-secondary">Un "no sé qué quieres" dicho con seguridad es una respuesta. Trátalo como tal.</strong>
+**La segunda selfie.** Dije "Jarvis, did you take the picture?", y tomó otra selfie. La palabra *picture* bastó para las reglas simples. Jev lo arregló, pero solo después de dos cambios. Yo había descrito "unknown" como "cualquier otra cosa", y eso le dice muy poco a un modelo. Y mi propio código ignoraba un "unknown" seguro y regresaba a las reglas de todos modos. <strong className="text-secondary">Mi código tenía que aceptar un "no sé qué quieres" dicho con seguridad y parar ahí.</strong>
 
-**El habla es el eslabón más débil.** Superwhisper escribió "github.com" como "OpenGeekHove.com", "Obsidian" como "of CDN", y el nombre de un contacto como otro nombre completamente distinto, tres veces. Ningún modelo puede corregir una palabra que nunca se dijo. La solución vive en la lista de vocabulario de la herramienta de voz, no en un prompt.
+**El habla es el eslabón más débil.** Superwhisper escribió "github.com" como "OpenGeekHove.com", "Obsidian" como "of CDN", y el nombre de un contacto como otro nombre completamente distinto, tres veces. Para esos errores, tuve que corregir la lista de vocabulario de la herramienta de voz.
 
 **Los bugs aburridos tomaron más tiempo.** "Take Photo" en Photo Booth ya no tiene atajo de teclado. Contactos se negaba a abrirse desde un script. El plan de ChatGPT solo responde cuando la respuesta va en streaming. Ninguno fue un problema de IA.
 
@@ -132,11 +132,11 @@ Y dónde no: **escribir.** El LLM corrió 6 veces, siempre para completar un det
 
 Sigue siendo un experimento, y tiene límites reales.
 
-**Solo conoce las apps para las que tiene habilidades.** Las apps con diccionario de scripting, como Music o Mail, son fáciles. Las que no lo tienen necesitan clics y atajos, que se rompen con más facilidad. Y algunos scripts tienen huecos: el del calendario muchas veces no ve los eventos que se repiten.
+Solo conoce las apps para las que tiene habilidades. Las apps con diccionario de scripting, como Music o Mail, son fáciles. Las que no lo tienen necesitan clics y atajos, que se rompen con más facilidad. Y algunos scripts tienen huecos: el del calendario muchas veces no ve los eventos que se repiten.
 
-**Necesita tu permiso para todo lo que toca.** macOS pregunta antes de que una terminal pueda escribir en otras apps, usar el micrófono, o controlar Contactos, Calendario o Recordatorios. Así debe ser. `jarvis doctor` te dice qué permisos faltan y dónde activarlos.
+Necesita tu permiso para todo lo que toca. macOS pregunta antes de que una terminal pueda escribir en otras apps, usar el micrófono, o controlar Contactos, Calendario o Recordatorios. `jarvis doctor` te dice qué permisos faltan y dónde activarlos.
 
-**Hasta ahora, solo una persona lo ha usado,** y soy yo. Los 69 comandos se midieron en modo de prueba. Algunas acciones las he usado de verdad, como la selfie, las notas y los borradores de correo. Otras solo se revisaron en modo de prueba y compilando sus scripts.
+Hasta ahora, solo una persona lo ha usado, y soy yo. Los 69 comandos se midieron en modo de prueba. Algunas acciones las he usado de verdad, como la selfie, las notas y los borradores de correo. Otras solo se revisaron en modo de prueba y compilando sus scripts.
 
 ## Pruébalo tú mismo
 
@@ -151,21 +151,21 @@ jarvis
 
 Necesitas una Mac, Python 3.11 o más reciente, y <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener noreferrer">uv</a>. Sin nada más, los comandos exactos ya funcionan: "volume up", "open Notes", "take a selfie". Una clave de Jev de TypeSafe agrega frases naturales e ignora las preguntas. Un LLM agrega borradores de correo y detalles como fechas, y puede ser tu plan de ChatGPT, una clave de API, o un modelo que corra en tu Mac.
 
-Si algo se rompe, por favor abre un issue. Es justo la retroalimentación que este experimento necesita.
+Si algo se rompe, por favor abre un issue.
 
 ## Lo que sigue
 
-El objetivo es simple: más comandos de voz que hagan más cosas en tu Mac, casi sin costo.
+Quiero añadir más comandos de voz que hagan más cosas en mi Mac, y que siga costando casi nada.
 
-Eso significa dos cosas. Hacer que agregar apps nuevas sea más fácil, para que el cuestionario de `jarvis add` alcance para la mayoría. Y seguir buscando lugares donde un modelo rápido y honesto que solo elige "una de estas" sea la herramienta correcta, en lugar de un modelo grande que escribe.
+Quiero que sea más fácil añadir apps, para que el cuestionario de `jarvis add` baste para la mayoría. Y quiero probar un modelo rápido que elige "una de estas" en más sitios donde normalmente usaría un LLM.
 
 ## Preguntas frecuentes
 
 **¿De verdad necesitas Jev?**
-Para una demo corta y con guion, los patrones bastan. Jev importa cuando la gente habla de forma natural, cuando hay muchas apps, y cuando una pregunta no debería hacer nada.
+Para una demo corta y con guion, los patrones bastan. Jev ayuda a entender frases naturales y a elegir entre muchas apps. También reconoce las preguntas que no deberían ejecutar nada.
 
 **¿Jarvis envía correos?**
-No. Escribe el borrador y lo abre. Enviar siempre es tu clic.
+No. Escribe el borrador y lo abre. Todavía tienes que hacer clic para enviarlo.
 
 **¿Cuánto cuesta usarlo?**
 Los patrones y los scripts son gratis. Jev es una llamada rápida cuando un patrón no puede responder. El LLM corre con mi plan de ChatGPT Plus, así que no hay factura extra.
@@ -184,8 +184,8 @@ Sí. Está en GitHub con licencia MIT, y se instala con una línea (ver "Pruéba
 
 ## Lo que aprendí
 
-Empecé preguntando dónde encaja Jev en lugar de un LLM. La respuesta que encontré es que no lo reemplaza. Va delante de él.
+Empecé preguntando dónde encaja Jev en lugar de un LLM. En este experimento acabé usándolo para elegir la acción antes de llamar al LLM para completar lo que faltara.
 
-Un patrón es la herramienta correcta más de la mitad de las veces. Un modelo pequeño que solo puede elegir es la herramienta correcta para casi todo lo demás, y es honesto cuando no sabe. El LLM es excelente escribiendo, y solo debería escribir.
+Los patrones resolvieron más de la mitad de lo que probé. Jev decidió el resto, incluido cuándo no hacer nada. Seguí necesitando el LLM para escribir y completar detalles.
 
 ¿Dónde más crees que un modelo que solo elige le ganaría a uno que escribe?
