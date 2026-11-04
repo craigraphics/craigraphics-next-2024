@@ -1,0 +1,191 @@
+---
+title: "Jarvis: Un experimento para encontrar dónde Jev le gana a un LLM"
+date: "2026-10-05"
+readTime: "10 min de lectura"
+author: "William Craig"
+tags: ["IA", "LLM", "Jev", "Interfaces de Voz", "Automatización", "macOS", "Jarvis"]
+excerpt: "Quería entender para qué sirve de verdad un modelo como Jev. El experimento se convirtió en Jarvis, un asistente de voz para mi Mac que usa patrones, Jev y un LLM, casi sin costo."
+---
+
+Empecé este proyecto porque tenía una pregunta sobre Jev.
+
+TypeSafe lanzó Jev, al que llaman un modelo "System One". Es un tipo de modelo raro. No escribe nada. Le das un texto y algunas preguntas de opción múltiple, y responde cada una con una probabilidad para cada opción y un nivel de confianza. Tarda como una décima de segundo.
+
+Quería entender dónde encaja algo así. <strong className="text-secondary">¿Cuándo usaría Jev en lugar de un LLM?</strong>
+
+Así que empecé a experimentar, y necesitaba probarlo en algo que de verdad fuera a usar.
+
+## La idea: hablarle a mi Mac
+
+Elegir entre opciones es lo que hace falta para entender un comando. "Sube el volumen", "súbele" y "está muy fuerte" son frases distintas, pero todas apuntan a la misma acción. Jev puede elegir esa acción sin escribir nada.
+
+Decidí probar con comandos de voz en mi Mac.
+
+Ya hay herramientas que hacen esto, pero quería ver hasta dónde podía llegar con Jev. Uso superwhisper todos los días para dictar, así que solo me faltaba conectarlo. Cuando digo una palabra clave al inicio de una frase, el texto va a Jev con una lista de cosas que podría significar, y un script hace el resto.
+
+Elegí cosas que hago todos los días:
+
+- **Obsidian**, que uso para mis notas. "Crea una nota llamada Lista del súper que diga leche y huevos."
+- **Buscar en el navegador** sin escribir. "Ve a github punto com."
+- **Tomar una foto.** "Tómate una selfie."
+- **Abrir un correo** con el asunto y el cuerpo ya escritos. "Escribe un correo a Maya sobre el viernes."
+
+Al principio la palabra clave era "Jev", como el modelo. Pero el modelo de voz escuchaba "Jeff" todas las veces. Probé "Jarvis", y lo escribió bien en las 6 pruebas. Así se quedó con su nombre.
+
+## Donde Jev llegó a su límite
+
+Los primeros tres funcionaron bien. Jev elegía la acción correcta, un poco de código sacaba el texto de la nota o el sitio web, y un script hacía el trabajo.
+
+El correo fue más complicado.
+
+Jev puede saber que "escribe un correo a Maya sobre el viernes" es un correo. Incluso puede elegir entre opciones que yo le preparo. Pero no puede escribir el correo. No puede convertir "sobre el viernes" en un asunto y un cuerpo, y no puede convertir "mañana a las 9" en una fecha real.
+
+Para eso seguía necesitando un LLM, así que puse Jev antes para elegir la acción.
+
+## El enfoque: cómo trabajan las partes juntas
+
+Cada comando recorre el mismo camino, y cada paso solo se ejecuta si el anterior no pudo responder.
+
+<figure>
+  <img src="/images/blog/jarvis/decision-path.webp" alt="El camino de decisión de Jarvis: hablas, se revisa la palabra de activación, los patrones deciden el 54% de los comandos, Jev decide el 46%, el LLM y las palabras clave no deciden ninguno, luego se completan los detalles y se ejecuta la acción." width="1600" height="2227" loading="lazy" className="rounded-lg border border-border block dark:hidden" />
+  <img src="/images/blog/jarvis/decision-path-dark.webp" alt="El mismo camino de decisión en modo oscuro, con la parte de comandos decidida en cada paso." width="1600" height="2227" loading="lazy" className="rounded-lg border border-border hidden dark:block" />
+  <figcaption>Cada comando sigue este camino. Los porcentajes vienen de los 69 comandos medidos más abajo.</figcaption>
+</figure>
+
+**1. Primero los patrones.** Casi todo lo que le digo a una computadora es aburrido. "Sube el volumen." "Pausa la música." "Abre mis descargas." Son formas exactas, así que unos patrones simples las reconocen. Ahora hay 49. Una coincidencia tarda menos de un milisegundo y no necesita ningún modelo.
+
+**2. Jev cuando los patrones no pueden responder.** "Make it darker in here" no coincide con ningún patrón. Jev elige el modo oscuro con 0.95 de confianza, en 123 ms. Responde dos preguntas en una sola llamada: ¿para qué app es esto?, y ¿qué acción dentro de ella? Una opción siempre es "unknown" (desconocido), para preguntas y charla, así que "¿ya tomaste la foto?" no hace nada.
+
+**3. Un LLM solo para lo que Jev no puede hacer.** Escribe borradores de correo y completa detalles, como convertir "el viernes a las 3" en una fecha o encontrar la dirección de una persona a partir de su nombre. También puede elegir una acción si Jev no está seguro. Nunca escribe código que se ejecute, y nunca envía nada.
+
+**4. Los scripts hacen el trabajo.** Cada acción es un script escrito de antemano, y tengo que leerlo antes de que pueda ejecutarse en mi computadora. Los modelos eligen la acción y escriben lo que necesita.
+
+Para un correo, un patrón o Jev reconoce la petición, y el LLM escribe el borrador. Un script lo abre en Gmail con el destinatario, el asunto y el cuerpo listos. Puedo pedir cambios en voz alta. Pero nunca lo envía. Aunque diga "envíalo", solo me avisa que el borrador está listo. Todavía tengo que hacer clic para enviarlo.
+
+## Casi sin costo
+
+Esto era importante para mí. No quería un experimento que mandara cada frase a una API de pago.
+
+- **Los patrones y los scripts** son gratis y corren en la Mac.
+- **Jev** es una llamada rápida a la API, solo cuando un patrón no puede responder.
+- **El LLM** es GPT-5.6 Luna, y corre con mi plan de ChatGPT Plus a través del mismo inicio de sesión que usa Codex. Usa el plan que ya pago, así que no hay una factura extra. Pasa por LiteLLM, así que también funciona cualquier otro modelo, o uno local.
+- **Las herramientas** alrededor son gratuitas y de código abierto.
+
+## De script a herramienta
+
+La primera versión era un solo script de Python para una demo. Luego lo seguí mejorando, y se convirtió en una herramienta de línea de comandos de verdad, `jarvis`:
+
+- **Escucha** a través de superwhisper, de cualquier herramienta de voz que copie su texto, del micrófono de la Mac, o del teclado.
+- **`jarvis doctor`** revisa todo lo que necesita: la entrada de voz, la clave de Jev, el inicio de sesión del LLM, las apps, la bóveda de Obsidian y los permisos de macOS. Cada problema viene con la solución exacta.
+- **Cada app es un archivo pequeño** con una descripción, algunas frases de ejemplo, los patrones y el script. Las opciones de Jev salen directamente de esos archivos, así que una app nueva es una opción nueva, sin cambiar código.
+- **`jarvis add`** le enseña una app nueva haciendo algunas preguntas: qué app, cómo la llamas, qué acciones quieres. También puede pedirle al LLM que sugiera acciones a partir del diccionario de scripting de la app, y me muestra cada script antes de guardarlo.
+- **`jarvis setup`** es un cuestionario corto para lo demás: qué herramienta de voz, el nombre al que responde, el navegador, la bóveda, las claves. La primera vez que ejecutas `jarvis`, te ofrece hacerlo.
+- **Los destinatarios de correo** salen de la app Contactos y, si la conectas, de tus contactos de Gmail, tomando en cuenta cómo el reconocimiento de voz escribe los nombres.
+
+Ahora mismo conoce 11 apps y 25 acciones: apps en general, el navegador, Music, ajustes del sistema como el volumen y el modo oscuro, Finder, Recordatorios, Calendario, correo, Obsidian, Photo Booth, y tus propios Atajos de Apple.
+
+## Los resultados
+
+Medí 69 comandos: todos los comandos de Jarvis que dicté con superwhisper, más todas las frases que usé para probar Jev. Pasaron por el camino de decisión real, con llamadas reales a los modelos, en modo de prueba, así que no se ejecutó nada.
+
+<figure>
+  <img src="/images/blog/jarvis/who-decided.webp" alt="Quién decidió: los patrones decidieron 37 de 69 comandos en menos de 1 ms, Jev decidió 32 con una mediana de 116 ms, el LLM y las palabras clave ninguno. Los comandos exactos fueron casi todos patrones, las frases naturales casi todas Jev, y las preguntas todas Jev." width="1600" height="1005" loading="lazy" className="rounded-lg border border-border block dark:hidden" />
+  <img src="/images/blog/jarvis/who-decided-dark.webp" alt="Los mismos resultados en modo oscuro." width="1600" height="1005" loading="lazy" className="rounded-lg border border-border hidden dark:block" />
+  <figcaption>37 comandos nunca tocaron un modelo. Jev resolvió el resto, incluidas todas las preguntas.</figcaption>
+</figure>
+
+<table>
+  <thead>
+    <tr><th>Paso</th><th>Comandos decididos</th><th>Tiempo</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Patrones</td><td>37 de 69 (54%)</td><td>menos de 1 ms</td></tr>
+    <tr><td>Jev</td><td>32 de 69 (46%)</td><td>mediana de 116 ms, de 93 a 330 ms</td></tr>
+    <tr><td>LLM</td><td>0 de 69</td><td>todas las respuestas de Jev superaron su umbral de 0.6</td></tr>
+    <tr><td>Palabras clave</td><td>0 de 69</td><td>solo se usan cuando nada más puede responder</td></tr>
+  </tbody>
+</table>
+
+Aquí es donde Jev ayudó:
+
+- "Put on some tunes", "it's too loud", "capture my face". Ninguna coincidía con un patrón, y Jev acertó en todas.
+- Las 8 preguntas y comentarios volvieron como "unknown" con 0.96 de confianza o más, así que no se ejecutó nada.
+- Hablo unos 5 segundos, y superwhisper necesita unos 200 ms para escribirlo. Jev agrega unos 116 ms. Es alrededor del 2% del comando completo.
+
+El LLM corrió 6 veces, siempre para completar un detalle, como un destinatario o una fecha. Tardó entre 1 y 5 segundos, así que es por mucho el paso más lento. Por eso solo se ejecuta cuando falta algo obligatorio.
+
+<figure>
+  <img src="/images/blog/jarvis/timing.webp" alt="Tres líneas de tiempo. Volume up tarda 0.47 segundos después de dejar de hablar, sin modelo. Put on some tunes tarda 0.59 segundos, con Jev en 116 ms. Un correo tarda unos 5 segundos, casi todo el LLM completando el destinatario." width="1600" height="759" loading="lazy" className="rounded-lg border border-border block dark:hidden" />
+  <img src="/images/blog/jarvis/timing-dark.webp" alt="Las mismas líneas de tiempo en modo oscuro." width="1600" height="759" loading="lazy" className="rounded-lg border border-border hidden dark:block" />
+  <figcaption>Casi todo el comando soy yo hablando. Jev es la línea morada delgada. El bloque naranja es el LLM escribiendo.</figcaption>
+</figure>
+
+## Lo que salió mal en el camino
+
+**La segunda selfie.** Dije "Jarvis, did you take the picture?", y tomó otra selfie. La palabra *picture* bastó para las reglas simples. Jev lo arregló, pero solo después de dos cambios. Yo había descrito "unknown" como "cualquier otra cosa", y eso le dice muy poco a un modelo. Y mi propio código ignoraba un "unknown" seguro y regresaba a las reglas de todos modos. <strong className="text-secondary">Mi código tenía que aceptar un "no sé qué quieres" dicho con seguridad y parar ahí.</strong>
+
+**El habla es el eslabón más débil.** Superwhisper escribió "github.com" como "OpenGeekHove.com", "Obsidian" como "of CDN", y el nombre de un contacto como otro nombre completamente distinto, tres veces. Para esos errores, tuve que corregir la lista de vocabulario de la herramienta de voz.
+
+**Los bugs aburridos tomaron más tiempo.** "Take Photo" en Photo Booth ya no tiene atajo de teclado. Contactos se negaba a abrirse desde un script. El plan de ChatGPT solo responde cuando la respuesta va en streaming. Ninguno fue un problema de IA.
+
+## Límites y permisos
+
+Sigue siendo un experimento, y tiene límites reales.
+
+Solo conoce las apps para las que tiene habilidades. Las apps con diccionario de scripting, como Music o Mail, son fáciles. Las que no lo tienen necesitan clics y atajos, que se rompen con más facilidad. Y algunos scripts tienen huecos: el del calendario muchas veces no ve los eventos que se repiten.
+
+Necesita tu permiso para todo lo que toca. macOS pregunta antes de que una terminal pueda escribir en otras apps, usar el micrófono, o controlar Contactos, Calendario o Recordatorios. `jarvis doctor` te dice qué permisos faltan y dónde activarlos.
+
+Hasta ahora, solo una persona lo ha usado, y soy yo. Los 69 comandos se midieron en modo de prueba. Algunas acciones las he usado de verdad, como la selfie, las notas y los borradores de correo. Otras solo se revisaron en modo de prueba y compilando sus scripts.
+
+## Pruébalo tú mismo
+
+Jarvis es de código abierto, con licencia MIT: <a href="https://github.com/craigraphics/jarvis" target="_blank" rel="noopener noreferrer">github.com/craigraphics/jarvis</a>.
+
+```sh
+uv tool install git+https://github.com/craigraphics/jarvis
+jarvis setup
+jarvis doctor
+jarvis
+```
+
+Necesitas una Mac, Python 3.11 o más reciente, y <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener noreferrer">uv</a>. Sin nada más, los comandos exactos ya funcionan: "volume up", "open Notes", "take a selfie". Una clave de Jev de TypeSafe agrega frases naturales e ignora las preguntas. Un LLM agrega borradores de correo y detalles como fechas, y puede ser tu plan de ChatGPT, una clave de API, o un modelo que corra en tu Mac.
+
+Si algo se rompe, por favor abre un issue.
+
+## Lo que sigue
+
+Quiero añadir más comandos de voz que hagan más cosas en mi Mac, y que siga costando casi nada.
+
+Quiero que sea más fácil añadir apps, para que el cuestionario de `jarvis add` baste para la mayoría. Y quiero probar un modelo rápido que elige "una de estas" en más sitios donde normalmente usaría un LLM.
+
+## Preguntas frecuentes
+
+**¿De verdad necesitas Jev?**
+Para una demo corta y con guion, los patrones bastan. Jev ayuda a entender frases naturales y a elegir entre muchas apps. También reconoce las preguntas que no deberían ejecutar nada.
+
+**¿Jarvis envía correos?**
+No. Escribe el borrador y lo abre. Todavía tienes que hacer clic para enviarlo.
+
+**¿Cuánto cuesta usarlo?**
+Los patrones y los scripts son gratis. Jev es una llamada rápida cuando un patrón no puede responder. El LLM corre con mi plan de ChatGPT Plus, así que no hay factura extra.
+
+**¿Con qué herramientas de voz funciona?**
+Superwhisper, cualquier herramienta que copie su texto al portapapeles, el micrófono de la Mac con whisper local, o simplemente escribiendo.
+
+**¿Funciona sin internet?**
+Los patrones y los scripts sí. Jev y el LLM necesitan red.
+
+**¿Puedo probarlo?**
+Sí. Está en GitHub con licencia MIT, y se instala con una línea (ver "Pruébalo tú mismo" arriba).
+
+**¿Cómo le enseñas una app nueva?**
+`jarvis add <app>` hace algunas preguntas y crea el archivo de la habilidad. Con `--ai`, el LLM sugiere acciones para esa app, y tú apruebas cada una.
+
+## Lo que aprendí
+
+Empecé preguntando dónde encaja Jev en lugar de un LLM. En este experimento acabé usándolo para elegir la acción antes de llamar al LLM para completar lo que faltara.
+
+Los patrones resolvieron más de la mitad de lo que probé. Jev decidió el resto, incluido cuándo no hacer nada. Seguí necesitando el LLM para escribir y completar detalles.
+
+¿Dónde más crees que un modelo que solo elige le ganaría a uno que escribe?

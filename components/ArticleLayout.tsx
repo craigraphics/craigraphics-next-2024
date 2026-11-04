@@ -85,7 +85,7 @@ const ArticleLayout: React.FC<ArticleLayoutProps> = ({ post }) => {
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center">
               <Avatar className="h-12 w-12 mr-4" aria-label={`${post.author}'s profile picture`}>
-                <AvatarImage src={post.avatar || 'null'} alt={`${post.author}'s avatar`} />
+                <AvatarImage src={post.avatar || '/images/profile.png'} alt={`${post.author}'s avatar`} />
                 <AvatarFallback>{post.author}</AvatarFallback>
               </Avatar>
               <div>
